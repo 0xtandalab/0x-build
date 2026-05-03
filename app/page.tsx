@@ -30,7 +30,7 @@ export default function HomePage() {
           {/* ULTRA MEGA LOGO - Sangat Lebar, Tinggi Ramping, Margin Meppet */}
           <div className="relative w-[110vw] max-w-[1200px] h-[180px] md:max-w-[2800px] md:h-[420px] mb-2 animate-glitch">
             <Image 
-              src="/branding/logo-0xtanda.svg"
+              src="/branding/logo-0xtanda.png"
               alt="0xTanda Official Logo"
               fill
               className="object-contain"
