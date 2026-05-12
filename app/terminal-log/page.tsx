@@ -78,7 +78,19 @@ const ARTICLES = [
     accentColor: "text-[#F59E0B]", // Warna Aksen Amber
     borderColor: "hover:border-[#F59E0B]/50",
     glowColor: "bg-[#F59E0B]/5"
-  }
+  },
+  {
+    id: "06",
+    title: "Cara Membedakan Kaos Original vs Palsu di Indonesia — dan Mengapa Blockchain Jadi Jawabannya | 0xTanda",
+    excerpt: "Cara cek keaslian baju di Indonesia: dari 5 langkah inspeksi fisik yang bisa kamu lakukan sendiri, hingga mengapa semua metode itu punya batas — dan bagaimana NFT blockchain jadi solusi yang tidak bisa ditipu.",
+    date: "12 Mei 2026",
+    category: "Deep Dive",
+    slug: "kaos-original-vs-palsu",
+    image: "/article/cover-anti-palsu.png", // Ganti dengan cover image yang sesuai
+    accentColor: "text-[#836EF9]",
+    borderColor: "hover:border-[#836EF9]/50",
+    glowColor: "bg-[#836EF9]/5"
+  },
 ];
 
 export default function TerminalLogMenu() {
