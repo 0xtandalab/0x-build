@@ -91,6 +91,18 @@ const ARTICLES = [
     borderColor: "hover:border-[#836EF9]/50",
     glowColor: "bg-[#836EF9]/5"
   },
+  {
+    id: "07",
+    title: "YONO vs YOLO: Ketika Gen Z Mulai Mempertanyakan Lemari Bajunya Sendiri | 0xTanda",
+    excerpt: "75,6% Gen Z Indonesia impulse buying baju tiap bulan. YONO hadir sebagai antitesis. Tapi apakah ini soal kesadaran, atau soal tidak punya pilihan?",
+    date: "19 Mei 2026",
+    category: "Editorial",
+    slug: "yono-vs-yolo",
+    image: "/article/cover-yono-vs-yolo.png",
+    accentColor: "text-[#836EF9]",
+    borderColor: "hover:border-[#836EF9]/50",
+    glowColor: "bg-[#836EF9]/5"
+  },
 ];
 
 export default function TerminalLogMenu() {

@@ -69,11 +69,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.85, 
     },
     {
-      // Artikel Edukasi: Phygital Anti Palsu
-      url: `${baseUrl}/journal/phygital-anti-palsu`,
+      // Artikel 6: Kaos Original vs Palsu
+      url: `${baseUrl}/terminal-log/kaos-original-vs-palsu`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
-      priority: 0.85, 
+      priority: 0.85,
+    },
+    {
+      // Artikel 7: YONO vs YOLO — BARU
+      url: `${baseUrl}/terminal-log/yono-vs-yolo`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.85,
     },
     {
       url: `${baseUrl}/verify`,
@@ -94,12 +101,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/terminal-log/kaos-original-vs-palsu`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
-      priority: 0.85,
     },
   ];
 }
