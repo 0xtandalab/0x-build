@@ -130,6 +130,1012 @@ dist/
 .env.local
 </file>
 
+<file path="app/robots.ts">
+import { MetadataRoute } from 'next';
+
+export default function robots(): MetadataRoute.Robots {
+  return {
+    rules: {
+      // Mengizinkan semua bot search engine (Google, Bing, Yahoo, dll)
+      userAgent: '*',
+      allow: '/',
+    },
+    // PERBAIKAN: Menambahkan 'www.' agar persis dengan domain utama lu di GSC
+    sitemap: 'https://www.0xtanda.xyz/sitemap.xml',
+  };
+}
+</file>
+
+<file path="app/verify/page.tsx">
+"use client";
+
+import React from 'react';
+import { ArrowRight, AlertTriangle, ShieldCheck } from 'lucide-react';
+
+// ============================================================================
+// MOCK NEXT.JS (Hanya untuk keperluan Preview di layar Canvas)
+// CATATAN UNTUK COPAS: 
+// Saat menyalin kode ini ke file project asli Anda (VSCode/Vercel), 
+// HAPUS bagian mock ini dan gunakan import bawaan Next.js berikut:
+//
+// import Link from 'next/link';
+// ============================================================================
+const Link = ({ href, children, className }: any) => (
+  <a href={href} className={className}>{children}</a>
+);
+// ============================================================================
+
+export default function VerifyLandingPage() {
+  return (
+    <main className="min-h-screen bg-[#0E0E0E] text-white flex flex-col items-center justify-center pt-32 pb-6 px-6 relative overflow-hidden font-sans selection:bg-[#836EF9] selection:text-black">
+      {/* Background Glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-[#836EF9]/10 blur-[150px] pointer-events-none rounded-full" />
+
+      <div className="relative z-10 max-w-3xl mx-auto text-center space-y-10">
+        
+        {/* Ikon Shield Online */}
+        <div className="inline-flex items-center justify-center w-24 h-24 bg-black border border-[#00FF9D]/30 rounded-full mb-4 shadow-[0_0_40px_rgba(0,255,157,0.1)] relative">
+          <div className="absolute inset-0 border border-[#00FF9D] rounded-full animate-ping opacity-20" />
+          <ShieldCheck size={40} className="text-[#00FF9D]" />
+        </div>
+
+        {/* HEADER */}
+        <div className="space-y-4">
+          <div className="inline-flex items-center gap-2 border border-[#836EF9] bg-[#836EF9]/10 px-4 py-1 rounded-full mb-2">
+            <div className="w-2 h-2 bg-[#836EF9] rounded-full animate-pulse"/>
+            <span className="text-[10px] text-[#836EF9] font-mono font-bold tracking-[0.2em] uppercase">SYSTEM_ONLINE // VERIFICATION_NODE</span>
+          </div>
+          <h1 className="text-4xl md:text-6xl font-bold uppercase tracking-tighter">
+            ACTIVATION <span className="text-[#836EF9]">PORTAL</span>
+          </h1>
+          <p className="text-neutral-500 font-mono text-xs md:text-sm leading-relaxed tracking-widest uppercase max-w-2xl mx-auto italic">
+            "Tangible craftsmanship you can feel, secured by digital ownership you can prove."
+          </p>
+        </div>
+
+        {/* INSTRUKSI PENTING */}
+        <div className="bg-[#121212] border border-white/10 p-6 md:p-8 rounded-sm mb-12 relative overflow-hidden group text-left shadow-2xl">
+          <div className="absolute top-0 left-0 w-1 h-full bg-[#836EF9] group-hover:w-full group-hover:opacity-5 transition-all duration-700" />
+          <h3 className="text-white font-bold text-sm uppercase tracking-[0.2em] mb-6 flex items-center gap-3 relative z-10">
+            <AlertTriangle className="text-[#836EF9]" size={18} /> INSTRUKSI PENTING:
+          </h3>
+          <ul className="space-y-4 text-[10px] md:text-xs text-neutral-400 uppercase tracking-wide leading-relaxed relative z-10">
+            <li className="flex gap-3 items-start">
+              <span className="text-[#836EF9] font-bold shrink-0">01.</span> 
+              <span>GOSOK panel pelindung pada Genesis Card untuk melihat Secret Code.</span>
+            </li>
+            <li className="flex gap-3 items-start">
+              <span className="text-[#836EF9] font-bold shrink-0">02.</span> 
+              <span>PASTIKAN alamat wallet yang dimasukkan adalah Personal Wallet MONAD (Metamask/Phantom/Hot Wallet lainnya).</span>
+            </li>
+            <li className="flex gap-3 items-start text-red-500 font-bold bg-red-900/10 p-3 border border-red-900/30 rounded-sm">
+              <span className="text-red-500 shrink-0">03.</span> 
+              <span>🚫 DILARANG menggunakan alamat Exchange (Indodax/Binance/Tokocrypto/Bybit. dll).</span>
+            </li>
+            <li className="flex gap-3 items-start">
+              <span className="text-[#836EF9] font-bold shrink-0">04.</span> 
+              <span>PROSES verifikasi dilakukan secara manual demi keamanan (Max 1x24 Jam).</span>
+            </li>
+            <li className="flex gap-3 items-start">
+              <span className="text-[#836EF9] font-bold shrink-0">05.</span> 
+              <span>BIAYA jaringan (Gas Fee) ditanggung 0xTanda (GRATIS).</span>
+            </li>
+          </ul>
+        </div>
+
+        {/* Tombol Lanjut ke Form */}
+        <div className="pt-4">
+          <Link 
+            href="/verify/pageform" 
+            className="inline-flex items-center gap-4 bg-[#836EF9] text-black px-12 py-5 font-mono text-sm font-bold uppercase tracking-[0.2em] hover:bg-white transition-all group shadow-[0_0_30px_rgba(131,110,249,0.3)] hover:shadow-[0_0_50px_rgba(131,110,249,0.5)] rounded-sm"
+          >
+            VERIFY <ArrowRight size={18} className="group-hover:translate-x-2 transition-transform" />
+          </Link>
+        </div>
+        
+        <p className="text-[9px] font-mono text-neutral-600 uppercase tracking-[0.4em] pt-8">
+          0xTanda // Secure Transmission
+        </p>
+
+      </div>
+    </main>
+  );
+}
+</file>
+
+<file path="app/verify/pageform/page.tsx">
+"use client";
+
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { 
+  ShieldCheck, 
+  Wallet, 
+  UploadCloud, 
+  CheckCircle2, 
+  AlertTriangle, 
+  Loader2, 
+  X,
+  Key,
+  User,
+  Smartphone,
+  Mail,
+  ShoppingBag,
+  ArrowLeft
+} from 'lucide-react';
+
+// ============================================================================
+// MOCK NEXT.JS (Hanya untuk keperluan Preview di layar Canvas)
+// CATATAN UNTUK COPAS: 
+// Saat menyalin kode ini ke file project asli Anda (VSCode/Vercel), 
+// HAPUS bagian mock ini dan gunakan import bawaan Next.js berikut:
+//
+// import Link from 'next/link';
+// ============================================================================
+const Link = ({ href, children, className }: any) => (
+  <a href={href} className={className}>{children}</a>
+);
+// ============================================================================
+
+export default function VerifyFormPage() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [status, setStatus] = useState<'idle' | 'success' | 'error' | 'used'>('idle');
+  const [fileName, setFileName] = useState('');
+  
+  // State khusus untuk Checkbox Persetujuan
+  const [isAgreed, setIsAgreed] = useState(false);
+
+  // 🔴 PASTIKAN URL INI BENAR DARI DEPLOYMENT GOOGLE APPS SCRIPT
+  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz9_dc-9v8UNopJGhjlzoBPluWiS9i2krk4-wARwH5PhiFiLx-BAHGoZoUgngcGw1ff/exec";
+
+  const [formData, setFormData] = useState({
+    secretCode: '',
+    walletAddress: '',
+    nama: '',
+    gender: 'Pria',
+    email: '',
+    noHp: '',
+    telegramId: '',
+    productName: 'GENESIS BOXY TEE',
+    orderId: '',
+    proofImage: '' 
+  });
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+
+    if (name === 'secretCode') {
+      // 1. Hapus semua karakter selain huruf dan angka, jadikan kapital
+      let rawValue = value.replace(/[^A-Za-z0-9]/g, '').toUpperCase();
+      // 2. Batasi maksimal 12 karakter alfanumerik
+      if (rawValue.length > 12) rawValue = rawValue.substring(0, 12);
+      // 3. Sisipkan strip (-) setiap 4 karakter sehingga menjadi XXXX-XXXX-XXXX
+      const formattedValue = rawValue.match(/.{1,4}/g)?.join('-') || rawValue;
+      setFormData({ ...formData, [name]: formattedValue });
+    } else if (name === 'telegramId') {
+      // Auto tambahkan @ jika user lupa (Hanya kalau input tidak kosong)
+      let tgValue = value.trim();
+      if (tgValue.length > 0 && !tgValue.startsWith('@')) {
+        tgValue = '@' + tgValue;
+      }
+      setFormData({ ...formData, [name]: tgValue });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.size > 2 * 1024 * 1024) {
+        alert("Ukuran file terlalu besar. Maksimal 2MB.");
+        return;
+      }
+      setFileName(file.name);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData({ ...formData, proofImage: reader.result as string });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // VALIDASI WALLET (Wajib Monad/EVM: Diawali 0x dan 40 karakter hex)
+    const evmRegex = /^0x[a-fA-F0-9]{40}$/;
+    if (!evmRegex.test(formData.walletAddress)) {
+        alert("ALAMAT WALLET TIDAK VALID!\nPastikan alamat dimulai dengan '0x' dan merupakan format standar MONAD/EVM.");
+        return;
+    }
+
+    // VALIDASI KODE (Wajib 12 digit alfanumerik + 2 strip = 14 karakter)
+    if (formData.secretCode.length !== 14) {
+        alert("SECRET CODE TIDAK LENGKAP!\nPastikan Anda memasukkan 12 digit kode dengan benar (Format: XXXX-XXXX-XXXX).");
+        return;
+    }
+
+    // VALIDASI TELEGRAM (Wajib pakai @ dan minimal 3 karakter setelah @)
+    if (!formData.telegramId.startsWith('@') || formData.telegramId.length < 4) {
+        alert("ID TELEGRAM TIDAK VALID!\nPastikan mengisi username Telegram yang diawali dengan simbol '@' (contoh: @username).");
+        return;
+    }
+
+    // VALIDASI PERSETUJUAN
+    if (!isAgreed) {
+        alert("Anda harus menyetujui Peringatan dan Kebijakan 0xTanda untuk melanjutkan.");
+        return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      // Menyertakan data persetujuan ke payload untuk direkam di database
+      const payloadData = {
+        ...formData,
+        persetujuanKebijakan: isAgreed ? "SETUJU" : "TIDAK_SETUJU"
+      };
+
+      const response = await fetch(GOOGLE_SCRIPT_URL, {
+        method: "POST",
+        body: JSON.stringify(payloadData),
+      });
+
+      const result = await response.json();
+
+      if (result.status === 'success') {
+        setStatus('success');
+      } else if (result.status === 'duplicate') {
+        setStatus('used');
+      } else {
+        setStatus('error');
+      }
+    } catch (error) {
+      console.error("Submission Error:", error);
+      // Menangkap error CORS yang umum terjadi di Google Apps Script walau data berhasil masuk
+      setStatus('success'); 
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <main className="min-h-screen bg-[#0E0E0E] text-white selection:bg-[#836EF9] selection:text-black font-mono overflow-x-hidden relative">
+      <div className="pt-32 px-6 pb-20 max-w-4xl mx-auto relative z-10">
+        
+        {/* Tombol Kembali ke Portal */}
+        <Link 
+          href="/verify"
+          className="inline-flex items-center gap-2 text-neutral-500 hover:text-white mb-10 font-mono text-[10px] tracking-[0.5em] uppercase transition-colors group"
+        >
+          <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" /> BACK TO PORTAL
+        </Link>
+        
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 border border-[#836EF9] bg-[#836EF9]/10 px-4 py-1 mb-6 rounded-full">
+            <div className="w-2 h-2 bg-[#836EF9] rounded-full animate-pulse"/>
+            <span className="text-[10px] text-[#836EF9] font-bold tracking-[0.2em] uppercase">SYSTEM_ONLINE // DATA_ENTRY</span>
+          </div>
+          <h1 className="text-3xl md:text-5xl font-sans font-bold uppercase tracking-tighter mb-4">
+            ACTIVATION <span className="text-[#836EF9]">FORM</span>
+          </h1>
+        </div>
+
+        {/* FORM */}
+        <form onSubmit={handleSubmit} className="space-y-12">
+          
+          {/* SECTION 1: CRITICAL DATA */}
+          <div className="space-y-6">
+            <div className="bg-gradient-to-b from-[#1a1a1a] to-black border border-[#836EF9]/50 p-8 rounded-sm shadow-[0_0_30px_rgba(131,110,249,0.1)] relative overflow-hidden">
+              <div className="absolute top-0 right-0 p-4 opacity-20">
+                <ShieldCheck size={64} className="text-[#836EF9]" />
+              </div>
+              <h4 className="text-[#836EF9] text-xs font-bold uppercase tracking-[0.3em] mb-8 flex items-center gap-2">
+                <ShieldCheck size={16}/> PRIMARY CREDENTIALS
+              </h4>
+              
+              <div className="grid gap-10">
+                <div className="space-y-3 relative z-10">
+                  <label className="text-xs text-[#836EF9] font-bold uppercase tracking-[0.2em] flex items-center gap-2">
+                    <Key size={14}/> SECRET CODE (GENESIS CARD)
+                  </label>
+                  <input 
+                    type="text" 
+                    name="secretCode"
+                    value={formData.secretCode}
+                    maxLength={14}
+                    required
+                    placeholder="XXXX-XXXX-XXXX" 
+                    className="w-full bg-black border-2 border-[#836EF9] p-6 text-xl md:text-3xl font-sans font-bold text-white placeholder:text-white/10 focus:shadow-[0_0_30px_rgba(131,110,249,0.4)] focus:outline-none transition-all uppercase tracking-widest text-center rounded-sm"
+                    onChange={handleInputChange}
+                  />
+                  <p className="text-[9px] text-neutral-500 uppercase tracking-widest text-center">*Masukkan 12 digit (Format otomatis: XXXX-XXXX-XXXX)</p>
+                </div>
+
+                <div className="space-y-3 relative z-10">
+                  <label className="text-xs text-[#00FF9D] font-bold uppercase tracking-[0.2em] flex items-center gap-2">
+                    <Wallet size={14}/> WALLET MONAD ADDRESS
+                  </label>
+                  <input 
+                    type="text" 
+                    name="walletAddress"
+                    value={formData.walletAddress}
+                    required
+                    placeholder="0x..." 
+                    className="w-full bg-black border-2 border-[#00FF9D]/50 p-6 text-sm md:text-xl font-mono text-[#00FF9D] placeholder:text-[#00FF9D]/20 focus:border-[#00FF9D] focus:shadow-[0_0_30px_rgba(0,255,157,0.2)] focus:outline-none transition-all rounded-sm"
+                    onChange={handleInputChange}
+                  />
+                  <p className="text-[9px] text-neutral-500 uppercase tracking-widest text-right">*Wajib format 0x... (Personal Wallet Monad)</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* SECTION 2: PROFILE */}
+          <div className="space-y-8 pt-8 border-t border-white/5">
+            <h4 className="text-white text-xs font-bold uppercase tracking-[0.3em] flex items-center gap-2">
+              <User size={16} className="text-neutral-500" /> IDENTITAS OWNER
+            </h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <label className="text-[10px] text-neutral-500 uppercase tracking-widest">Nama Lengkap <span className="text-red-500">*</span></label>
+                <input type="text" name="nama" value={formData.nama} required className="w-full bg-[#121212] border border-white/10 p-4 text-sm text-white focus:border-white/50 focus:outline-none transition-colors" onChange={handleInputChange} />
+              </div>
+              <div className="space-y-2">
+                <label className="text-[10px] text-neutral-500 uppercase tracking-widest">Jenis Kelamin</label>
+                <select name="gender" value={formData.gender} className="w-full bg-[#121212] border border-white/10 p-4 text-sm text-white focus:border-white/50 focus:outline-none transition-colors appearance-none" onChange={handleInputChange}>
+                  <option value="Pria">PRIA</option>
+                  <option value="Wanita">WANITA</option>
+                </select>
+              </div>
+              <div className="space-y-2">
+                <label className="text-[10px] text-neutral-500 uppercase tracking-widest">Email Aktif <span className="text-red-500">*</span></label>
+                <div className="relative">
+                  <Mail className="absolute right-4 top-1/2 -translate-y-1/2 text-white/20" size={16} />
+                  <input type="email" name="email" value={formData.email} required className="w-full bg-[#121212] border border-white/10 p-4 text-sm text-white focus:border-white/50 focus:outline-none transition-colors" onChange={handleInputChange} />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <label className="text-[10px] text-neutral-500 uppercase tracking-widest">No. HP / WhatsApp <span className="text-red-500">*</span></label>
+                <div className="relative">
+                  <Smartphone className="absolute right-4 top-1/2 -translate-y-1/2 text-white/20" size={16} />
+                  <input type="tel" name="noHp" value={formData.noHp} required className="w-full bg-[#121212] border border-white/10 p-4 text-sm text-white focus:border-white/50 focus:outline-none transition-colors" onChange={handleInputChange} />
+                </div>
+              </div>
+              <div className="space-y-2 md:col-span-2">
+                <label className="text-[10px] text-neutral-500 uppercase tracking-widest">ID Telegram (Wajib pakai @) <span className="text-red-500">*</span></label>
+                <input type="text" name="telegramId" value={formData.telegramId} required placeholder="@username" className="w-full bg-[#121212] border border-white/10 p-4 text-sm text-white focus:border-white/50 focus:outline-none transition-colors" onChange={handleInputChange} />
+              </div>
+            </div>
+          </div>
+
+          {/* SECTION 3: DETAIL ORDER */}
+          <div className="space-y-8 pt-8 border-t border-white/5">
+            <h4 className="text-white text-xs font-bold uppercase tracking-[0.3em] flex items-center gap-2">
+              <ShoppingBag size={16} className="text-neutral-500" /> DETAIL TRANSAKSI
+            </h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-2 md:col-span-2">
+                <label className="text-[10px] text-neutral-500 uppercase tracking-widest">Pilih Artefak (Produk)</label>
+                <div className="relative">
+                  <select name="productName" value={formData.productName} className="w-full bg-[#121212] border border-white/10 p-4 text-sm text-[#836EF9] font-bold focus:border-white/50 focus:outline-none transition-colors appearance-none uppercase" onChange={handleInputChange}>
+                    <option value="GENESIS BOXY TEE">GENESIS BOXY TEE [BATCH #001]</option>
+                    <option value="-" disabled>ARCHIVE 02 (LOCKED)</option>
+                  </select>
+                  <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
+                    <div className="w-2 h-2 bg-[#836EF9] rounded-full" />
+                  </div>
+                </div>
+              </div>
+              <div className="space-y-2">
+                <label className="text-[10px] text-neutral-500 uppercase tracking-widest">Order ID <span className="text-red-500">*</span></label>
+                <input type="text" name="orderId" value={formData.orderId} required placeholder="Contoh: 230919ABC..." className="w-full bg-[#121212] border border-white/10 p-4 text-sm text-white focus:border-white/50 focus:outline-none transition-colors" onChange={handleInputChange} />
+              </div>
+              <div className="space-y-2">
+                <label className="text-[10px] text-neutral-500 uppercase tracking-widest">Upload Bukti Pembelian (Max 2MB) <span className="text-red-500">*</span></label>
+                <div className="relative group">
+                  <input type="file" id="fileUpload" required className="hidden" onChange={handleFileChange} accept="image/*" />
+                  <label htmlFor="fileUpload" className="w-full bg-[#121212] border border-white/10 border-dashed p-4 text-sm text-neutral-400 flex items-center justify-between cursor-pointer hover:bg-white/5 hover:border-[#836EF9] transition-all">
+                    <span className="truncate font-mono">{fileName || "KLIK UNTUK UPLOAD FILE..."}</span>
+                    <UploadCloud size={20} className="text-neutral-500 group-hover:text-[#836EF9]" />
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* WARNING & DISCLAIMER BOX DENGAN CHECKBOX PERSETUJUAN */}
+          <div className="pt-8">
+            <div className="bg-red-900/10 border border-red-500/30 p-6 md:p-8 rounded-sm space-y-6">
+              <div className="flex items-center gap-2 text-red-500 font-bold text-sm md:text-base uppercase tracking-widest">
+                <AlertTriangle size={20} /> PERINGATAN & KEBIJAKAN
+              </div>
+              <p className="text-[11px] md:text-xs text-neutral-400 uppercase tracking-widest leading-relaxed">
+                Produk 0xTanda <strong className="text-white">bukan instrumen investasi</strong>, dan 0xTanda <strong className="text-white">bukan tempat jual beli</strong>. Setiap produk dan aset digital yang sudah keluar (didistribusikan) dari sistem 0xTanda sepenuhnya menjadi hak dan tanggung jawab mutlak pemilik, dan bukan lagi menjadi tanggung jawab 0xTanda.
+              </p>
+              
+              {/* Checkbox Persetujuan */}
+              <label className="flex items-start gap-4 cursor-pointer mt-4 group">
+                <div className="relative flex items-start justify-center mt-0.5">
+                  <input 
+                    type="checkbox" 
+                    className="w-5 h-5 accent-[#836EF9] bg-[#121212] border border-white/30 rounded-sm cursor-pointer"
+                    checked={isAgreed}
+                    onChange={(e) => setIsAgreed(e.target.checked)}
+                    required
+                  />
+                </div>
+                <span className={`text-[10px] md:text-[11px] font-bold uppercase tracking-widest leading-relaxed transition-colors ${isAgreed ? 'text-[#00FF9D]' : 'text-white group-hover:text-[#836EF9]'}`}>
+                  SAYA TELAH MEMBACA, MEMAHAMI, DAN MENYETUJUI SELURUH KEBIJAKAN SERTA PERINGATAN DI ATAS.
+                </span>
+              </label>
+            </div>
+          </div>
+
+          {/* SUBMIT BUTTON */}
+          <div className="pt-4">
+            <button 
+              type="submit" 
+              disabled={isLoading || !isAgreed}
+              className="w-full bg-[#836EF9] text-black font-mono text-sm font-bold py-6 uppercase tracking-[0.2em] hover:bg-white transition-all flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-neutral-800 disabled:text-neutral-500 shadow-[0_0_40px_rgba(131,110,249,0.3)] hover:shadow-[0_0_60px_rgba(131,110,249,0.6)] rounded-sm"
+            >
+              {isLoading ? <><Loader2 className="animate-spin" size={20} /> VALIDATING DATA...</> : "SUBMIT VERIFICATION DATA"}
+            </button>
+          </div>
+        </form>
+      </div>
+
+      {/* POPUP MODALS */}
+      <AnimatePresence>
+        {status !== 'idle' && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/95 backdrop-blur-md">
+            <motion.div 
+              initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-[#0E0E0E] border border-white/10 p-10 max-w-md w-full text-center relative shadow-[0_0_50px_rgba(131,110,249,0.2)]"
+            >
+              <button onClick={() => setStatus('idle')} className="absolute top-4 right-4 text-neutral-500 hover:text-white"><X size={24} /></button>
+
+              {status === 'success' && (
+                <div className="space-y-6">
+                  <div className="w-24 h-24 bg-[#00FF9D]/10 rounded-full flex items-center justify-center mx-auto border border-[#00FF9D]/30">
+                    <CheckCircle2 size={48} className="text-[#00FF9D]" />
+                  </div>
+                  <div>
+                    <h3 className="text-3xl font-bold text-white uppercase tracking-tighter mb-2">VERIFIED</h3>
+                    <div className="h-1 w-12 bg-[#00FF9D] mx-auto mb-4" />
+                    <p className="text-xs text-neutral-400 font-mono uppercase tracking-widest leading-relaxed">Data Anda telah diterima. Tim 0xTanda akan memvalidasi dalam 1x24 jam.</p>
+                  </div>
+                </div>
+              )}
+
+              {status === 'used' && (
+                <div className="space-y-6">
+                  <div className="w-24 h-24 bg-[#EE4D2D]/10 rounded-full flex items-center justify-center mx-auto border border-[#EE4D2D]/30">
+                    <AlertTriangle size={48} className="text-[#EE4D2D]" />
+                  </div>
+                  <div>
+                    <h3 className="text-3xl font-bold text-[#EE4D2D] uppercase tracking-tighter mb-2">KODE DIGUNAKAN</h3>
+                    <div className="h-1 w-12 bg-[#EE4D2D] mx-auto mb-4" />
+                    <p className="text-xs text-neutral-400 font-mono uppercase tracking-widest leading-relaxed">Kode Rahasia terdeteksi duplikat atau sudah pernah diklaim sebelumnya.</p>
+                  </div>
+                </div>
+              )}
+
+              {status === 'error' && (
+                <div className="space-y-6">
+                  <div className="w-24 h-24 bg-yellow-500/10 rounded-full flex items-center justify-center mx-auto border border-yellow-500/30">
+                    <AlertTriangle size={48} className="text-yellow-500" />
+                  </div>
+                  <div>
+                    <h3 className="text-3xl font-bold text-white uppercase tracking-tighter mb-2">ERROR</h3>
+                    <div className="h-1 w-12 bg-yellow-500 mx-auto mb-4" />
+                    <p className="text-xs text-neutral-400 font-mono uppercase tracking-widest leading-relaxed">Kode Rahasia tidak dikenali. Pastikan Anda mengetik 12 digit kode dengan benar.</p>
+                  </div>
+                </div>
+              )}
+              
+              <button onClick={() => setStatus('idle')} className="mt-10 w-full border border-white/20 py-4 text-xs font-bold uppercase hover:bg-white hover:text-black transition-all">TUTUP</button>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+    </main>
+  );
+}
+</file>
+
+<file path="components/CursorSystem.tsx">
+'use client';
+
+import { useEffect, useRef, useState } from 'react';
+
+function lerp(start: number, end: number, factor: number): number {
+  return start + (end - start) * factor;
+}
+
+export default function CursorSystem() {
+  const [visible, setVisible] = useState(false);
+
+  const dotRef = useRef<HTMLDivElement>(null);
+  const ringRef = useRef<HTMLDivElement>(null);
+  const glowRef = useRef<HTMLDivElement>(null);
+
+  // Mobile check — only activate on pointer/hover-capable devices
+  useEffect(() => {
+    const isTouch = window.matchMedia('(hover: none)').matches;
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!isTouch && !prefersReduced) setVisible(true);
+  }, []);
+
+  // Animation loop — runs only after mobile check passes
+  useEffect(() => {
+    if (!visible) return;
+
+    const dot = dotRef.current;
+    const ring = ringRef.current;
+    const glow = glowRef.current;
+    if (!dot || !ring || !glow) return;
+
+    document.body.style.cursor = 'none';
+
+    const mouse = { x: -1000, y: -1000 };
+    const ringPos = { x: -1000, y: -1000 };
+    const glowPos = { x: -1000, y: -1000 };
+    let isHovered = false;
+    let currentScale = 1;
+    let ringAlpha = 0;
+    let rafId: number;
+
+    const onMouseMove = (e: MouseEvent) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+      // Zero lag — bypass rAF, write directly to DOM
+      dot.style.transform = `translate(${mouse.x - 3}px, ${mouse.y - 3}px)`;
+    };
+
+    const onMouseOver = (e: MouseEvent) => {
+      if ((e.target as Element).closest('a, button, [role="button"]')) {
+        isHovered = true;
+      }
+    };
+
+    const onMouseOut = (e: MouseEvent) => {
+      if ((e.target as Element).closest('a, button, [role="button"]')) {
+        isHovered = false;
+      }
+    };
+
+    const animate = () => {
+      // Ring — lerp 0.12 (slight lag)
+      ringPos.x = lerp(ringPos.x, mouse.x, 0.12);
+      ringPos.y = lerp(ringPos.y, mouse.y, 0.12);
+
+      // Glow — lerp 0.04 (heavy lag, dreamy follow)
+      glowPos.x = lerp(glowPos.x, mouse.x, 0.04);
+      glowPos.y = lerp(glowPos.y, mouse.y, 0.04);
+
+      // Lerp scale + fill for smooth hover transitions
+      currentScale = lerp(currentScale, isHovered ? 2 : 1, 0.1);
+      ringAlpha = lerp(ringAlpha, isHovered ? 0.08 : 0, 0.1);
+
+      ring.style.transform = `translate(${ringPos.x - 14}px, ${ringPos.y - 14}px) scale(${currentScale.toFixed(4)})`;
+      ring.style.background = `rgba(131,110,249,${ringAlpha.toFixed(4)})`;
+      glow.style.transform = `translate(${glowPos.x - 200}px, ${glowPos.y - 200}px)`;
+
+      rafId = requestAnimationFrame(animate);
+    };
+
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseover', onMouseOver);
+    document.addEventListener('mouseout', onMouseOut);
+    rafId = requestAnimationFrame(animate);
+
+    return () => {
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseover', onMouseOver);
+      document.removeEventListener('mouseout', onMouseOut);
+      cancelAnimationFrame(rafId);
+      document.body.style.cursor = '';
+    };
+  }, [visible]);
+
+  if (!visible) return null;
+
+  return (
+    <>
+      {/* Dot — 6px, zero lag, direct DOM write on mousemove */}
+      <div
+        ref={dotRef}
+        aria-hidden="true"
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: 6,
+          height: 6,
+          borderRadius: '50%',
+          background: '#836EF9',
+          pointerEvents: 'none',
+          zIndex: 10001,
+          willChange: 'transform',
+          transform: 'translate(-1000px, -1000px)',
+        }}
+      />
+
+      {/* Ring — 28px, lerp 0.12, scale×2 + fill on interactive hover */}
+      <div
+        ref={ringRef}
+        aria-hidden="true"
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: 28,
+          height: 28,
+          borderRadius: '50%',
+          border: '1px solid rgba(131,110,249,0.5)',
+          background: 'transparent',
+          pointerEvents: 'none',
+          zIndex: 10000,
+          willChange: 'transform',
+          transform: 'translate(-1000px, -1000px)',
+        }}
+      />
+
+      {/* Ambient Glow — 400px, lerp 0.04, purple radial light */}
+      <div
+        ref={glowRef}
+        aria-hidden="true"
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: 400,
+          height: 400,
+          background:
+            'radial-gradient(circle, rgba(131,110,249,0.07) 0%, transparent 70%)',
+          pointerEvents: 'none',
+          zIndex: 9997,
+          willChange: 'transform',
+          transform: 'translate(-1000px, -1000px)',
+        }}
+      />
+    </>
+  );
+}
+</file>
+
+<file path="components/NoiseOverlay.tsx">
+import type { CSSProperties } from 'react';
+
+const base: CSSProperties = {
+  position: 'fixed',
+  inset: 0,
+  width: '100%',
+  height: '100%',
+  pointerEvents: 'none',
+  zIndex: 9998,
+};
+
+export default function NoiseOverlay() {
+  return (
+    <>
+      {/* Layer 1 — Film Grain */}
+      <svg
+        style={{ ...base, opacity: 0.035, mixBlendMode: 'overlay' }}
+        xmlns="http://www.w3.org/2000/svg"
+        width="100%"
+        height="100%"
+        aria-hidden="true"
+      >
+        <defs>
+          <filter id="noise-filter">
+            <feTurbulence
+              type="fractalNoise"
+              baseFrequency="0.65"
+              numOctaves={3}
+              stitchTiles="stitch"
+            />
+            <feColorMatrix type="saturate" values="0" />
+          </filter>
+        </defs>
+        <rect width="100%" height="100%" filter="url(#noise-filter)" />
+      </svg>
+
+      {/* Layer 2 — Scanlines */}
+      <div
+        aria-hidden="true"
+        style={{
+          ...base,
+          backgroundImage:
+            'repeating-linear-gradient(0deg, rgba(0,0,0,0) 0px, rgba(0,0,0,0) 1px, rgba(0,0,0,0.04) 1px, rgba(0,0,0,0.04) 2px)',
+          backgroundSize: '100% 4px',
+          mixBlendMode: 'multiply',
+        }}
+      />
+
+      {/* Layer 3 — Corner Vignette */}
+      <div
+        aria-hidden="true"
+        style={{
+          ...base,
+          background:
+            'radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.6) 100%)',
+        }}
+      />
+    </>
+  );
+}
+</file>
+
+<file path="components/ScrollProgress.tsx">
+'use client';
+
+import { useScroll, useSpring, motion } from 'framer-motion';
+
+export default function ScrollProgress() {
+  const { scrollYProgress } = useScroll();
+  const scrollSpring = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  });
+
+  return (
+    <motion.div
+      aria-hidden="true"
+      style={{
+        scaleX: scrollSpring,
+        originX: 0,
+        background: 'linear-gradient(to right, #836EF9, #00FF9D)',
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: 2,
+        zIndex: 9999,
+        pointerEvents: 'none',
+      }}
+    />
+  );
+}
+</file>
+
+<file path="eslint.config.mjs">
+import { defineConfig, globalIgnores } from "eslint/config";
+import nextVitals from "eslint-config-next/core-web-vitals";
+import nextTs from "eslint-config-next/typescript";
+
+const eslintConfig = defineConfig([
+  ...nextVitals,
+  ...nextTs,
+  // Override default ignores of eslint-config-next.
+  globalIgnores([
+    // Default ignores of eslint-config-next:
+    ".next/**",
+    "out/**",
+    "build/**",
+    "next-env.d.ts",
+  ]),
+]);
+
+export default eslintConfig;
+</file>
+
+<file path="next.config.ts">
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        pathname: '**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'placehold.co',
+        pathname: '**',
+      },
+    ],
+  },
+};
+
+export default nextConfig;
+</file>
+
+<file path="package.json">
+{
+  "name": "oxtanda-website",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "framer-motion": "^12.34.0",
+    "lucide-react": "^0.563.0",
+    "next": "16.1.6",
+    "react": "19.2.3",
+    "react-dom": "19.2.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "autoprefixer": "^10.4.24",
+    "eslint": "^9",
+    "eslint-config-next": "16.1.6",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.18",
+    "typescript": "^5"
+  }
+}
+</file>
+
+<file path="postcss.config.mjs">
+const config = {
+  plugins: {
+    "@tailwindcss/postcss": {},
+  },
+};
+
+export default config;
+</file>
+
+<file path="public/branding/logo-0xtanda-icon.svg">
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32">
+  <image width="2000" height="2000" transform="scale(.02)" xlink:href="../../../../OneDrive/Documents/Abrur File/Project/0xTanda/0xFile/Assets/Logo/0xTanda_White_Logo_Icon.png"/>
+</svg>
+</file>
+
+<file path="public/branding/logo-0xtanda.svg">
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1500 525">
+  <image width="2000" height="700" transform="scale(.75)" xlink:href="logo-0xtanda.png"/>
+</svg>
+</file>
+
+<file path="public/file.svg">
+<svg fill="none" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M14.5 13.5V5.41a1 1 0 0 0-.3-.7L9.8.29A1 1 0 0 0 9.08 0H1.5v13.5A2.5 2.5 0 0 0 4 16h8a2.5 2.5 0 0 0 2.5-2.5m-1.5 0v-7H8v-5H3v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1M9.5 5V2.12L12.38 5zM5.13 5h-.62v1.25h2.12V5zm-.62 3h7.12v1.25H4.5zm.62 3h-.62v1.25h7.12V11z" clip-rule="evenodd" fill="#666" fill-rule="evenodd"/></svg>
+</file>
+
+<file path="public/next.svg">
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 394 80"><path fill="#000" d="M262 0h68.5v12.7h-27.2v66.6h-13.6V12.7H262V0ZM149 0v12.7H94v20.4h44.3v12.6H94v21h55v12.6H80.5V0h68.7zm34.3 0h-17.8l63.8 79.4h17.9l-32-39.7 32-39.6h-17.9l-23 28.6-23-28.6zm18.3 56.7-9-11-27.1 33.7h17.8l18.3-22.7z"/><path fill="#000" d="M81 79.3 17 0H0v79.3h13.6V17l50.2 62.3H81Zm252.6-.4c-1 0-1.8-.4-2.5-1s-1.1-1.6-1.1-2.6.3-1.8 1-2.5 1.6-1 2.6-1 1.8.3 2.5 1a3.4 3.4 0 0 1 .6 4.3 3.7 3.7 0 0 1-3 1.8zm23.2-33.5h6v23.3c0 2.1-.4 4-1.3 5.5a9.1 9.1 0 0 1-3.8 3.5c-1.6.8-3.5 1.3-5.7 1.3-2 0-3.7-.4-5.3-1s-2.8-1.8-3.7-3.2c-.9-1.3-1.4-3-1.4-5h6c.1.8.3 1.6.7 2.2s1 1.2 1.6 1.5c.7.4 1.5.5 2.4.5 1 0 1.8-.2 2.4-.6a4 4 0 0 0 1.6-1.8c.3-.8.5-1.8.5-3V45.5zm30.9 9.1a4.4 4.4 0 0 0-2-3.3 7.5 7.5 0 0 0-4.3-1.1c-1.3 0-2.4.2-3.3.5-.9.4-1.6 1-2 1.6a3.5 3.5 0 0 0-.3 4c.3.5.7.9 1.3 1.2l1.8 1 2 .5 3.2.8c1.3.3 2.5.7 3.7 1.2a13 13 0 0 1 3.2 1.8 8.1 8.1 0 0 1 3 6.5c0 2-.5 3.7-1.5 5.1a10 10 0 0 1-4.4 3.5c-1.8.8-4.1 1.2-6.8 1.2-2.6 0-4.9-.4-6.8-1.2-2-.8-3.4-2-4.5-3.5a10 10 0 0 1-1.7-5.6h6a5 5 0 0 0 3.5 4.6c1 .4 2.2.6 3.4.6 1.3 0 2.5-.2 3.5-.6 1-.4 1.8-1 2.4-1.7a4 4 0 0 0 .8-2.4c0-.9-.2-1.6-.7-2.2a11 11 0 0 0-2.1-1.4l-3.2-1-3.8-1c-2.8-.7-5-1.7-6.6-3.2a7.2 7.2 0 0 1-2.4-5.7 8 8 0 0 1 1.7-5 10 10 0 0 1 4.3-3.5c2-.8 4-1.2 6.4-1.2 2.3 0 4.4.4 6.2 1.2 1.8.8 3.2 2 4.3 3.4 1 1.4 1.5 3 1.5 5h-5.8z"/></svg>
+</file>
+
+<file path="public/window.svg">
+<svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill-rule="evenodd" clip-rule="evenodd" d="M1.5 2.5h13v10a1 1 0 0 1-1 1h-11a1 1 0 0 1-1-1zM0 1h16v11.5a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 0 12.5zm3.75 4.5a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5M7 4.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0m1.75.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5" fill="#666"/></svg>
+</file>
+
+<file path="README.md">
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+
+## Getting Started
+
+First, run the development server:
+
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+
+## Learn More
+
+To learn more about Next.js, take a look at the following resources:
+
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+"# nx-build" 
+"# 0x-build" 
+"# 0x-build" 
+"# 0x-build" 
+"# 0x-build" 
+"# 0x-build" 
+"# 0x-build"
+</file>
+
+<file path="tailwind.config.ts">
+// tailwind.config.ts
+import type { Config } from "tailwindcss";
+
+const config: Config = {
+  content: [
+    "./app/**/*.{js,ts,jsx,tsx}",
+    "./components/**/*.{js,ts,jsx,tsx}",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        brand: {
+          purple: "#836EF9",
+          black: "#0E0E0E",
+          white: "#F0F0F0",
+          green: "#00FF9D",
+          gray: "#A19797",
+          tokopedia: "#03AC0E",
+          shopee: "#EE4D2D",
+          tiktok: "#000000",
+          whatsapp: "#25D366",
+        },
+      },
+      fontFamily: {
+        sans: ["Space Grotesk", "sans-serif"],
+        mono: ["Space Mono", "monospace"],
+        deco: ["Cinzel Decorative", "serif"],
+      },
+    },
+  },
+  plugins: [],
+};
+
+export default config;
+</file>
+
+<file path="tsconfig.json">
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["./*"]
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts",
+    "**/*.mts"
+  ],
+  "exclude": ["node_modules"]
+}
+</file>
+
 <file path="app/about/page.tsx">
 "use client";
 
@@ -1612,22 +2618,6 @@ export default function ProductDetailPage() {
 }
 </file>
 
-<file path="app/robots.ts">
-import { MetadataRoute } from 'next';
-
-export default function robots(): MetadataRoute.Robots {
-  return {
-    rules: {
-      // Mengizinkan semua bot search engine (Google, Bing, Yahoo, dll)
-      userAgent: '*',
-      allow: '/',
-    },
-    // PERBAIKAN: Menambahkan 'www.' agar persis dengan domain utama lu di GSC
-    sitemap: 'https://www.0xtanda.xyz/sitemap.xml',
-  };
-}
-</file>
-
 <file path="app/shop/page.tsx">
 "use client";
 
@@ -1635,15 +2625,20 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { Lock, ExternalLink } from 'lucide-react';
+import {
+  Lock,
+  ArrowUpRight,
+  Cpu,
+  CheckCircle2,
+} from 'lucide-react';
 import { PRODUCTS_DATA, Product } from '../../lib/data';
 
-// ─── Animation Variants ────────────────────────────────────────────────────
+// ─── Animation Variants ────────────────────────────────────────────────────────
 
 const EASE_SNAP = [0.22, 1, 0.36, 1] as [number, number, number, number];
 
 const headerVariants = {
-  hidden: { opacity: 0, y: 30 },
+  hidden: { opacity: 0, y: 24 },
   visible: {
     opacity: 1,
     y: 0,
@@ -1653,11 +2648,11 @@ const headerVariants = {
 
 const containerVariants = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.1 } },
+  visible: { transition: { staggerChildren: 0.08 } },
 };
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 40 },
+  hidden: { opacity: 0, y: 32 },
   visible: {
     opacity: 1,
     y: 0,
@@ -1665,1484 +2660,322 @@ const cardVariants = {
   },
 };
 
-// ─── Flip Card Component ───────────────────────────────────────────────────
+// ─── Discount helper ──────────────────────────────────────────────────────────
 
-function FlipCard({ product, index }: { product: Product; index: number }) {
-  const [isFlipped, setIsFlipped] = useState(false);
+function getDiscount(product: Product): number {
+  if (!product.originalPrice || product.originalPrice <= product.price) return 0;
+  return Math.round(
+    ((product.originalPrice - product.price) / product.originalPrice) * 100
+  );
+}
+
+// ─── Product Card ─────────────────────────────────────────────────────────────
+
+function ProductCard({ product }: { product: Product }) {
+  const [imgHover, setImgHover] = useState(false);
   const isPlaceholder = !!product.isPlaceholder;
-  const isFeatured = index === 0;
+  const discount = getDiscount(product);
 
-  const handleClick = () => {
-    if (
-      typeof window !== 'undefined' &&
-      window.matchMedia('(pointer: coarse)').matches &&
-      !isPlaceholder
-    ) {
-      setIsFlipped(prev => !prev);
-    }
-  };
-
-  let discountPercentage = 0;
-  if (product.originalPrice && product.originalPrice > product.price) {
-    discountPercentage = Math.round(
-      ((product.originalPrice - product.price) / product.originalPrice) * 100
+  // ── Placeholder (upcoming) ──────────────────────────────────────────────────
+  if (isPlaceholder) {
+    return (
+      <motion.div variants={cardVariants}>
+        <div className="relative w-full aspect-[3/4] bg-[#0A0A0A] border border-white/5 overflow-hidden flex flex-col items-center justify-center gap-4">
+          {/* Noise texture overlay */}
+          <div
+            className="absolute inset-0 pointer-events-none opacity-[0.03]"
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+            }}
+          />
+          <Lock
+            size={48}
+            strokeWidth={1}
+            className="text-neutral-800 relative z-10"
+          />
+          <div className="relative z-10 text-center space-y-1">
+            <p className="font-mono text-[9px] tracking-[0.5em] text-neutral-700 uppercase">
+              ENCRYPTED_FILE
+            </p>
+            <p className="font-mono text-[8px] tracking-[0.3em] text-neutral-800 uppercase">
+              ACCESS DENIED
+            </p>
+          </div>
+          {/* Scanline effect */}
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              backgroundImage:
+                'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.01) 2px, rgba(255,255,255,0.01) 4px)',
+            }}
+          />
+        </div>
+        <div className="pt-4 space-y-1 px-0.5">
+          <p className="font-mono text-[8px] tracking-[0.4em] text-neutral-700 uppercase">
+            Coming Soon
+          </p>
+          <p className="font-deco text-sm font-bold tracking-wider uppercase text-neutral-700">
+            ???
+          </p>
+        </div>
+      </motion.div>
     );
   }
 
+  // ── Real product ────────────────────────────────────────────────────────────
   return (
-    <motion.div
-      variants={cardVariants}
-      className={isFeatured ? 'md:col-span-2' : ''}
-    >
-      {/* ── Perspective + Hover Lift Wrapper ── */}
-      <div
-        className={`relative cursor-pointer transition-[transform,box-shadow] duration-[400ms] ease-in-out${
-          !isPlaceholder
-            ? ' hover:-translate-y-1 hover:shadow-[0_8px_32px_rgba(131,110,249,0.1)]'
-            : ''
-        }`}
-        style={{
-          perspective: '1000px',
-          height: isFeatured ? '620px' : '520px',
-        }}
-        onMouseEnter={() => { if (!isPlaceholder) setIsFlipped(true); }}
-        onMouseLeave={() => setIsFlipped(false)}
-        onClick={handleClick}
+    <motion.div variants={cardVariants}>
+      <Link
+        href={`/product/${product.slug}`}
+        className="group block"
       >
-        {/* ── Rotating Inner ── */}
+        {/* ── Image container ── */}
         <div
-          style={{
-            position: 'relative',
-            width: '100%',
-            height: '100%',
-            transformStyle: 'preserve-3d',
-            transition: 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
-            transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
-          }}
+          className="relative w-full aspect-[3/4] overflow-hidden bg-[#0A0A0A] border border-white/[0.06]"
+          onMouseEnter={() => setImgHover(true)}
+          onMouseLeave={() => setImgHover(false)}
         >
-          {/* ══════════════════════════════════════
-              FRONT FACE — Physical Product
-          ══════════════════════════════════════ */}
-          <div
-            className="absolute inset-0 overflow-hidden rounded-sm"
-            style={{ backfaceVisibility: 'hidden' }}
-          >
-            {isPlaceholder ? (
-              <div className="w-full h-full flex flex-col items-center justify-center gap-4 bg-black/40 border border-white/5 grayscale opacity-60">
-                <Lock size={64} strokeWidth={1} className="text-neutral-800" />
-                <p className="font-mono text-[9px] tracking-[1em] text-neutral-800 uppercase">
-                  Encrypted_File
-                </p>
-              </div>
-            ) : (
-              <div className="relative w-full h-full bg-[#121212] border border-white/5">
-                {/* Product image */}
-                <Image
-                  src={product.imgPhysical}
-                  alt={product.name}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                />
+          {/* Product image */}
+          <Image
+            src={product.imgPhysical}
+            alt={product.name}
+            fill
+            className="object-cover transition-transform duration-700 ease-out will-change-transform group-hover:scale-[1.04]"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          />
 
-                {/* Bottom gradient overlay */}
-                <div className="absolute inset-x-0 bottom-0 h-3/5 bg-gradient-to-t from-[#0E0E0E] via-[#0E0E0E]/60 to-transparent pointer-events-none" />
+          {/* Gradient overlay — always present, intensifies on hover */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0E0E0E] via-[#0E0E0E]/20 to-transparent transition-opacity duration-500 opacity-80 group-hover:opacity-90" />
 
-                {/* Stock badge — top right */}
-                <div className="absolute top-4 right-4 bg-black/80 backdrop-blur-md px-3 py-1.5 border border-white/10 rounded-sm flex items-center gap-2 z-10">
-                  <div className="w-1.5 h-1.5 bg-[#00FF9D] rounded-full animate-pulse" />
-                  <span className="font-mono text-[8px] tracking-widest text-white uppercase">
-                    {product.stock} units
-                  </span>
-                </div>
+          {/* ── Badges: top row ── */}
+          <div className="absolute top-4 inset-x-4 flex items-start justify-between z-10">
+            {/* Stock badge */}
+            <div className="flex items-center gap-1.5 bg-black/70 backdrop-blur-md border border-white/10 px-2.5 py-1.5">
+              <div className="w-1.5 h-1.5 rounded-full bg-[#00FF9D] animate-pulse flex-shrink-0" />
+              <span className="font-mono text-[8px] tracking-widest text-white uppercase">
+                {product.stock} UNITS
+              </span>
+            </div>
 
-                {/* Discount badge — top left */}
-                {discountPercentage > 0 && (
-                  <div className="absolute top-4 left-4 bg-[#00FF9D] text-black font-mono text-[8px] px-2 py-1 font-bold tracking-wider z-10">
-                    -{discountPercentage}%
-                  </div>
-                )}
-
-                {/* Info overlay — bottom */}
-                <div className="absolute inset-x-0 bottom-0 p-5 z-10 flex items-end justify-between gap-4">
-                  <div className="flex-1 min-w-0">
-                    <p className="font-mono text-[8px] tracking-[0.3em] text-neutral-400 uppercase mb-1 truncate">
-                      {product.type}
-                    </p>
-                    <h3 className="font-deco text-lg font-bold tracking-wider uppercase text-white leading-tight">
-                      {product.name}
-                    </h3>
-                  </div>
-                  <div className="text-right flex-shrink-0">
-                    {discountPercentage > 0 && (
-                      <p className="font-mono text-[9px] text-neutral-500 line-through mb-0.5">
-                        IDR {product.originalPrice?.toLocaleString('id-ID')}
-                      </p>
-                    )}
-                    <p className="font-mono text-base font-bold text-[#836EF9]">
-                      IDR {product.price.toLocaleString('id-ID')}
-                    </p>
-                  </div>
-                </div>
+            {/* Discount badge */}
+            {discount > 0 && (
+              <div className="bg-[#00FF9D] text-black font-mono text-[8px] font-bold px-2 py-1 tracking-wider">
+                -{discount}%
               </div>
             )}
           </div>
 
-          {/* ══════════════════════════════════════
-              BACK FACE — Digital Twin
-          ══════════════════════════════════════ */}
-          {/* Animated border outer wrapper */}
+          {/* ── Digital Twin indicator — bottom left badge ── */}
+          <div className="absolute bottom-4 left-4 z-10 flex items-center gap-1.5 bg-[#836EF9]/15 backdrop-blur-md border border-[#836EF9]/30 px-2.5 py-1.5">
+            <Cpu size={9} className="text-[#836EF9]" />
+            <span className="font-mono text-[7px] tracking-[0.3em] text-[#836EF9] uppercase">
+              Digital Twin
+            </span>
+          </div>
+
+          {/* ── Hover: View Detail overlay ── */}
           <div
-            className="absolute inset-0 overflow-hidden rounded-sm"
-            style={{
-              backfaceVisibility: 'hidden',
-              transform: 'rotateY(180deg)',
-              padding: '1px',
-            }}
+            className={`absolute inset-0 z-20 flex items-center justify-center transition-opacity duration-300 ${
+              imgHover ? 'opacity-100' : 'opacity-0'
+            }`}
           >
-            {/* Rotating gradient — animated border effect */}
-            <div
-              className="pointer-events-none"
-              style={{
-                position: 'absolute',
-                inset: '-50%',
-                background:
-                  'linear-gradient(0deg, #836EF9 0%, #00FF9D 50%, #836EF9 100%)',
-                animation: 'borderRotate 4s linear infinite',
-              }}
-            />
-
-            {/* Inner content area */}
-            <div
-              className="relative z-10 w-full h-full overflow-hidden"
-              style={{ background: '#0a0a0a', borderRadius: '1px' }}
-            >
-              {isPlaceholder ? (
-                <div className="w-full h-full flex flex-col items-center justify-center gap-4 opacity-60">
-                  <Lock size={48} strokeWidth={1} className="text-neutral-800" />
-                  <p className="font-mono text-[9px] tracking-[1em] text-neutral-800 uppercase">
-                    Access_Denied
-                  </p>
-                </div>
-              ) : (
-                <>
-                  {/* Radial glow */}
-                  <div
-                    className="absolute inset-0 pointer-events-none"
-                    style={{
-                      background:
-                        'radial-gradient(circle at 50% 35%, rgba(131,110,249,0.12) 0%, transparent 65%)',
-                    }}
-                  />
-
-                  <div className="relative z-10 flex flex-col h-full p-5">
-                    {/* Header row */}
-                    <div className="flex items-start justify-between mb-4">
-                      <div>
-                        <p className="font-mono text-[8px] tracking-[0.4em] text-[#836EF9] uppercase mb-1">
-                          Digital Twin
-                        </p>
-                        <p className="font-mono text-[9px] tracking-[0.1em] text-neutral-300 uppercase leading-tight max-w-[160px] truncate">
-                          {product.name}
-                        </p>
-                      </div>
-                      {/* Diamond accent icon */}
-                      <div className="w-8 h-8 border border-[#836EF9]/30 rounded-sm flex items-center justify-center flex-shrink-0">
-                        <div
-                          className="w-3 h-3 bg-[#836EF9]"
-                          style={{
-                            opacity: 0.65,
-                            clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)',
-                          }}
-                        />
-                      </div>
-                    </div>
-
-                    {/* NFT Image */}
-                    <div className="relative flex-1 mb-4 rounded-sm overflow-hidden border border-[#836EF9]/20 bg-black/30">
-                      {product.imgDigital ? (
-                        <Image
-                          src={product.imgDigital}
-                          alt={`${product.name} Digital Twin`}
-                          fill
-                          className="object-contain p-3"
-                          sizes="(max-width: 768px) 100vw, 50vw"
-                        />
-                      ) : (
-                        <div className="w-full h-full flex flex-col items-center justify-center gap-2">
-                          <div className="w-10 h-10 border border-[#836EF9]/20 rounded-sm flex items-center justify-center">
-                            <div
-                              style={{
-                                width: 16,
-                                height: 16,
-                                background: 'rgba(131,110,249,0.3)',
-                                clipPath:
-                                  'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)',
-                              }}
-                            />
-                          </div>
-                          <p className="font-mono text-[8px] text-neutral-700 tracking-wider">
-                            NO_PREVIEW
-                          </p>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Token info */}
-                    <div className="space-y-1.5 mb-4 pt-3 border-t border-white/5">
-                      {(
-                        [
-                          ['TOKEN_TYPE', 'ERC-721'],
-                          ['CHAIN', 'MONAD'],
-                          ['STATUS', 'CLAIMABLE'],
-                        ] as const
-                      ).map(([key, value]) => (
-                        <div key={key} className="flex items-center justify-between">
-                          <span className="font-mono text-[8px] text-neutral-600 tracking-[0.2em]">
-                            {key}
-                          </span>
-                          <span
-                            className={`font-mono text-[8px] tracking-[0.15em] font-bold ${
-                              value === 'CLAIMABLE'
-                                ? 'text-[#00FF9D]'
-                                : 'text-neutral-400'
-                            }`}
-                          >
-                            {value}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-
-                    {/* CTA Buttons */}
-                    <div className="grid grid-cols-2 gap-2 mt-auto">
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setIsFlipped(false);
-                        }}
-                        className="py-3 border border-white/20 text-white font-mono text-[8px] tracking-[0.15em] uppercase transition-colors hover:border-[#836EF9]/60 hover:text-[#836EF9]"
-                      >
-                        View Physical
-                      </button>
-                      <Link
-                        href={product.explorerLink ?? product.links.telegram ?? '#'}
-                        target="_blank"
-                        onClick={(e) => e.stopPropagation()}
-                        className="py-3 bg-[#836EF9] text-black font-mono text-[8px] tracking-[0.15em] uppercase flex items-center justify-center gap-1.5 transition-colors hover:bg-[#9d8bff]"
-                      >
-                        Claim NFT <ExternalLink size={9} />
-                      </Link>
-                    </div>
-                  </div>
-                </>
-              )}
+            <div className="flex items-center gap-2 border border-white/20 bg-black/60 backdrop-blur-md px-5 py-3">
+              <span className="font-mono text-[9px] tracking-[0.3em] text-white uppercase">
+                Lihat Detail
+              </span>
+              <ArrowUpRight size={12} className="text-white" />
             </div>
           </div>
-          {/* ─── end back face ─── */}
         </div>
-        {/* ─── end rotating inner ─── */}
-      </div>
-      {/* ─── end perspective wrapper ─── */}
+
+        {/* ── Card info footer ── */}
+        <div className="pt-4 space-y-2 px-0.5">
+          {/* Type label */}
+          <p className="font-mono text-[8px] tracking-[0.35em] text-neutral-500 uppercase">
+            {product.type}
+          </p>
+
+          {/* Name + Arrow row */}
+          <div className="flex items-start justify-between gap-3">
+            <h3 className="font-deco text-sm md:text-base font-bold tracking-wider uppercase text-white leading-tight group-hover:text-[#836EF9] transition-colors duration-300">
+              {product.name}
+            </h3>
+            <ArrowUpRight
+              size={14}
+              className="text-neutral-600 group-hover:text-[#836EF9] transition-colors duration-300 flex-shrink-0 mt-0.5"
+            />
+          </div>
+
+          {/* Price row */}
+          <div className="flex items-center gap-3 pt-1">
+            <span className="font-mono text-sm font-bold text-[#836EF9]">
+              IDR {product.price.toLocaleString('id-ID')}
+            </span>
+            {discount > 0 && (
+              <span className="font-mono text-[9px] text-neutral-600 line-through">
+                IDR {product.originalPrice?.toLocaleString('id-ID')}
+              </span>
+            )}
+          </div>
+
+          {/* Phygital verified micro-tag */}
+          <div className="flex items-center gap-1.5 pt-0.5">
+            <CheckCircle2 size={9} className="text-[#00FF9D]" />
+            <span className="font-mono text-[7px] tracking-[0.3em] text-neutral-600 uppercase">
+              Phygital Verified // ERC-721 Monad
+            </span>
+          </div>
+        </div>
+      </Link>
     </motion.div>
   );
 }
 
-// ─── Page ─────────────────────────────────────────────────────────────────
+// ─── Filter Tabs ──────────────────────────────────────────────────────────────
+
+const FILTERS = ['ALL', 'AVAILABLE', 'COMING_SOON'] as const;
+type Filter = (typeof FILTERS)[number];
+
+// ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function ShopPage() {
-  return (
-    <main className="min-h-screen bg-[#0E0E0E] pb-20 selection:bg-[#836EF9] selection:text-black font-sans overflow-x-hidden">
+  const [activeFilter, setActiveFilter] = useState<Filter>('ALL');
 
-      {/* ══════════════════════════════════════════════════════
-          SHOP HEADER
-      ══════════════════════════════════════════════════════ */}
+  const filteredProducts = PRODUCTS_DATA.filter(p => {
+    if (activeFilter === 'ALL') return true;
+    if (activeFilter === 'AVAILABLE') return !p.isPlaceholder;
+    if (activeFilter === 'COMING_SOON') return !!p.isPlaceholder;
+    return true;
+  });
+
+  return (
+    <main className="min-h-screen bg-[#0E0E0E] pb-28 selection:bg-[#836EF9] selection:text-black font-sans overflow-x-hidden">
+
+      {/* ════════════════════════════════════════════════════
+          HEADER
+      ════════════════════════════════════════════════════ */}
       <motion.header
-        className="pt-44 px-6 mb-20 text-center"
+        className="pt-44 px-6 mb-16"
         initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.3 }}
+        animate="visible"
         variants={headerVariants}
       >
-        {/* Archive Collection label — with flanking lines */}
-        <div className="flex items-center justify-center gap-4 mb-5">
-          <div className="h-px w-16 bg-[#836EF9] opacity-30" />
-          <span className="font-mono text-[#836EF9] text-[10px] tracking-[0.5em] uppercase">
-            Archive Collection
-          </span>
-          <div className="h-px w-16 bg-[#836EF9] opacity-30" />
-        </div>
+        <div className="max-w-7xl mx-auto">
 
-        {/* Main heading: GENESIS // 01 */}
-        <h1 className="flex flex-wrap items-baseline justify-center gap-x-3 text-6xl md:text-8xl font-bold tracking-tighter uppercase leading-none mb-4">
-          <span className="font-deco text-white">GENESIS</span>
-          <span className="font-mono text-neutral-700 italic text-5xl md:text-7xl">
-            {'// 01'}
-          </span>
-        </h1>
-
-        {/* Sub-label */}
-        <p className="font-mono text-[9px] tracking-[0.4em] text-white/40 uppercase mt-4">
-          BATCH 01 — LIMITED PHYSICAL UNITS // DIGITAL TWIN INCLUDED
-        </p>
-      </motion.header>
-
-      {/* ══════════════════════════════════════════════════════
-          PRODUCTS GRID
-      ══════════════════════════════════════════════════════ */}
-      <motion.div
-        className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8"
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.1 }}
-      >
-        {PRODUCTS_DATA.map((product, index) => (
-          <FlipCard key={product.id} product={product} index={index} />
-        ))}
-      </motion.div>
-    </main>
-  );
-}
-</file>
-
-<file path="app/verify/page.tsx">
-"use client";
-
-import React from 'react';
-import { ArrowRight, AlertTriangle, ShieldCheck } from 'lucide-react';
-
-// ============================================================================
-// MOCK NEXT.JS (Hanya untuk keperluan Preview di layar Canvas)
-// CATATAN UNTUK COPAS: 
-// Saat menyalin kode ini ke file project asli Anda (VSCode/Vercel), 
-// HAPUS bagian mock ini dan gunakan import bawaan Next.js berikut:
-//
-// import Link from 'next/link';
-// ============================================================================
-const Link = ({ href, children, className }: any) => (
-  <a href={href} className={className}>{children}</a>
-);
-// ============================================================================
-
-export default function VerifyLandingPage() {
-  return (
-    <main className="min-h-screen bg-[#0E0E0E] text-white flex flex-col items-center justify-center pt-32 pb-6 px-6 relative overflow-hidden font-sans selection:bg-[#836EF9] selection:text-black">
-      {/* Background Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-[#836EF9]/10 blur-[150px] pointer-events-none rounded-full" />
-
-      <div className="relative z-10 max-w-3xl mx-auto text-center space-y-10">
-        
-        {/* Ikon Shield Online */}
-        <div className="inline-flex items-center justify-center w-24 h-24 bg-black border border-[#00FF9D]/30 rounded-full mb-4 shadow-[0_0_40px_rgba(0,255,157,0.1)] relative">
-          <div className="absolute inset-0 border border-[#00FF9D] rounded-full animate-ping opacity-20" />
-          <ShieldCheck size={40} className="text-[#00FF9D]" />
-        </div>
-
-        {/* HEADER */}
-        <div className="space-y-4">
-          <div className="inline-flex items-center gap-2 border border-[#836EF9] bg-[#836EF9]/10 px-4 py-1 rounded-full mb-2">
-            <div className="w-2 h-2 bg-[#836EF9] rounded-full animate-pulse"/>
-            <span className="text-[10px] text-[#836EF9] font-mono font-bold tracking-[0.2em] uppercase">SYSTEM_ONLINE // VERIFICATION_NODE</span>
-          </div>
-          <h1 className="text-4xl md:text-6xl font-bold uppercase tracking-tighter">
-            ACTIVATION <span className="text-[#836EF9]">PORTAL</span>
-          </h1>
-          <p className="text-neutral-500 font-mono text-xs md:text-sm leading-relaxed tracking-widest uppercase max-w-2xl mx-auto italic">
-            "Tangible craftsmanship you can feel, secured by digital ownership you can prove."
-          </p>
-        </div>
-
-        {/* INSTRUKSI PENTING */}
-        <div className="bg-[#121212] border border-white/10 p-6 md:p-8 rounded-sm mb-12 relative overflow-hidden group text-left shadow-2xl">
-          <div className="absolute top-0 left-0 w-1 h-full bg-[#836EF9] group-hover:w-full group-hover:opacity-5 transition-all duration-700" />
-          <h3 className="text-white font-bold text-sm uppercase tracking-[0.2em] mb-6 flex items-center gap-3 relative z-10">
-            <AlertTriangle className="text-[#836EF9]" size={18} /> INSTRUKSI PENTING:
-          </h3>
-          <ul className="space-y-4 text-[10px] md:text-xs text-neutral-400 uppercase tracking-wide leading-relaxed relative z-10">
-            <li className="flex gap-3 items-start">
-              <span className="text-[#836EF9] font-bold shrink-0">01.</span> 
-              <span>GOSOK panel pelindung pada Genesis Card untuk melihat Secret Code.</span>
-            </li>
-            <li className="flex gap-3 items-start">
-              <span className="text-[#836EF9] font-bold shrink-0">02.</span> 
-              <span>PASTIKAN alamat wallet yang dimasukkan adalah Personal Wallet MONAD (Metamask/Phantom/Hot Wallet lainnya).</span>
-            </li>
-            <li className="flex gap-3 items-start text-red-500 font-bold bg-red-900/10 p-3 border border-red-900/30 rounded-sm">
-              <span className="text-red-500 shrink-0">03.</span> 
-              <span>🚫 DILARANG menggunakan alamat Exchange (Indodax/Binance/Tokocrypto/Bybit. dll).</span>
-            </li>
-            <li className="flex gap-3 items-start">
-              <span className="text-[#836EF9] font-bold shrink-0">04.</span> 
-              <span>PROSES verifikasi dilakukan secara manual demi keamanan (Max 1x24 Jam).</span>
-            </li>
-            <li className="flex gap-3 items-start">
-              <span className="text-[#836EF9] font-bold shrink-0">05.</span> 
-              <span>BIAYA jaringan (Gas Fee) ditanggung 0xTanda (GRATIS).</span>
-            </li>
-          </ul>
-        </div>
-
-        {/* Tombol Lanjut ke Form */}
-        <div className="pt-4">
-          <Link 
-            href="/verify/pageform" 
-            className="inline-flex items-center gap-4 bg-[#836EF9] text-black px-12 py-5 font-mono text-sm font-bold uppercase tracking-[0.2em] hover:bg-white transition-all group shadow-[0_0_30px_rgba(131,110,249,0.3)] hover:shadow-[0_0_50px_rgba(131,110,249,0.5)] rounded-sm"
-          >
-            VERIFY <ArrowRight size={18} className="group-hover:translate-x-2 transition-transform" />
-          </Link>
-        </div>
-        
-        <p className="text-[9px] font-mono text-neutral-600 uppercase tracking-[0.4em] pt-8">
-          0xTanda // Secure Transmission
-        </p>
-
-      </div>
-    </main>
-  );
-}
-</file>
-
-<file path="app/verify/pageform/page.tsx">
-"use client";
-
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  ShieldCheck, 
-  Wallet, 
-  UploadCloud, 
-  CheckCircle2, 
-  AlertTriangle, 
-  Loader2, 
-  X,
-  Key,
-  User,
-  Smartphone,
-  Mail,
-  ShoppingBag,
-  ArrowLeft
-} from 'lucide-react';
-
-// ============================================================================
-// MOCK NEXT.JS (Hanya untuk keperluan Preview di layar Canvas)
-// CATATAN UNTUK COPAS: 
-// Saat menyalin kode ini ke file project asli Anda (VSCode/Vercel), 
-// HAPUS bagian mock ini dan gunakan import bawaan Next.js berikut:
-//
-// import Link from 'next/link';
-// ============================================================================
-const Link = ({ href, children, className }: any) => (
-  <a href={href} className={className}>{children}</a>
-);
-// ============================================================================
-
-export default function VerifyFormPage() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [status, setStatus] = useState<'idle' | 'success' | 'error' | 'used'>('idle');
-  const [fileName, setFileName] = useState('');
-  
-  // State khusus untuk Checkbox Persetujuan
-  const [isAgreed, setIsAgreed] = useState(false);
-
-  // 🔴 PASTIKAN URL INI BENAR DARI DEPLOYMENT GOOGLE APPS SCRIPT
-  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz9_dc-9v8UNopJGhjlzoBPluWiS9i2krk4-wARwH5PhiFiLx-BAHGoZoUgngcGw1ff/exec";
-
-  const [formData, setFormData] = useState({
-    secretCode: '',
-    walletAddress: '',
-    nama: '',
-    gender: 'Pria',
-    email: '',
-    noHp: '',
-    telegramId: '',
-    productName: 'GENESIS BOXY TEE',
-    orderId: '',
-    proofImage: '' 
-  });
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-
-    if (name === 'secretCode') {
-      // 1. Hapus semua karakter selain huruf dan angka, jadikan kapital
-      let rawValue = value.replace(/[^A-Za-z0-9]/g, '').toUpperCase();
-      // 2. Batasi maksimal 12 karakter alfanumerik
-      if (rawValue.length > 12) rawValue = rawValue.substring(0, 12);
-      // 3. Sisipkan strip (-) setiap 4 karakter sehingga menjadi XXXX-XXXX-XXXX
-      const formattedValue = rawValue.match(/.{1,4}/g)?.join('-') || rawValue;
-      setFormData({ ...formData, [name]: formattedValue });
-    } else if (name === 'telegramId') {
-      // Auto tambahkan @ jika user lupa (Hanya kalau input tidak kosong)
-      let tgValue = value.trim();
-      if (tgValue.length > 0 && !tgValue.startsWith('@')) {
-        tgValue = '@' + tgValue;
-      }
-      setFormData({ ...formData, [name]: tgValue });
-    } else {
-      setFormData({ ...formData, [name]: value });
-    }
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      if (file.size > 2 * 1024 * 1024) {
-        alert("Ukuran file terlalu besar. Maksimal 2MB.");
-        return;
-      }
-      setFileName(file.name);
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setFormData({ ...formData, proofImage: reader.result as string });
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    // VALIDASI WALLET (Wajib Monad/EVM: Diawali 0x dan 40 karakter hex)
-    const evmRegex = /^0x[a-fA-F0-9]{40}$/;
-    if (!evmRegex.test(formData.walletAddress)) {
-        alert("ALAMAT WALLET TIDAK VALID!\nPastikan alamat dimulai dengan '0x' dan merupakan format standar MONAD/EVM.");
-        return;
-    }
-
-    // VALIDASI KODE (Wajib 12 digit alfanumerik + 2 strip = 14 karakter)
-    if (formData.secretCode.length !== 14) {
-        alert("SECRET CODE TIDAK LENGKAP!\nPastikan Anda memasukkan 12 digit kode dengan benar (Format: XXXX-XXXX-XXXX).");
-        return;
-    }
-
-    // VALIDASI TELEGRAM (Wajib pakai @ dan minimal 3 karakter setelah @)
-    if (!formData.telegramId.startsWith('@') || formData.telegramId.length < 4) {
-        alert("ID TELEGRAM TIDAK VALID!\nPastikan mengisi username Telegram yang diawali dengan simbol '@' (contoh: @username).");
-        return;
-    }
-
-    // VALIDASI PERSETUJUAN
-    if (!isAgreed) {
-        alert("Anda harus menyetujui Peringatan dan Kebijakan 0xTanda untuk melanjutkan.");
-        return;
-    }
-
-    setIsLoading(true);
-
-    try {
-      // Menyertakan data persetujuan ke payload untuk direkam di database
-      const payloadData = {
-        ...formData,
-        persetujuanKebijakan: isAgreed ? "SETUJU" : "TIDAK_SETUJU"
-      };
-
-      const response = await fetch(GOOGLE_SCRIPT_URL, {
-        method: "POST",
-        body: JSON.stringify(payloadData),
-      });
-
-      const result = await response.json();
-
-      if (result.status === 'success') {
-        setStatus('success');
-      } else if (result.status === 'duplicate') {
-        setStatus('used');
-      } else {
-        setStatus('error');
-      }
-    } catch (error) {
-      console.error("Submission Error:", error);
-      // Menangkap error CORS yang umum terjadi di Google Apps Script walau data berhasil masuk
-      setStatus('success'); 
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  return (
-    <main className="min-h-screen bg-[#0E0E0E] text-white selection:bg-[#836EF9] selection:text-black font-mono overflow-x-hidden relative">
-      <div className="pt-32 px-6 pb-20 max-w-4xl mx-auto relative z-10">
-        
-        {/* Tombol Kembali ke Portal */}
-        <Link 
-          href="/verify"
-          className="inline-flex items-center gap-2 text-neutral-500 hover:text-white mb-10 font-mono text-[10px] tracking-[0.5em] uppercase transition-colors group"
-        >
-          <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" /> BACK TO PORTAL
-        </Link>
-        
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 border border-[#836EF9] bg-[#836EF9]/10 px-4 py-1 mb-6 rounded-full">
-            <div className="w-2 h-2 bg-[#836EF9] rounded-full animate-pulse"/>
-            <span className="text-[10px] text-[#836EF9] font-bold tracking-[0.2em] uppercase">SYSTEM_ONLINE // DATA_ENTRY</span>
-          </div>
-          <h1 className="text-3xl md:text-5xl font-sans font-bold uppercase tracking-tighter mb-4">
-            ACTIVATION <span className="text-[#836EF9]">FORM</span>
-          </h1>
-        </div>
-
-        {/* FORM */}
-        <form onSubmit={handleSubmit} className="space-y-12">
-          
-          {/* SECTION 1: CRITICAL DATA */}
-          <div className="space-y-6">
-            <div className="bg-gradient-to-b from-[#1a1a1a] to-black border border-[#836EF9]/50 p-8 rounded-sm shadow-[0_0_30px_rgba(131,110,249,0.1)] relative overflow-hidden">
-              <div className="absolute top-0 right-0 p-4 opacity-20">
-                <ShieldCheck size={64} className="text-[#836EF9]" />
-              </div>
-              <h4 className="text-[#836EF9] text-xs font-bold uppercase tracking-[0.3em] mb-8 flex items-center gap-2">
-                <ShieldCheck size={16}/> PRIMARY CREDENTIALS
-              </h4>
-              
-              <div className="grid gap-10">
-                <div className="space-y-3 relative z-10">
-                  <label className="text-xs text-[#836EF9] font-bold uppercase tracking-[0.2em] flex items-center gap-2">
-                    <Key size={14}/> SECRET CODE (GENESIS CARD)
-                  </label>
-                  <input 
-                    type="text" 
-                    name="secretCode"
-                    value={formData.secretCode}
-                    maxLength={14}
-                    required
-                    placeholder="XXXX-XXXX-XXXX" 
-                    className="w-full bg-black border-2 border-[#836EF9] p-6 text-xl md:text-3xl font-sans font-bold text-white placeholder:text-white/10 focus:shadow-[0_0_30px_rgba(131,110,249,0.4)] focus:outline-none transition-all uppercase tracking-widest text-center rounded-sm"
-                    onChange={handleInputChange}
-                  />
-                  <p className="text-[9px] text-neutral-500 uppercase tracking-widest text-center">*Masukkan 12 digit (Format otomatis: XXXX-XXXX-XXXX)</p>
-                </div>
-
-                <div className="space-y-3 relative z-10">
-                  <label className="text-xs text-[#00FF9D] font-bold uppercase tracking-[0.2em] flex items-center gap-2">
-                    <Wallet size={14}/> WALLET MONAD ADDRESS
-                  </label>
-                  <input 
-                    type="text" 
-                    name="walletAddress"
-                    value={formData.walletAddress}
-                    required
-                    placeholder="0x..." 
-                    className="w-full bg-black border-2 border-[#00FF9D]/50 p-6 text-sm md:text-xl font-mono text-[#00FF9D] placeholder:text-[#00FF9D]/20 focus:border-[#00FF9D] focus:shadow-[0_0_30px_rgba(0,255,157,0.2)] focus:outline-none transition-all rounded-sm"
-                    onChange={handleInputChange}
-                  />
-                  <p className="text-[9px] text-neutral-500 uppercase tracking-widest text-right">*Wajib format 0x... (Personal Wallet Monad)</p>
-                </div>
-              </div>
-            </div>
+          {/* Label */}
+          <div className="flex items-center gap-4 mb-6">
+            <div className="h-px w-12 bg-[#836EF9]" />
+            <span className="font-mono text-[#836EF9] text-[9px] tracking-[0.6em] uppercase">
+              Archive Collection
+            </span>
           </div>
 
-          {/* SECTION 2: PROFILE */}
-          <div className="space-y-8 pt-8 border-t border-white/5">
-            <h4 className="text-white text-xs font-bold uppercase tracking-[0.3em] flex items-center gap-2">
-              <User size={16} className="text-neutral-500" /> IDENTITAS OWNER
-            </h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <label className="text-[10px] text-neutral-500 uppercase tracking-widest">Nama Lengkap <span className="text-red-500">*</span></label>
-                <input type="text" name="nama" value={formData.nama} required className="w-full bg-[#121212] border border-white/10 p-4 text-sm text-white focus:border-white/50 focus:outline-none transition-colors" onChange={handleInputChange} />
-              </div>
-              <div className="space-y-2">
-                <label className="text-[10px] text-neutral-500 uppercase tracking-widest">Jenis Kelamin</label>
-                <select name="gender" value={formData.gender} className="w-full bg-[#121212] border border-white/10 p-4 text-sm text-white focus:border-white/50 focus:outline-none transition-colors appearance-none" onChange={handleInputChange}>
-                  <option value="Pria">PRIA</option>
-                  <option value="Wanita">WANITA</option>
-                </select>
-              </div>
-              <div className="space-y-2">
-                <label className="text-[10px] text-neutral-500 uppercase tracking-widest">Email Aktif <span className="text-red-500">*</span></label>
-                <div className="relative">
-                  <Mail className="absolute right-4 top-1/2 -translate-y-1/2 text-white/20" size={16} />
-                  <input type="email" name="email" value={formData.email} required className="w-full bg-[#121212] border border-white/10 p-4 text-sm text-white focus:border-white/50 focus:outline-none transition-colors" onChange={handleInputChange} />
-                </div>
-              </div>
-              <div className="space-y-2">
-                <label className="text-[10px] text-neutral-500 uppercase tracking-widest">No. HP / WhatsApp <span className="text-red-500">*</span></label>
-                <div className="relative">
-                  <Smartphone className="absolute right-4 top-1/2 -translate-y-1/2 text-white/20" size={16} />
-                  <input type="tel" name="noHp" value={formData.noHp} required className="w-full bg-[#121212] border border-white/10 p-4 text-sm text-white focus:border-white/50 focus:outline-none transition-colors" onChange={handleInputChange} />
-                </div>
-              </div>
-              <div className="space-y-2 md:col-span-2">
-                <label className="text-[10px] text-neutral-500 uppercase tracking-widest">ID Telegram (Wajib pakai @) <span className="text-red-500">*</span></label>
-                <input type="text" name="telegramId" value={formData.telegramId} required placeholder="@username" className="w-full bg-[#121212] border border-white/10 p-4 text-sm text-white focus:border-white/50 focus:outline-none transition-colors" onChange={handleInputChange} />
-              </div>
-            </div>
-          </div>
-
-          {/* SECTION 3: DETAIL ORDER */}
-          <div className="space-y-8 pt-8 border-t border-white/5">
-            <h4 className="text-white text-xs font-bold uppercase tracking-[0.3em] flex items-center gap-2">
-              <ShoppingBag size={16} className="text-neutral-500" /> DETAIL TRANSAKSI
-            </h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-2 md:col-span-2">
-                <label className="text-[10px] text-neutral-500 uppercase tracking-widest">Pilih Artefak (Produk)</label>
-                <div className="relative">
-                  <select name="productName" value={formData.productName} className="w-full bg-[#121212] border border-white/10 p-4 text-sm text-[#836EF9] font-bold focus:border-white/50 focus:outline-none transition-colors appearance-none uppercase" onChange={handleInputChange}>
-                    <option value="GENESIS BOXY TEE">GENESIS BOXY TEE [BATCH #001]</option>
-                    <option value="-" disabled>ARCHIVE 02 (LOCKED)</option>
-                  </select>
-                  <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
-                    <div className="w-2 h-2 bg-[#836EF9] rounded-full" />
-                  </div>
-                </div>
-              </div>
-              <div className="space-y-2">
-                <label className="text-[10px] text-neutral-500 uppercase tracking-widest">Order ID <span className="text-red-500">*</span></label>
-                <input type="text" name="orderId" value={formData.orderId} required placeholder="Contoh: 230919ABC..." className="w-full bg-[#121212] border border-white/10 p-4 text-sm text-white focus:border-white/50 focus:outline-none transition-colors" onChange={handleInputChange} />
-              </div>
-              <div className="space-y-2">
-                <label className="text-[10px] text-neutral-500 uppercase tracking-widest">Upload Bukti Pembelian (Max 2MB) <span className="text-red-500">*</span></label>
-                <div className="relative group">
-                  <input type="file" id="fileUpload" required className="hidden" onChange={handleFileChange} accept="image/*" />
-                  <label htmlFor="fileUpload" className="w-full bg-[#121212] border border-white/10 border-dashed p-4 text-sm text-neutral-400 flex items-center justify-between cursor-pointer hover:bg-white/5 hover:border-[#836EF9] transition-all">
-                    <span className="truncate font-mono">{fileName || "KLIK UNTUK UPLOAD FILE..."}</span>
-                    <UploadCloud size={20} className="text-neutral-500 group-hover:text-[#836EF9]" />
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* WARNING & DISCLAIMER BOX DENGAN CHECKBOX PERSETUJUAN */}
-          <div className="pt-8">
-            <div className="bg-red-900/10 border border-red-500/30 p-6 md:p-8 rounded-sm space-y-6">
-              <div className="flex items-center gap-2 text-red-500 font-bold text-sm md:text-base uppercase tracking-widest">
-                <AlertTriangle size={20} /> PERINGATAN & KEBIJAKAN
-              </div>
-              <p className="text-[11px] md:text-xs text-neutral-400 uppercase tracking-widest leading-relaxed">
-                Produk 0xTanda <strong className="text-white">bukan instrumen investasi</strong>, dan 0xTanda <strong className="text-white">bukan tempat jual beli</strong>. Setiap produk dan aset digital yang sudah keluar (didistribusikan) dari sistem 0xTanda sepenuhnya menjadi hak dan tanggung jawab mutlak pemilik, dan bukan lagi menjadi tanggung jawab 0xTanda.
-              </p>
-              
-              {/* Checkbox Persetujuan */}
-              <label className="flex items-start gap-4 cursor-pointer mt-4 group">
-                <div className="relative flex items-start justify-center mt-0.5">
-                  <input 
-                    type="checkbox" 
-                    className="w-5 h-5 accent-[#836EF9] bg-[#121212] border border-white/30 rounded-sm cursor-pointer"
-                    checked={isAgreed}
-                    onChange={(e) => setIsAgreed(e.target.checked)}
-                    required
-                  />
-                </div>
-                <span className={`text-[10px] md:text-[11px] font-bold uppercase tracking-widest leading-relaxed transition-colors ${isAgreed ? 'text-[#00FF9D]' : 'text-white group-hover:text-[#836EF9]'}`}>
-                  SAYA TELAH MEMBACA, MEMAHAMI, DAN MENYETUJUI SELURUH KEBIJAKAN SERTA PERINGATAN DI ATAS.
+          {/* Heading + subtitle row */}
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+            <div>
+              <h1 className="font-deco text-5xl md:text-7xl font-bold tracking-tighter uppercase leading-none text-white">
+                GENESIS
+                <span className="font-mono text-neutral-700 italic text-4xl md:text-6xl ml-4">
+                  // 01
                 </span>
-              </label>
+              </h1>
+              <p className="font-mono text-[9px] tracking-[0.4em] text-white/30 uppercase mt-4">
+                BATCH 01 — LIMITED PHYSICAL UNITS // DIGITAL TWIN INCLUDED
+              </p>
+            </div>
+
+            {/* Live count */}
+            <div className="flex items-center gap-2 self-start md:self-auto">
+              <div className="w-1.5 h-1.5 rounded-full bg-[#00FF9D] animate-pulse" />
+              <span className="font-mono text-[9px] tracking-[0.3em] text-neutral-500 uppercase">
+                {PRODUCTS_DATA.filter(p => !p.isPlaceholder && p.stock > 0).length} Items Live
+              </span>
             </div>
           </div>
 
-          {/* SUBMIT BUTTON */}
-          <div className="pt-4">
-            <button 
-              type="submit" 
-              disabled={isLoading || !isAgreed}
-              className="w-full bg-[#836EF9] text-black font-mono text-sm font-bold py-6 uppercase tracking-[0.2em] hover:bg-white transition-all flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-neutral-800 disabled:text-neutral-500 shadow-[0_0_40px_rgba(131,110,249,0.3)] hover:shadow-[0_0_60px_rgba(131,110,249,0.6)] rounded-sm"
-            >
-              {isLoading ? <><Loader2 className="animate-spin" size={20} /> VALIDATING DATA...</> : "SUBMIT VERIFICATION DATA"}
-            </button>
-          </div>
-        </form>
-      </div>
-
-      {/* POPUP MODALS */}
-      <AnimatePresence>
-        {status !== 'idle' && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/95 backdrop-blur-md">
-            <motion.div 
-              initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-[#0E0E0E] border border-white/10 p-10 max-w-md w-full text-center relative shadow-[0_0_50px_rgba(131,110,249,0.2)]"
-            >
-              <button onClick={() => setStatus('idle')} className="absolute top-4 right-4 text-neutral-500 hover:text-white"><X size={24} /></button>
-
-              {status === 'success' && (
-                <div className="space-y-6">
-                  <div className="w-24 h-24 bg-[#00FF9D]/10 rounded-full flex items-center justify-center mx-auto border border-[#00FF9D]/30">
-                    <CheckCircle2 size={48} className="text-[#00FF9D]" />
-                  </div>
-                  <div>
-                    <h3 className="text-3xl font-bold text-white uppercase tracking-tighter mb-2">VERIFIED</h3>
-                    <div className="h-1 w-12 bg-[#00FF9D] mx-auto mb-4" />
-                    <p className="text-xs text-neutral-400 font-mono uppercase tracking-widest leading-relaxed">Data Anda telah diterima. Tim 0xTanda akan memvalidasi dalam 1x24 jam.</p>
-                  </div>
-                </div>
-              )}
-
-              {status === 'used' && (
-                <div className="space-y-6">
-                  <div className="w-24 h-24 bg-[#EE4D2D]/10 rounded-full flex items-center justify-center mx-auto border border-[#EE4D2D]/30">
-                    <AlertTriangle size={48} className="text-[#EE4D2D]" />
-                  </div>
-                  <div>
-                    <h3 className="text-3xl font-bold text-[#EE4D2D] uppercase tracking-tighter mb-2">KODE DIGUNAKAN</h3>
-                    <div className="h-1 w-12 bg-[#EE4D2D] mx-auto mb-4" />
-                    <p className="text-xs text-neutral-400 font-mono uppercase tracking-widest leading-relaxed">Kode Rahasia terdeteksi duplikat atau sudah pernah diklaim sebelumnya.</p>
-                  </div>
-                </div>
-              )}
-
-              {status === 'error' && (
-                <div className="space-y-6">
-                  <div className="w-24 h-24 bg-yellow-500/10 rounded-full flex items-center justify-center mx-auto border border-yellow-500/30">
-                    <AlertTriangle size={48} className="text-yellow-500" />
-                  </div>
-                  <div>
-                    <h3 className="text-3xl font-bold text-white uppercase tracking-tighter mb-2">ERROR</h3>
-                    <div className="h-1 w-12 bg-yellow-500 mx-auto mb-4" />
-                    <p className="text-xs text-neutral-400 font-mono uppercase tracking-widest leading-relaxed">Kode Rahasia tidak dikenali. Pastikan Anda mengetik 12 digit kode dengan benar.</p>
-                  </div>
-                </div>
-              )}
-              
-              <button onClick={() => setStatus('idle')} className="mt-10 w-full border border-white/20 py-4 text-xs font-bold uppercase hover:bg-white hover:text-black transition-all">TUTUP</button>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
-    </main>
-  );
-}
-</file>
-
-<file path="components/CursorSystem.tsx">
-'use client';
-
-import { useEffect, useRef, useState } from 'react';
-
-function lerp(start: number, end: number, factor: number): number {
-  return start + (end - start) * factor;
-}
-
-export default function CursorSystem() {
-  const [visible, setVisible] = useState(false);
-
-  const dotRef = useRef<HTMLDivElement>(null);
-  const ringRef = useRef<HTMLDivElement>(null);
-  const glowRef = useRef<HTMLDivElement>(null);
-
-  // Mobile check — only activate on pointer/hover-capable devices
-  useEffect(() => {
-    const isTouch = window.matchMedia('(hover: none)').matches;
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (!isTouch && !prefersReduced) setVisible(true);
-  }, []);
-
-  // Animation loop — runs only after mobile check passes
-  useEffect(() => {
-    if (!visible) return;
-
-    const dot = dotRef.current;
-    const ring = ringRef.current;
-    const glow = glowRef.current;
-    if (!dot || !ring || !glow) return;
-
-    document.body.style.cursor = 'none';
-
-    const mouse = { x: -1000, y: -1000 };
-    const ringPos = { x: -1000, y: -1000 };
-    const glowPos = { x: -1000, y: -1000 };
-    let isHovered = false;
-    let currentScale = 1;
-    let ringAlpha = 0;
-    let rafId: number;
-
-    const onMouseMove = (e: MouseEvent) => {
-      mouse.x = e.clientX;
-      mouse.y = e.clientY;
-      // Zero lag — bypass rAF, write directly to DOM
-      dot.style.transform = `translate(${mouse.x - 3}px, ${mouse.y - 3}px)`;
-    };
-
-    const onMouseOver = (e: MouseEvent) => {
-      if ((e.target as Element).closest('a, button, [role="button"]')) {
-        isHovered = true;
-      }
-    };
-
-    const onMouseOut = (e: MouseEvent) => {
-      if ((e.target as Element).closest('a, button, [role="button"]')) {
-        isHovered = false;
-      }
-    };
-
-    const animate = () => {
-      // Ring — lerp 0.12 (slight lag)
-      ringPos.x = lerp(ringPos.x, mouse.x, 0.12);
-      ringPos.y = lerp(ringPos.y, mouse.y, 0.12);
-
-      // Glow — lerp 0.04 (heavy lag, dreamy follow)
-      glowPos.x = lerp(glowPos.x, mouse.x, 0.04);
-      glowPos.y = lerp(glowPos.y, mouse.y, 0.04);
-
-      // Lerp scale + fill for smooth hover transitions
-      currentScale = lerp(currentScale, isHovered ? 2 : 1, 0.1);
-      ringAlpha = lerp(ringAlpha, isHovered ? 0.08 : 0, 0.1);
-
-      ring.style.transform = `translate(${ringPos.x - 14}px, ${ringPos.y - 14}px) scale(${currentScale.toFixed(4)})`;
-      ring.style.background = `rgba(131,110,249,${ringAlpha.toFixed(4)})`;
-      glow.style.transform = `translate(${glowPos.x - 200}px, ${glowPos.y - 200}px)`;
-
-      rafId = requestAnimationFrame(animate);
-    };
-
-    document.addEventListener('mousemove', onMouseMove);
-    document.addEventListener('mouseover', onMouseOver);
-    document.addEventListener('mouseout', onMouseOut);
-    rafId = requestAnimationFrame(animate);
-
-    return () => {
-      document.removeEventListener('mousemove', onMouseMove);
-      document.removeEventListener('mouseover', onMouseOver);
-      document.removeEventListener('mouseout', onMouseOut);
-      cancelAnimationFrame(rafId);
-      document.body.style.cursor = '';
-    };
-  }, [visible]);
-
-  if (!visible) return null;
-
-  return (
-    <>
-      {/* Dot — 6px, zero lag, direct DOM write on mousemove */}
-      <div
-        ref={dotRef}
-        aria-hidden="true"
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          width: 6,
-          height: 6,
-          borderRadius: '50%',
-          background: '#836EF9',
-          pointerEvents: 'none',
-          zIndex: 10001,
-          willChange: 'transform',
-          transform: 'translate(-1000px, -1000px)',
-        }}
-      />
-
-      {/* Ring — 28px, lerp 0.12, scale×2 + fill on interactive hover */}
-      <div
-        ref={ringRef}
-        aria-hidden="true"
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          width: 28,
-          height: 28,
-          borderRadius: '50%',
-          border: '1px solid rgba(131,110,249,0.5)',
-          background: 'transparent',
-          pointerEvents: 'none',
-          zIndex: 10000,
-          willChange: 'transform',
-          transform: 'translate(-1000px, -1000px)',
-        }}
-      />
-
-      {/* Ambient Glow — 400px, lerp 0.04, purple radial light */}
-      <div
-        ref={glowRef}
-        aria-hidden="true"
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          width: 400,
-          height: 400,
-          background:
-            'radial-gradient(circle, rgba(131,110,249,0.07) 0%, transparent 70%)',
-          pointerEvents: 'none',
-          zIndex: 9997,
-          willChange: 'transform',
-          transform: 'translate(-1000px, -1000px)',
-        }}
-      />
-    </>
-  );
-}
-</file>
-
-<file path="components/Marquee.tsx">
-// Marquee banner — fixed top, dark bg, mixed purple/white text
-
-function MarqueeUnit() {
-  return (
-    <span className="inline-flex items-center whitespace-nowrap font-mono text-[10px] font-bold italic">
-      <span className="text-[#836EF9] tracking-[0.35em] mx-5">0xTANDA</span>
-      <span className="text-white/25 mx-1 tracking-wider not-italic">{'//'}</span>
-      <span className="text-white/65 tracking-[0.3em] mx-5">PHYGITAL STREETWEAR</span>
-      <span className="text-[#836EF9] mx-4 not-italic">✦</span>
-      <span className="text-white/65 tracking-[0.3em] mx-5">0XTANDA ORIGIN-LOG-1 COMING SOON</span>
-      <span className="text-[#836EF9] mx-4 not-italic">✦</span>
-      <span className="text-[#836EF9] tracking-[0.35em] mx-5">ONE ENTITY</span>
-      <span className="text-white/65 tracking-[0.3em] ml-1 mx-5">DUAL EXISTENCE</span>
-      <span className="text-[#836EF9] mx-4 not-italic">✦</span>
-    </span>
-  );
-}
-
-export default function Marquee() {
-  return (
-    <div className="fixed top-0 left-0 w-full bg-[#0a0a0a] border-b border-white/[0.06] py-2 z-[60] overflow-hidden">
-      <div className="animate-marquee whitespace-nowrap">
-        {[...Array(10)].map((_, i) => (
-          <MarqueeUnit key={i} />
-        ))}
-      </div>
-    </div>
-  );
-}
-</file>
-
-<file path="components/Navbar.tsx">
-"use client";
-
-import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { usePathname } from 'next/navigation';
-import { Menu, X } from 'lucide-react';
-
-export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const pathname = usePathname();
-
-  // Scroll detection — compact navbar after 50px
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const navLinks = [
-    { name: 'HOME',         path: '/' },
-    { name: 'SHOP',         path: '/shop' },
-    { name: 'VERIFY',       path: '/verify' },
-    { name: 'ABOUT',        path: '/about' },
-    { name: 'TERMINAL LOG', path: '/terminal-log' },
-  ];
-
-  return (
-    <nav
-      className={`fixed left-0 w-full z-50 px-6 transition-all duration-300 ease-in-out ${
-        scrolled ? 'top-3' : 'top-10'
-      }`}
-    >
-      {/* ── Pill container — shrinks on scroll ── */}
-      <div
-        className={`max-w-7xl mx-auto border border-white/10 rounded-2xl flex items-center justify-between shadow-2xl transition-all duration-300 ease-in-out ${
-          scrolled
-            ? 'p-2.5 bg-[rgba(14,14,14,0.88)]'
-            : 'p-4 bg-black/60'
-        }`}
-        style={{ backdropFilter: 'blur(12px)' }}
-      >
-        {/* Logo — scale 1.02 on hover */}
-        <Link href="/" className="flex items-center">
-          <div className="relative w-8 h-8 transition-transform duration-200 hover:scale-[1.02]">
-            <Image
-              src="/branding/logo-0xtanda-icon.png"
-              alt="0xTanda Icon"
-              width={32}
-              height={32}
-              className="object-contain"
-              priority
-            />
-          </div>
-        </Link>
-
-        {/* Desktop nav links */}
-        <div className="hidden lg:flex gap-1 bg-white/5 p-1 rounded-full border border-white/5">
-          {navLinks.map((link) => {
-            const isActive =
-              (pathname.startsWith(link.path) && link.path !== '/') ||
-              pathname === link.path;
-
-            return (
-              <Link
-                key={link.path}
-                href={link.path}
-                className={`px-6 py-2 rounded-full text-[10px] font-mono tracking-widest transition-colors duration-200 relative ${
-                  isActive
-                    ? 'bg-[#836EF9] text-black font-bold'
-                    : 'text-neutral-400 hover:text-white nav-link-hover'
+          {/* ── Filter tabs ── */}
+          <div className="flex items-center gap-1 mt-10 border-b border-white/[0.06] pb-0">
+            {FILTERS.map(f => (
+              <button
+                key={f}
+                onClick={() => setActiveFilter(f)}
+                className={`relative font-mono text-[9px] tracking-[0.3em] uppercase px-4 pb-3 transition-colors duration-200 ${
+                  activeFilter === f
+                    ? 'text-white'
+                    : 'text-neutral-600 hover:text-neutral-400'
                 }`}
               >
-                {link.name}
-              </Link>
-            );
-          })}
+                {f.replace('_', ' ')}
+                {activeFilter === f && (
+                  <motion.div
+                    layoutId="filter-underline"
+                    className="absolute bottom-0 left-0 right-0 h-px bg-[#836EF9]"
+                    transition={{ duration: 0.25, ease: EASE_SNAP }}
+                  />
+                )}
+              </button>
+            ))}
+          </div>
         </div>
+      </motion.header>
 
-        {/* Mobile toggle */}
-        <div className="lg:hidden flex items-center">
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="text-white p-2 hover:bg-white/5 rounded-lg transition-colors"
-            aria-label="Toggle Navigation"
-          >
-            {isOpen ? <X size={20} /> : <Menu size={20} />}
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile menu overlay */}
-      {isOpen && (
-        <div className="absolute top-24 left-6 right-6 bg-black/95 backdrop-blur-2xl border border-white/10 rounded-2xl p-8 flex flex-col gap-6 lg:hidden shadow-2xl">
-          {navLinks.map((link) => (
-            <Link
-              key={link.path}
-              href={link.path}
-              onClick={() => setIsOpen(false)}
-              className={`text-3xl font-display font-bold tracking-tighter transition-colors uppercase ${
-                (pathname.startsWith(link.path) && link.path !== '/') ||
-                pathname === link.path
-                  ? 'text-[#836EF9]'
-                  : 'text-white'
-              }`}
-            >
-              {link.name}
-            </Link>
+      {/* ════════════════════════════════════════════════════
+          PRODUCTS GRID
+      ════════════════════════════════════════════════════ */}
+      <section className="max-w-7xl mx-auto px-6">
+        <motion.div
+          key={activeFilter}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-14"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          {filteredProducts.map(product => (
+            <ProductCard key={product.id} product={product} />
           ))}
+        </motion.div>
+
+        {/* Empty state */}
+        {filteredProducts.length === 0 && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-center py-28"
+          >
+            <p className="font-mono text-[10px] tracking-[0.5em] text-neutral-700 uppercase">
+              NO_RECORDS_FOUND
+            </p>
+          </motion.div>
+        )}
+      </section>
+
+      {/* ════════════════════════════════════════════════════
+          BOTTOM CTA — subtle
+      ════════════════════════════════════════════════════ */}
+      <section className="max-w-7xl mx-auto px-6 mt-24">
+        <div className="border-t border-white/[0.05] pt-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          <div>
+            <p className="font-mono text-[9px] tracking-[0.4em] text-neutral-600 uppercase mb-2">
+              0xTanda // Secure Transmission
+            </p>
+            <p className="font-mono text-[8px] tracking-[0.25em] text-neutral-700 uppercase">
+              Setiap item mencakup fisik + Digital Twin NFT
+            </p>
+          </div>
+          <Link
+            href="/verify"
+            className="inline-flex items-center gap-3 border border-white/10 bg-white/[0.02] hover:border-[#836EF9]/40 hover:bg-[#836EF9]/5 px-5 py-3 transition-all duration-300 group"
+          >
+            <span className="font-mono text-[9px] tracking-[0.35em] text-neutral-400 group-hover:text-white uppercase transition-colors">
+              Sudah beli? Aktivasi NFT
+            </span>
+            <ArrowUpRight size={12} className="text-neutral-600 group-hover:text-[#836EF9] transition-colors" />
+          </Link>
         </div>
-      )}
-    </nav>
+      </section>
+
+    </main>
   );
-}
-</file>
-
-<file path="components/NoiseOverlay.tsx">
-import type { CSSProperties } from 'react';
-
-const base: CSSProperties = {
-  position: 'fixed',
-  inset: 0,
-  width: '100%',
-  height: '100%',
-  pointerEvents: 'none',
-  zIndex: 9998,
-};
-
-export default function NoiseOverlay() {
-  return (
-    <>
-      {/* Layer 1 — Film Grain */}
-      <svg
-        style={{ ...base, opacity: 0.035, mixBlendMode: 'overlay' }}
-        xmlns="http://www.w3.org/2000/svg"
-        width="100%"
-        height="100%"
-        aria-hidden="true"
-      >
-        <defs>
-          <filter id="noise-filter">
-            <feTurbulence
-              type="fractalNoise"
-              baseFrequency="0.65"
-              numOctaves={3}
-              stitchTiles="stitch"
-            />
-            <feColorMatrix type="saturate" values="0" />
-          </filter>
-        </defs>
-        <rect width="100%" height="100%" filter="url(#noise-filter)" />
-      </svg>
-
-      {/* Layer 2 — Scanlines */}
-      <div
-        aria-hidden="true"
-        style={{
-          ...base,
-          backgroundImage:
-            'repeating-linear-gradient(0deg, rgba(0,0,0,0) 0px, rgba(0,0,0,0) 1px, rgba(0,0,0,0.04) 1px, rgba(0,0,0,0.04) 2px)',
-          backgroundSize: '100% 4px',
-          mixBlendMode: 'multiply',
-        }}
-      />
-
-      {/* Layer 3 — Corner Vignette */}
-      <div
-        aria-hidden="true"
-        style={{
-          ...base,
-          background:
-            'radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.6) 100%)',
-        }}
-      />
-    </>
-  );
-}
-</file>
-
-<file path="components/ScrollProgress.tsx">
-'use client';
-
-import { useScroll, useSpring, motion } from 'framer-motion';
-
-export default function ScrollProgress() {
-  const { scrollYProgress } = useScroll();
-  const scrollSpring = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001,
-  });
-
-  return (
-    <motion.div
-      aria-hidden="true"
-      style={{
-        scaleX: scrollSpring,
-        originX: 0,
-        background: 'linear-gradient(to right, #836EF9, #00FF9D)',
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: 2,
-        zIndex: 9999,
-        pointerEvents: 'none',
-      }}
-    />
-  );
-}
-</file>
-
-<file path="eslint.config.mjs">
-import { defineConfig, globalIgnores } from "eslint/config";
-import nextVitals from "eslint-config-next/core-web-vitals";
-import nextTs from "eslint-config-next/typescript";
-
-const eslintConfig = defineConfig([
-  ...nextVitals,
-  ...nextTs,
-  // Override default ignores of eslint-config-next.
-  globalIgnores([
-    // Default ignores of eslint-config-next:
-    ".next/**",
-    "out/**",
-    "build/**",
-    "next-env.d.ts",
-  ]),
-]);
-
-export default eslintConfig;
-</file>
-
-<file path="next.config.ts">
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-  images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'images.unsplash.com',
-        pathname: '**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'placehold.co',
-        pathname: '**',
-      },
-    ],
-  },
-};
-
-export default nextConfig;
-</file>
-
-<file path="package.json">
-{
-  "name": "oxtanda-website",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint"
-  },
-  "dependencies": {
-    "framer-motion": "^12.34.0",
-    "lucide-react": "^0.563.0",
-    "next": "16.1.6",
-    "react": "19.2.3",
-    "react-dom": "19.2.3"
-  },
-  "devDependencies": {
-    "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "autoprefixer": "^10.4.24",
-    "eslint": "^9",
-    "eslint-config-next": "16.1.6",
-    "postcss": "^8.5.6",
-    "tailwindcss": "^4.1.18",
-    "typescript": "^5"
-  }
-}
-</file>
-
-<file path="postcss.config.mjs">
-const config = {
-  plugins: {
-    "@tailwindcss/postcss": {},
-  },
-};
-
-export default config;
-</file>
-
-<file path="public/branding/logo-0xtanda-icon.svg">
-<?xml version="1.0" encoding="UTF-8"?>
-<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32">
-  <image width="2000" height="2000" transform="scale(.02)" xlink:href="../../../../OneDrive/Documents/Abrur File/Project/0xTanda/0xFile/Assets/Logo/0xTanda_White_Logo_Icon.png"/>
-</svg>
-</file>
-
-<file path="public/branding/logo-0xtanda.svg">
-<?xml version="1.0" encoding="UTF-8"?>
-<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1500 525">
-  <image width="2000" height="700" transform="scale(.75)" xlink:href="logo-0xtanda.png"/>
-</svg>
-</file>
-
-<file path="public/file.svg">
-<svg fill="none" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M14.5 13.5V5.41a1 1 0 0 0-.3-.7L9.8.29A1 1 0 0 0 9.08 0H1.5v13.5A2.5 2.5 0 0 0 4 16h8a2.5 2.5 0 0 0 2.5-2.5m-1.5 0v-7H8v-5H3v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1M9.5 5V2.12L12.38 5zM5.13 5h-.62v1.25h2.12V5zm-.62 3h7.12v1.25H4.5zm.62 3h-.62v1.25h7.12V11z" clip-rule="evenodd" fill="#666" fill-rule="evenodd"/></svg>
-</file>
-
-<file path="public/next.svg">
-<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 394 80"><path fill="#000" d="M262 0h68.5v12.7h-27.2v66.6h-13.6V12.7H262V0ZM149 0v12.7H94v20.4h44.3v12.6H94v21h55v12.6H80.5V0h68.7zm34.3 0h-17.8l63.8 79.4h17.9l-32-39.7 32-39.6h-17.9l-23 28.6-23-28.6zm18.3 56.7-9-11-27.1 33.7h17.8l18.3-22.7z"/><path fill="#000" d="M81 79.3 17 0H0v79.3h13.6V17l50.2 62.3H81Zm252.6-.4c-1 0-1.8-.4-2.5-1s-1.1-1.6-1.1-2.6.3-1.8 1-2.5 1.6-1 2.6-1 1.8.3 2.5 1a3.4 3.4 0 0 1 .6 4.3 3.7 3.7 0 0 1-3 1.8zm23.2-33.5h6v23.3c0 2.1-.4 4-1.3 5.5a9.1 9.1 0 0 1-3.8 3.5c-1.6.8-3.5 1.3-5.7 1.3-2 0-3.7-.4-5.3-1s-2.8-1.8-3.7-3.2c-.9-1.3-1.4-3-1.4-5h6c.1.8.3 1.6.7 2.2s1 1.2 1.6 1.5c.7.4 1.5.5 2.4.5 1 0 1.8-.2 2.4-.6a4 4 0 0 0 1.6-1.8c.3-.8.5-1.8.5-3V45.5zm30.9 9.1a4.4 4.4 0 0 0-2-3.3 7.5 7.5 0 0 0-4.3-1.1c-1.3 0-2.4.2-3.3.5-.9.4-1.6 1-2 1.6a3.5 3.5 0 0 0-.3 4c.3.5.7.9 1.3 1.2l1.8 1 2 .5 3.2.8c1.3.3 2.5.7 3.7 1.2a13 13 0 0 1 3.2 1.8 8.1 8.1 0 0 1 3 6.5c0 2-.5 3.7-1.5 5.1a10 10 0 0 1-4.4 3.5c-1.8.8-4.1 1.2-6.8 1.2-2.6 0-4.9-.4-6.8-1.2-2-.8-3.4-2-4.5-3.5a10 10 0 0 1-1.7-5.6h6a5 5 0 0 0 3.5 4.6c1 .4 2.2.6 3.4.6 1.3 0 2.5-.2 3.5-.6 1-.4 1.8-1 2.4-1.7a4 4 0 0 0 .8-2.4c0-.9-.2-1.6-.7-2.2a11 11 0 0 0-2.1-1.4l-3.2-1-3.8-1c-2.8-.7-5-1.7-6.6-3.2a7.2 7.2 0 0 1-2.4-5.7 8 8 0 0 1 1.7-5 10 10 0 0 1 4.3-3.5c2-.8 4-1.2 6.4-1.2 2.3 0 4.4.4 6.2 1.2 1.8.8 3.2 2 4.3 3.4 1 1.4 1.5 3 1.5 5h-5.8z"/></svg>
-</file>
-
-<file path="public/window.svg">
-<svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill-rule="evenodd" clip-rule="evenodd" d="M1.5 2.5h13v10a1 1 0 0 1-1 1h-11a1 1 0 0 1-1-1zM0 1h16v11.5a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 0 12.5zm3.75 4.5a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5M7 4.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0m1.75.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5" fill="#666"/></svg>
-</file>
-
-<file path="README.md">
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
-
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-"# nx-build" 
-"# 0x-build" 
-"# 0x-build" 
-"# 0x-build" 
-"# 0x-build" 
-"# 0x-build" 
-"# 0x-build"
-</file>
-
-<file path="tailwind.config.ts">
-// tailwind.config.ts
-import type { Config } from "tailwindcss";
-
-const config: Config = {
-  content: [
-    "./app/**/*.{js,ts,jsx,tsx}",
-    "./components/**/*.{js,ts,jsx,tsx}",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
-  theme: {
-    extend: {
-      colors: {
-        brand: {
-          purple: "#836EF9",
-          black: "#0E0E0E",
-          white: "#F0F0F0",
-          green: "#00FF9D",
-          gray: "#A19797",
-          tokopedia: "#03AC0E",
-          shopee: "#EE4D2D",
-          tiktok: "#000000",
-          whatsapp: "#25D366",
-        },
-      },
-      fontFamily: {
-        sans: ["Space Grotesk", "sans-serif"],
-        mono: ["Space Mono", "monospace"],
-        deco: ["Cinzel Decorative", "serif"],
-      },
-    },
-  },
-  plugins: [],
-};
-
-export default config;
-</file>
-
-<file path="tsconfig.json">
-{
-  "compilerOptions": {
-    "target": "ES2017",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "react-jsx",
-    "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
-    "paths": {
-      "@/*": ["./*"]
-    }
-  },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts",
-    ".next/dev/types/**/*.ts",
-    "**/*.mts"
-  ],
-  "exclude": ["node_modules"]
 }
 </file>
 
@@ -5533,6 +5366,156 @@ export default function YonoVsYoloArticlePage() {
 }
 </file>
 
+<file path="components/Marquee.tsx">
+// Marquee banner — fixed top, dark bg, mixed purple/white text
+
+function MarqueeUnit() {
+  return (
+    <span className="inline-flex items-center whitespace-nowrap font-mono text-[10px] font-bold italic">
+      <span className="text-[#836EF9] tracking-[0.35em] mx-5">0xTANDA</span>
+      <span className="text-white/25 mx-1 tracking-wider not-italic">{'//'}</span>
+      <span className="text-white/65 tracking-[0.3em] mx-5">PHYGITAL STREETWEAR</span>
+      <span className="text-[#836EF9] mx-4 not-italic">✦</span>
+      <span className="text-white/65 tracking-[0.3em] mx-5">0XTANDA ORIGIN-LOG-1 COMING SOON</span>
+      <span className="text-[#836EF9] mx-4 not-italic">✦</span>
+      <span className="text-[#836EF9] tracking-[0.35em] mx-5">ONE ENTITY</span>
+      <span className="text-white/65 tracking-[0.3em] ml-1 mx-5">DUAL EXISTENCE</span>
+      <span className="text-[#836EF9] mx-4 not-italic">✦</span>
+    </span>
+  );
+}
+
+export default function Marquee() {
+  return (
+    <div className="fixed top-0 left-0 w-full bg-[#0a0a0a] border-b border-white/[0.06] py-2 z-[60] overflow-hidden">
+      <div className="animate-marquee whitespace-nowrap">
+        {[...Array(10)].map((_, i) => (
+          <MarqueeUnit key={i} />
+        ))}
+      </div>
+    </div>
+  );
+}
+</file>
+
+<file path="components/Navbar.tsx">
+"use client";
+
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { usePathname } from 'next/navigation';
+import { Menu, X } from 'lucide-react';
+
+export default function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
+
+  // Scroll detection — compact navbar after 50px
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const navLinks = [
+    { name: 'HOME',         path: '/' },
+    { name: 'SHOP',         path: '/shop' },
+    { name: 'VERIFY',       path: '/verify' },
+    { name: 'ABOUT',        path: '/about' },
+    { name: 'TERMINAL LOG', path: '/terminal-log' },
+  ];
+
+  return (
+    <nav
+      className={`fixed left-0 w-full z-50 px-6 transition-all duration-300 ease-in-out ${
+        scrolled ? 'top-3' : 'top-10'
+      }`}
+    >
+      {/* ── Pill container — shrinks on scroll ── */}
+      <div
+        className={`max-w-7xl mx-auto border border-white/10 rounded-2xl flex items-center justify-between shadow-2xl transition-all duration-300 ease-in-out ${
+          scrolled
+            ? 'p-2.5 bg-[rgba(14,14,14,0.88)]'
+            : 'p-4 bg-black/60'
+        }`}
+        style={{ backdropFilter: 'blur(12px)' }}
+      >
+        {/* Logo — scale 1.02 on hover */}
+        <Link href="/" className="flex items-center">
+          <div className="relative w-8 h-8 transition-transform duration-200 hover:scale-[1.02]">
+            <Image
+              src="/branding/logo-0xtanda-icon.png"
+              alt="0xTanda Icon"
+              width={32}
+              height={32}
+              className="object-contain"
+              priority
+            />
+          </div>
+        </Link>
+
+        {/* Desktop nav links */}
+        <div className="hidden lg:flex gap-1 bg-white/5 p-1 rounded-full border border-white/5">
+          {navLinks.map((link) => {
+            const isActive =
+              (pathname.startsWith(link.path) && link.path !== '/') ||
+              pathname === link.path;
+
+            return (
+              <Link
+                key={link.path}
+                href={link.path}
+                className={`px-6 py-2 rounded-full text-[10px] font-mono tracking-widest transition-colors duration-200 relative ${
+                  isActive
+                    ? 'bg-[#836EF9] text-black font-bold'
+                    : 'text-neutral-400 hover:text-white nav-link-hover'
+                }`}
+              >
+                {link.name}
+              </Link>
+            );
+          })}
+        </div>
+
+        {/* Mobile toggle */}
+        <div className="lg:hidden flex items-center">
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="text-white p-2 hover:bg-white/5 rounded-lg transition-colors"
+            aria-label="Toggle Navigation"
+          >
+            {isOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile menu overlay */}
+      {isOpen && (
+        <div className="absolute top-24 left-6 right-6 bg-black/95 backdrop-blur-2xl border border-white/10 rounded-2xl p-8 flex flex-col gap-6 lg:hidden shadow-2xl">
+          {navLinks.map((link) => (
+            <Link
+              key={link.path}
+              href={link.path}
+              onClick={() => setIsOpen(false)}
+              className={`text-3xl font-display font-bold tracking-tighter transition-colors uppercase ${
+                (pathname.startsWith(link.path) && link.path !== '/') ||
+                pathname === link.path
+                  ? 'text-[#836EF9]'
+                  : 'text-white'
+              }`}
+            >
+              {link.name}
+            </Link>
+          ))}
+        </div>
+      )}
+    </nav>
+  );
+}
+</file>
+
 <file path="lib/data.ts">
 /**
  * 0xTanda - Single Source of Truth
@@ -5711,179 +5694,6 @@ import "./.next/types/routes.d.ts";
 
 // NOTE: This file should not be edited
 // see https://nextjs.org/docs/app/api-reference/config/typescript for more information.
-</file>
-
-<file path="app/globals.css">
-@import "tailwindcss";
-
-@theme {
-  --color-brand-black: #0E0E0E;
-  --color-brand-purple: #836EF9;
-  --color-brand-green: #00FF9D;
-  --color-brand-white: #FFFFFF;
-  --color-brand-gray: #888888;
-
-  --font-sans: var(--font-space-grotesk);
-  --font-mono: var(--font-space-mono);
-  --font-display: var(--font-space-grotesk);
-  --font-deco: var(--font-orbitron);
-}
-
-/* --- ANIMATIONS --- */
-
-/* Glitch Effect */
-@keyframes glitch {
-  0% { transform: translate(0); text-shadow: -2px 0 #836EF9, 2px 0 #00FF9D; }
-  25% { transform: translate(-2px, 2px); }
-  50% { transform: translate(2px, -2px); text-shadow: 2px 0 #836EF9, -2px 0 #00FF9D; }
-  75% { transform: translate(-2px, -2px); }
-  100% { transform: translate(0); }
-}
-
-.animate-glitch {
-  animation: glitch 0.3s cubic-bezier(.25,.46,.45,.94) both infinite;
-}
-
-/* Marquee Effect */
-@keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
-.animate-marquee {
-  display: flex;
-  width: max-content;
-  animation: marquee 25s linear infinite;
-}
-
-/* Smooth Fade In Up */
-.fade-in {
-  animation: fadeIn 0.8s ease-out forwards;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Custom Selection Color */
-::selection {
-  background-color: #836EF9;
-  color: #0E0E0E;
-}
-
-/* Hero Atmospheric Grid */
-@keyframes gridScroll {
-  from { transform: translateY(0); }
-  to   { transform: translateY(60px); }
-}
-
-.hero-grid-bg {
-  background-image:
-    linear-gradient(rgba(131, 110, 249, 0.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(131, 110, 249, 0.07) 1px, transparent 1px);
-  background-size: 60px 60px;
-  animation: gridScroll 15s linear infinite;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-/* Product Card — Button Sweep Effect */
-.card-btn {
-  position: relative;
-  overflow: hidden;
-  display: block;
-}
-
-.card-btn::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: white;
-  clip-path: inset(0 100% 0 0);
-  transition: clip-path 0.35s ease;
-  z-index: 0;
-}
-
-.card-btn:hover::before {
-  clip-path: inset(0 0% 0 0);
-}
-
-.card-btn-inner {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  transition: color 0.35s ease;
-}
-
-.card-btn:hover .card-btn-inner {
-  color: black;
-}
-
-/* Animated Border — NFT Card (Phygital Duality Section) */
-@keyframes borderRotate {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
-}
-
-.nft-animated-border {
-  position: relative;
-  padding: 1px;
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.nft-animated-border::before {
-  content: '';
-  position: absolute;
-  inset: -50%;
-  background: linear-gradient(0deg, #836EF9 0%, #00FF9D 50%, #836EF9 100%);
-  animation: borderRotate 4s linear infinite;
-}
-
-.nft-card-inner {
-  position: relative;
-  z-index: 1;
-  background: #0E0E0E;
-  border-radius: 3px;
-  padding: 8px;
-}
-
-/* Navbar link — animated underline trace from left on hover */
-.nav-link-hover {
-  position: relative;
-  overflow: visible;
-}
-
-.nav-link-hover::after {
-  content: '';
-  position: absolute;
-  bottom: 4px;
-  left: 14%;
-  width: 72%;
-  height: 1px;
-  background: #836EF9;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.3s ease;
-}
-
-.nav-link-hover:hover::after {
-  transform: scaleX(1);
-}
-
-/* ── Mobile & Reduced-Motion: disable expensive infinite animations ── */
-@media (hover: none), (prefers-reduced-motion: reduce) {
-  .animate-glitch {
-    animation: none;
-  }
-  .hero-grid-bg {
-    animation: none;
-  }
-}
 </file>
 
 <file path="app/layout.tsx">
@@ -6360,6 +6170,179 @@ export default function TerminalLogMenu() {
       </footer>
     </main>
   );
+}
+</file>
+
+<file path="app/globals.css">
+@import "tailwindcss";
+
+@theme {
+  --color-brand-black: #0E0E0E;
+  --color-brand-purple: #836EF9;
+  --color-brand-green: #00FF9D;
+  --color-brand-white: #FFFFFF;
+  --color-brand-gray: #888888;
+
+  --font-sans: var(--font-space-grotesk);
+  --font-mono: var(--font-space-mono);
+  --font-display: var(--font-space-grotesk);
+  --font-deco: var(--font-orbitron);
+}
+
+/* --- ANIMATIONS --- */
+
+/* Glitch Effect */
+@keyframes glitch {
+  0% { transform: translate(0); text-shadow: -2px 0 #836EF9, 2px 0 #00FF9D; }
+  25% { transform: translate(-2px, 2px); }
+  50% { transform: translate(2px, -2px); text-shadow: 2px 0 #836EF9, -2px 0 #00FF9D; }
+  75% { transform: translate(-2px, -2px); }
+  100% { transform: translate(0); }
+}
+
+.animate-glitch {
+  animation: glitch 0.3s cubic-bezier(.25,.46,.45,.94) both infinite;
+}
+
+/* Marquee Effect */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 25s linear infinite;
+}
+
+/* Smooth Fade In Up */
+.fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Custom Selection Color */
+::selection {
+  background-color: #836EF9;
+  color: #0E0E0E;
+}
+
+/* Hero Atmospheric Grid */
+@keyframes gridScroll {
+  from { transform: translateY(0); }
+  to   { transform: translateY(60px); }
+}
+
+.hero-grid-bg {
+  background-image:
+    linear-gradient(rgba(131, 110, 249, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(131, 110, 249, 0.07) 1px, transparent 1px);
+  background-size: 60px 60px;
+  animation: gridScroll 15s linear infinite;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Product Card — Button Sweep Effect */
+.card-btn {
+  position: relative;
+  overflow: hidden;
+  display: block;
+}
+
+.card-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: white;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 0.35s ease;
+  z-index: 0;
+}
+
+.card-btn:hover::before {
+  clip-path: inset(0 0% 0 0);
+}
+
+.card-btn-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: color 0.35s ease;
+}
+
+.card-btn:hover .card-btn-inner {
+  color: black;
+}
+
+/* Animated Border — NFT Card (Phygital Duality Section) */
+@keyframes borderRotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.nft-animated-border {
+  position: relative;
+  padding: 1px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.nft-animated-border::before {
+  content: '';
+  position: absolute;
+  inset: -50%;
+  background: linear-gradient(0deg, #836EF9 0%, #00FF9D 50%, #836EF9 100%);
+  animation: borderRotate 4s linear infinite;
+}
+
+.nft-card-inner {
+  position: relative;
+  z-index: 1;
+  background: #0E0E0E;
+  border-radius: 3px;
+  padding: 8px;
+}
+
+/* Navbar link — animated underline trace from left on hover */
+.nav-link-hover {
+  position: relative;
+  overflow: visible;
+}
+
+.nav-link-hover::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 14%;
+  width: 72%;
+  height: 1px;
+  background: #836EF9;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.nav-link-hover:hover::after {
+  transform: scaleX(1);
+}
+
+/* ── Mobile & Reduced-Motion: disable expensive infinite animations ── */
+@media (hover: none), (prefers-reduced-motion: reduce) {
+  .animate-glitch {
+    animation: none;
+  }
+  .hero-grid-bg {
+    animation: none;
+  }
 }
 </file>
 
