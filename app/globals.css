@@ -135,3 +135,36 @@
   border-radius: 3px;
   padding: 8px;
 }
+
+/* Navbar link — animated underline trace from left on hover */
+.nav-link-hover {
+  position: relative;
+  overflow: visible;
+}
+
+.nav-link-hover::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 14%;
+  width: 72%;
+  height: 1px;
+  background: #836EF9;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.nav-link-hover:hover::after {
+  transform: scaleX(1);
+}
+
+/* ── Mobile & Reduced-Motion: disable expensive infinite animations ── */
+@media (hover: none), (prefers-reduced-motion: reduce) {
+  .animate-glitch {
+    animation: none;
+  }
+  .hero-grid-bg {
+    animation: none;
+  }
+}

@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import Navbar from '../components/Navbar';
 import Marquee from '../components/Marquee';
 import { ArrowRight, Lock, Zap } from 'lucide-react';
@@ -14,15 +14,6 @@ const sectionVariants = {
   visible: { opacity: 1, transition: { staggerChildren: 0.15 } },
 };
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 32, filter: 'blur(4px)' },
-  visible: {
-    opacity: 1,
-    y: 0,
-    filter: 'blur(0px)',
-    transition: { duration: 0.85, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] },
-  },
-};
 
 const headingVariants = {
   hidden: { opacity: 0, y: 20, skewY: 2 },
@@ -41,6 +32,24 @@ const TICKER_TOKENS = [
 
 export default function HomePage() {
   const [isReady, setIsReady] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
+
+  const itemVariants = {
+    hidden: {
+      opacity: 0,
+      y: prefersReducedMotion ? 0 : 32,
+      filter: prefersReducedMotion ? 'blur(0px)' : 'blur(4px)',
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      filter: 'blur(0px)',
+      transition: {
+        duration: prefersReducedMotion ? 0.4 : 0.85,
+        ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
+      },
+    },
+  };
 
   useEffect(() => {
     const t = setTimeout(() => setIsReady(true), 100);
@@ -81,9 +90,9 @@ export default function HomePage() {
 
                 <motion.div
                   className="relative w-[110vw] max-w-[1200px] h-[180px] md:max-w-[2800px] md:h-[420px] mb-2 animate-glitch"
-                  initial={{ opacity: 0, scale: 1.06, filter: 'blur(12px)' }}
+                  initial={{ opacity: 0, scale: prefersReducedMotion ? 1 : 1.06, filter: prefersReducedMotion ? 'blur(0px)' : 'blur(12px)' }}
                   animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-                  transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+                  transition={{ duration: prefersReducedMotion ? 0.5 : 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
                 >
                   <Image
                     src="/branding/logo-0xtanda.png"
@@ -276,7 +285,7 @@ export default function HomePage() {
               key={i}
               className="font-mono text-[8px] tracking-[0.6em] text-white/15 uppercase whitespace-nowrap"
             >
-              {token} <span className="text-brand-purple/30">//</span>
+              {token} <span className="text-brand-purple/30">{'//'}</span>
             </span>
           ))}
         </motion.div>
