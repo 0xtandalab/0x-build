@@ -6,10 +6,11 @@
   --color-brand-green: #00FF9D;
   --color-brand-white: #FFFFFF;
   --color-brand-gray: #888888;
-  
+
   --font-sans: var(--font-space-grotesk);
   --font-mono: var(--font-space-mono);
-  --font-display: var(--font-cinzel);
+  --font-display: var(--font-space-grotesk);
+  --font-deco: var(--font-orbitron);
 }
 
 /* --- ANIMATIONS --- */
@@ -69,4 +70,68 @@
   animation: gridScroll 15s linear infinite;
   pointer-events: none;
   overflow: hidden;
+}
+
+/* Product Card — Button Sweep Effect */
+.card-btn {
+  position: relative;
+  overflow: hidden;
+  display: block;
+}
+
+.card-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: white;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 0.35s ease;
+  z-index: 0;
+}
+
+.card-btn:hover::before {
+  clip-path: inset(0 0% 0 0);
+}
+
+.card-btn-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: color 0.35s ease;
+}
+
+.card-btn:hover .card-btn-inner {
+  color: black;
+}
+
+/* Animated Border — NFT Card (Phygital Duality Section) */
+@keyframes borderRotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.nft-animated-border {
+  position: relative;
+  padding: 1px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.nft-animated-border::before {
+  content: '';
+  position: absolute;
+  inset: -50%;
+  background: linear-gradient(0deg, #836EF9 0%, #00FF9D 50%, #836EF9 100%);
+  animation: borderRotate 4s linear infinite;
+}
+
+.nft-card-inner {
+  position: relative;
+  z-index: 1;
+  background: #0E0E0E;
+  border-radius: 3px;
+  padding: 8px;
 }

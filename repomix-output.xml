@@ -40,6 +40,7 @@ The content is organized as follows:
 </file_summary>
 
 <directory_structure>
+.claude/settings.local.json
 .gitignore
 app/about/page.tsx
 app/globals.css
@@ -59,8 +60,11 @@ app/terminal-log/stoikisme-dalam-fashion/page.tsx
 app/terminal-log/yono-vs-yolo/page.tsx
 app/verify/page.tsx
 app/verify/pageform/page.tsx
+components/CursorSystem.tsx
 components/Marquee.tsx
 components/Navbar.tsx
+components/NoiseOverlay.tsx
+components/ScrollProgress.tsx
 eslint.config.mjs
 lib/data.ts
 next-env.d.ts
@@ -105,360 +109,14 @@ tsconfig.json
 <files>
 This section contains the contents of the repository's files.
 
-<file path="app/terminal-log/yono-vs-yolo/page.tsx">
-"use client";
-
-import React from "react";
-import { motion, useScroll, useSpring, Variants } from "framer-motion";
-import {
-  BarChart2, RefreshCcw, Brain, Fingerprint, ArrowLeft, ChevronRight, ArrowRight, User, Calendar, Clock
-} from "lucide-react";
-
-// ============================================================================
-// MOCK COMPONENTS
-// ============================================================================
-const Link = ({ href, children, className }: any) => <a href={href} className={className}>{children}</a>;
-const Image = ({ src, alt, width, height, className, priority }: any) => (
-  <img src={src} alt={alt} width={width} height={height} className={className} loading={priority ? "eager" : "lazy"} />
-);
-// ============================================================================
-
-// --- VARIAN ANIMASI ---
-const fadeUp: Variants = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8 } }};
-const stagger: Variants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.1 } }};
-
-export default function YonoVsYoloArticlePage() {
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
-
-  return (
-    <main className="min-h-screen bg-[#0A0A0A] text-[#F3F3F3] selection:bg-[#836EF9] selection:text-black font-sans relative">
-      {/* READING PROGRESS BAR */}
-      <motion.div className="fixed top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#836EF9] to-[#00FF9D] z-[100] origin-left" style={{ scaleX }} />
-
-      {/* HEADER ARTIKEL JURNAL */}
-      <header className="relative pt-40 pb-12 px-6 border-b border-white/5">
-        <div className="max-w-3xl mx-auto">
-          <Link href="/terminal-log" className="inline-flex items-center gap-2 text-neutral-500 hover:text-[#836EF9] mb-10 font-mono text-[10px] tracking-[0.4em] uppercase transition-colors group">
-            <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" /> Back to Menu
-          </Link>
-          <motion.div initial="hidden" animate="visible" variants={stagger} className="space-y-6">
-            <motion.div variants={fadeUp} className="flex items-center gap-3 text-[11px] font-mono tracking-widest text-[#836EF9] uppercase font-bold">
-              <span className="bg-[#836EF9]/10 border border-[#836EF9]/30 px-3 py-1 rounded-full">Editorial</span>
-              <span className="text-neutral-500">// Archive_07</span>
-            </motion.div>
-            <motion.h1 variants={fadeUp} className="text-3xl md:text-5xl font-bold tracking-tighter leading-tight text-white">
-              YONO vs YOLO: Ketika Generasi yang Lahir dari Impulse Buying Mulai Mempertanyakan Lemari Bajunya Sendiri
-            </motion.h1>
-            <motion.p variants={fadeUp} className="text-lg md:text-xl text-[#836EF9] font-light leading-relaxed">
-              Sistem dirancang agar kamu terus membeli. Tapi ada error di dalam loop itu. Dan Gen Z mulai melihatnya.
-            </motion.p>
-            <motion.div variants={fadeUp} className="flex flex-wrap items-center gap-x-6 gap-y-4 text-[12px] text-neutral-500 pt-6 border-t border-white/5">
-              <div className="flex items-center gap-2">
-                <div className="w-6 h-6 rounded-full bg-[#836EF9]/20 flex items-center justify-center border border-[#836EF9]/50">
-                  <User size={12} className="text-[#836EF9]" />
-                </div>
-                <span className="font-bold text-white">0xTanda Lab</span>
-              </div>
-              <div className="flex items-center gap-2"><Calendar size={14} /> 19 Mei 2026</div>
-              <div className="flex items-center gap-2"><Clock size={14} /> ~8 menit</div>
-            </motion.div>
-          </motion.div>
-        </div>
-      </header>
-
-      {/* BODY ARTIKEL */}
-      <article className="relative py-16 px-6">
-        <div className="max-w-3xl mx-auto space-y-10 text-[17px] md:text-[19px] text-neutral-300 leading-[1.8] font-light">
-
-          {/* PENDAHULUAN */}
-          <motion.div variants={fadeUp}>
-            <p>
-              <span className="float-left text-6xl md:text-7xl font-bold text-[#836EF9] mr-4 mt-2 leading-none font-serif">K</span>
-              amu punya berapa baju?
-            </p>
-            <p className="mt-6">
-              Buka lemarimu. Hitung. Bukan yang sering dipakai — hitung semuanya. Yang terlipat rapi di belakang. Yang masih ada tag-nya. Yang dibeli karena diskon flash sale pukul 00.00. Yang terasa "sayang dibuang" padahal sudah setahun tidak pernah disentuh.
-            </p>
-            <p className="mt-6">
-              Angkanya lebih besar dari yang kamu kira.
-            </p>
-            <p className="mt-6">
-              Dan di suatu titik, angka itu berhenti terasa seperti kekayaan. Ia mulai terasa seperti catatan kesalahan.
-            </p>
-            <p className="mt-6">
-              Generasi yang dibesarkan dengan notifikasi checkout, OOTD culture, dan filosofi YOLO — You Only Live Once, hidup sekali jadi belilah saja — kini menghadapi paradoks yang tidak pernah diajarkan di sekolah: punya banyak, tapi tidak benar-benar memiliki apapun.
-            </p>
-            <p className="mt-6">
-              Di sinilah YONO masuk. Bukan sebagai tren estetika. Tapi sebagai sinyal bahwa sesuatu di dalam sistem sudah mulai rusak.
-            </p>
-          </motion.div>
-
-          {/* COVER IMAGE */}
-          <motion.div variants={fadeUp} className="py-6">
-            <figure className="relative aspect-[16/9] w-full rounded-sm overflow-hidden border border-white/10 bg-white/5 group flex items-center justify-center">
-              <Image 
-                src="/article/cover-yono-vs-yolo.png" 
-                alt="YONO vs YOLO Concept" 
-                width={1600}
-                height={900}
-                priority
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000 grayscale group-hover:grayscale-0" 
-              />
-              <div className="absolute inset-0 bg-[#836EF9]/10 mix-blend-overlay group-hover:bg-transparent transition-colors"></div>
-              <figcaption className="absolute bottom-4 left-4 bg-black/80 backdrop-blur-md px-3 py-1.5 text-[10px] font-mono text-[#836EF9] border border-[#836EF9]/30 uppercase tracking-widest z-10">
-                Consumption_Loop // Error_Detected
-              </figcaption>
-            </figure>
-          </motion.div>
-
-          {/* SEKSI A */}
-          <motion.div variants={fadeUp} className="space-y-5">
-            <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight flex items-center gap-3">
-              <BarChart2 className="text-[#836EF9]" size={28} /> A. Angka-Angka yang Tidak Ada di Caption Instagram
-            </h2>
-            <p>
-              Mari kita mulai dari fakta.
-            </p>
-            <p>
-              Sebuah riset terhadap perilaku konsumsi Gen Z di Indonesia menemukan angka yang mengejutkan: 56,2% membeli pakaian baru setiap bulan. Dan 75,6% melakukan impulse buying — membeli tanpa rencana, dipicu diskon atau tampilan menarik di layar ponsel.
-            </p>
-
-            {/* CALLOUT BOX */}
-            <div className="bg-[#836EF9]/10 border-l-2 border-[#836EF9] p-6 my-6 text-white italic">
-              "Tiga dari empat orang. Setiap bulan. Tanpa benar-benar berniat membeli."
-            </div>
-
-            <p>
-              Di sisi lain, data Kementerian Perdagangan mencatat bahwa pakaian adalah produk paling banyak dibeli di e-commerce Indonesia sepanjang 2024, dengan persentase 70,1% dari seluruh kategori — mengalahkan produk kecantikan, makanan, bahkan elektronik.
-            </p>
-            <p>
-              Indonesia bukan hanya konsumen fashion. Indonesia adalah salah satu mesin konsumsi fashion terbesar di dunia.
-            </p>
-            <p>
-              Dan biayanya?
-            </p>
-            <p>
-              Limbah tekstil Indonesia diproyeksikan mencapai 3,5 juta ton pada 2030 — naik 68 persen dibanding 2019. Industri tekstil global menyumbang setidaknya 7 persen dari total sampah dunia. Di hulu produksinya, Sungai Citarum — sungai yang ada di negara yang sama dengan lemarimu — telah kehilangan 60 persen spesies ikannya akibat limbah pewarnaan tekstil.
-            </p>
-            <p>
-              Tidak ada dari angka-angka ini yang muncul di konten "haul baju" yang kamu tonton tadi malam.
-            </p>
-          </motion.div>
-
-          {/* SEKSI B */}
-          <motion.div variants={fadeUp} className="space-y-5 pt-8 border-t border-white/5">
-            <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight flex items-center gap-3">
-              <RefreshCcw className="text-[#836EF9]" size={28} /> B. YOLO ke YONO: Ini Bukan Soal Kesadaran Lingkungan
-            </h2>
-            <p>
-              YONO — You Only Need One — bukan lahir dari kampanye sustainability yang dibiayai brand fashion mewah.
-            </p>
-            <p>
-              Ia lahir dari tekanan.
-            </p>
-            <p>
-              Pertama kali viral dari Korea, YONO adalah respons Gen Z terhadap dua krisis sekaligus: krisis ekonomi yang membuat "flex culture" terasa semakin absurd, dan krisis eksistensial ketika lemari yang penuh ternyata tidak membuat hidup terasa lebih penuh.
-            </p>
-            <p>
-              Ini adalah perbedaan yang penting untuk dipahami.
-            </p>
-            <p>
-              YONO bukan tentang menjadi minimalis yang estetis. Ia tentang satu pertanyaan radikal yang mulai berani ditanyakan oleh generasi yang selama ini diajarkan untuk tidak menunda kepuasan:
-            </p>
-            <p className="text-white font-bold">
-              "Apakah aku benar-benar membutuhkan ini?"
-            </p>
-            <p>
-              Dan di balik pertanyaan itu, ada kesadaran yang lebih gelap: bahwa selama bertahun-tahun, jawaban atas pertanyaan itu sudah dijawabkan lebih dulu — oleh algoritma, oleh flash sale, oleh notifikasi yang tahu persis kapan kamu paling rentan membuka aplikasi.
-            </p>
-
-            {/* BLOCKQUOTE */}
-            <div className="bg-[#836EF9]/10 border-l-2 border-[#836EF9] p-6 my-6">
-              <p className="text-white italic text-lg md:text-xl leading-relaxed">
-                "YOLO memberi izin. YONO adalah pencabutan izin itu."
-              </p>
-            </div>
-
-            <p>
-              Tapi ada masalah.
-            </p>
-          </motion.div>
-
-          {/* SEKSI C */}
-          <motion.div variants={fadeUp} className="space-y-5 pt-8 border-t border-white/5">
-            <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight flex items-center gap-3">
-              <Brain className="text-[#836EF9]" size={28} /> C. Intention-Behavior Gap: Tahu Tapi Tidak Bisa Berhenti
-            </h2>
-            <p>
-              Di sinilah narasi YONO mulai retak.
-            </p>
-            <p>
-              Riset akademis menyebutnya intention-behavior gap — jurang antara niat dan tindakan nyata. Orang tahu fast fashion merusak. Mereka tahu impulse buying menguras dompet. Mereka setuju dengan prinsip YONO secara teoritis.
-            </p>
-            <p>
-              Tapi angka impulse buying tidak turun.
-            </p>
-            <p>
-              Kenapa?
-            </p>
-            <p>
-              Karena sistem tidak dirancang untuk mendukung keputusan yang lambat.
-            </p>
-            <p>
-              Algoritma TikTok dan Instagram bukan hanya cermin selera kamu — ia adalah instruksi pembelian yang sangat personal, dibangun dari data perilakumu selama bertahun-tahun. Setiap konten yang berhenti kamu scroll lebih dari dua detik adalah data. Setiap produk yang kamu zoom adalah data. Setiap jam berapa kamu membuka aplikasi adalah data.
-            </p>
-            <p>
-              Lebih jauh lagi: brand fashion besar sudah menggunakan AI yang menganalisis jutaan gambar media sosial setiap hari untuk memprediksi apa yang akan kamu inginkan — hingga 24 bulan ke depan. Tren yang kamu "temukan" sendiri di FYP bulan ini, mungkin sudah diproduksi massal dua tahun yang lalu berdasarkan model prediktif yang melacak pola konsumsi jutaan orang seperti kamu.
-            </p>
-            <p>
-              Kamu bukan yang menemukan tren itu. Kamu adalah konfirmasi dari prediksi yang sudah dibuat sebelum kamu sadar ingin membelinya.
-            </p>
-            <p>
-              YONO adalah perlawanan terhadap sistem ini. Tapi perlawanan yang jujur harus dimulai dengan mengakui betapa dalamnya sistem itu sudah masuk.
-            </p>
-            <p>
-              Capsule wardrobe yang diromantisasi di konten lifestyle? Itu bukan solusi untuk semua orang. "Beli sedikit, beli bagus" adalah privilege ketika harga barang berkualitas masih jauh di atas jangkauan UMR Jakarta.
-            </p>
-            <p>
-              Masalahnya bukan pilihan antara fast fashion atau slow fashion.
-            </p>
-            <p className="text-white font-bold">
-              Masalahnya adalah: kepemilikan yang sebenarnya tidak pernah diajarkan sebagai sebuah nilai.
-            </p>
-
-            {/* GRID 2-COL FAKTA KUNCI */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-              <div className="bg-white/5 border border-white/10 p-6 rounded-sm space-y-3">
-                <p className="text-3xl font-bold text-[#836EF9] font-mono">76,7%</p>
-                <p className="text-sm text-neutral-400 leading-relaxed">
-                  Gen Z dipengaruhi konten sosmed dalam belanja baju
-                </p>
-              </div>
-              <div className="bg-white/5 border border-white/10 p-6 rounded-sm space-y-3">
-                <p className="text-3xl font-bold text-[#836EF9] font-mono">24</p>
-                <p className="text-sm text-neutral-400 leading-relaxed">
-                  Bulan — brand fashion pakai AI prediksi tren hingga 24 bulan sebelum launching
-                </p>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* SEKSI D */}
-          <motion.div variants={fadeUp} className="space-y-5 pt-8 border-t border-white/5">
-            <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight flex items-center gap-3">
-              <Fingerprint className="text-[#836EF9]" size={28} /> D. Bukan Tentang Membeli Lebih Sedikit — Tapi Memiliki dengan Cara yang Berbeda
-            </h2>
-            <p>
-              Ada pertanyaan yang lebih fundamental dari "seberapa banyak yang cukup?":
-            </p>
-            <p className="text-white font-bold text-xl">
-              Apa artinya benar-benar memiliki sesuatu?
-            </p>
-            <p>
-              Dalam sistem yang sekarang ada, jawaban itu sangat kabur. Kamu membeli baju, tapi dalam tiga bulan modelnya sudah "ketinggalan." Kamu punya receipt-nya, tapi tidak ada cara membuktikan keasliannya. Nilai barangnya turun begitu keluar dari toko, bukan karena kualitasnya menurun, tapi karena sistem tidak pernah membangun infrastruktur untuk nilai yang bertahan.
-            </p>
-            <p>
-              Fast fashion menjual ilusi kepemilikan. Kamu membeli sebuah baju, tapi yang sebenarnya kamu beli adalah akses sementara ke sebuah tren — yang akan digantikan oleh tren berikutnya dalam hitungan minggu.
-            </p>
-            <p>
-              YONO bukan hanya tentang membeli lebih sedikit. Ia tentang menuntut bahwa setiap keputusan membeli harus berarti sesuatu. Bahwa setiap piece yang masuk ke lemarimu membawa nilai yang bisa diverifikasi, dipertahankan, dan dipindahtangankan secara sah.
-            </p>
-
-            {/* CALLOUT BOX */}
-            <div className="bg-[#836EF9]/10 border border-[#836EF9]/30 p-6 md:p-8 rounded-sm mt-8">
-              <p className="text-white font-bold text-lg md:text-xl leading-relaxed">
-                Kepemilikan yang nyata bukan soal jumlah. Ia soal bukti.
-              </p>
-            </div>
-
-            <p>
-              Baju yang kamu beli hari ini — siapa yang bisa membuktikan kamu yang punya? Dalam berapa tahun, dan dengan cara apa, nilai itu bisa bertahan?
-            </p>
-            <p>
-              Itulah pertanyaan yang seharusnya ditanyakan sebelum checkout berikutnya.
-            </p>
-          </motion.div>
-
-          {/* PENUTUP */}
-          <motion.div variants={fadeUp} className="space-y-5 pt-8 border-t border-white/5">
-            <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight">
-              Sistem Tidak Akan Berubah Sendiri
-            </h2>
-            <p>
-              YONO adalah sinyal yang benar dengan solusi yang masih setengah jalan.
-            </p>
-            <p>
-              Benar bahwa generasi ini mulai lelah dengan loop konsumsi tanpa akhir. Benar bahwa "lebih sedikit" lebih baik dari "lebih banyak."
-            </p>
-            <p>
-              Tapi selama infrastruktur kepemilikan tidak berubah — selama baju yang kamu beli tidak punya catatan eksistensi, tidak punya verifikasi, tidak punya nilai yang bertahan melampaui satu musim tren — YONO hanya akan menjadi tren lain yang difoto untuk konten dan dilupakan di bulan berikutnya.
-            </p>
-            <p>
-              Pergeseran yang nyata bukan di jumlah baju di lemarimu.
-            </p>
-            <p>
-              Ia ada di pertanyaan yang kamu tanyakan sebelum membeli:
-            </p>
-            <p className="text-white font-bold text-xl md:text-2xl italic leading-relaxed">
-              "Apakah ini sesuatu yang layak untuk benar-benar kumiliki?"
-            </p>
-            <p>
-              Dan jika jawabannya ya — maka kepemilikan itu seharusnya bisa dibuktikan.
-            </p>
-
-            {/* CTA BUTTON */}
-            <div className="pt-6">
-              <Link 
-                href="/shop" 
-                className="inline-flex items-center justify-center gap-3 px-8 py-5 bg-[#836EF9] text-black font-mono text-xs font-bold uppercase tracking-widest hover:bg-white transition-all rounded-sm shadow-[0_0_30px_rgba(131,110,249,0.3)] w-full sm:w-auto"
-              >
-                LIHAT KOLEKSI GENESIS <ArrowRight size={16} />
-              </Link>
-            </div>
-          </motion.div>
-
-        </div>
-      </article>
-
-      {/* INTERNAL LINKS */}
-      <section className="py-16 px-6 bg-white/[0.02] border-y border-white/5">
-        <div className="max-w-4xl mx-auto space-y-6">
-          <h4 className="font-mono text-[#836EF9] text-[10px] tracking-[0.4em] uppercase mb-4 text-center md:text-left">Archive Transmissions:</h4>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Link 
-              href="/terminal-log/phygital-fashion-indonesia" 
-              className="group bg-[#121212] border border-white/10 p-5 flex flex-col gap-4 hover:border-[#836EF9]/50 transition-all rounded-sm"
-            >
-              <div className="space-y-2">
-                <p className="text-[9px] font-mono text-neutral-500 uppercase tracking-widest">System Log 01</p>
-                <h4 className="text-white font-bold text-sm tracking-tight leading-snug group-hover:text-[#836EF9] transition-colors flex items-start gap-2 justify-between">
-                  Apa Itu Phygital Fashion? <ChevronRight size={16} className="shrink-0 mt-1" />
-                </h4>
-              </div>
-            </Link>
-            <Link 
-              href="/terminal-log/psikologi-koleksi" 
-              className="group bg-[#121212] border border-white/10 p-5 flex flex-col gap-4 hover:border-[#F43F5E]/50 transition-all rounded-sm"
-            >
-              <div className="space-y-2">
-                <p className="text-[9px] font-mono text-neutral-500 uppercase tracking-widest">System Log 04</p>
-                <h4 className="text-white font-bold text-sm tracking-tight leading-snug group-hover:text-[#F43F5E] transition-colors flex items-start gap-2 justify-between">
-                  Psikologi di Balik Mengoleksi <ChevronRight size={16} className="shrink-0 mt-1" />
-                </h4>
-              </div>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      <footer className="py-16 px-6 text-center">
-        <div className="max-w-3xl mx-auto space-y-8">
-          <p className="font-mono text-[7px] text-neutral-800 uppercase tracking-[0.5em]">0XTANDA_DIGITAL_ARCHIVE_ISSUE_007_LOCKED</p>
-        </div>
-      </footer>
-    </main>
-  );
+<file path=".claude/settings.local.json">
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run *)",
+      "Bash(npx repomix *)"
+    ]
+  }
 }
 </file>
 
@@ -1023,240 +681,6 @@ export default function AboutPage() {
         <p className="font-mono text-[7px] uppercase tracking-[1em]">0XTANDA_LITEPAPER_V1.0_SYSTEM_SECURED</p>
       </footer>
     </main>
-  );
-}
-</file>
-
-<file path="app/globals.css">
-@import "tailwindcss";
-
-@theme {
-  --color-brand-black: #0E0E0E;
-  --color-brand-purple: #836EF9;
-  --color-brand-green: #00FF9D;
-  --color-brand-white: #FFFFFF;
-  --color-brand-gray: #888888;
-  
-  --font-sans: var(--font-space-grotesk);
-  --font-mono: var(--font-space-mono);
-  --font-display: var(--font-cinzel);
-}
-
-/* --- ANIMATIONS --- */
-
-/* Glitch Effect */
-@keyframes glitch {
-  0% { transform: translate(0); text-shadow: -2px 0 #836EF9, 2px 0 #00FF9D; }
-  25% { transform: translate(-2px, 2px); }
-  50% { transform: translate(2px, -2px); text-shadow: 2px 0 #836EF9, -2px 0 #00FF9D; }
-  75% { transform: translate(-2px, -2px); }
-  100% { transform: translate(0); }
-}
-
-.animate-glitch {
-  animation: glitch 0.3s cubic-bezier(.25,.46,.45,.94) both infinite;
-}
-
-/* Marquee Effect */
-@keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
-.animate-marquee {
-  display: flex;
-  width: max-content;
-  animation: marquee 25s linear infinite;
-}
-
-/* Smooth Fade In Up */
-.fade-in {
-  animation: fadeIn 0.8s ease-out forwards;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Custom Selection Color */
-::selection {
-  background-color: #836EF9;
-  color: #0E0E0E;
-}
-</file>
-
-<file path="app/layout.tsx">
-import type { Metadata, Viewport } from 'next';
-import { Inter, Space_Grotesk, Space_Mono } from 'next/font/google';
-import './globals.css';
-import Navbar from '../components/Navbar';
-import Marquee from '../components/Marquee';
-
-// Load Fonts
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
-const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], variable: '--font-space-grotesk' });
-const spaceMono = Space_Mono({ weight: ['400', '700'], subsets: ['latin'], variable: '--font-space-mono' });
-
-// =================================================================
-// 🚀 MASTER SEO METADATA & LSI KEYWORDS ENGINE
-// =================================================================
-export const metadata: Metadata = {
-  applicationName: '0xTanda', // <--- TAMBAHAN BARU: Sinyal super kuat ke Google untuk Site Name
-  title: {
-    default: '0xTanda | Phygital Fashion & Web3 Streetwear Indonesia',
-    template: '%s | 0xTanda Phygital Fashion'
-  },
-  
-  description: '0xTanda adalah brand Phygital Digital Twin Streetwear pertama di Indonesia. Kami menggabungkan pakaian fisik heavyweight cotton berkualitas premium dengan bukti kepemilikan aset digital (Digital Twin NFT) di jaringan blockchain Monad. Tangible craftsmanship secured by digital ownership.',
-  
-  keywords: [
-    '0xTanda', '0x Tanda', '0xTanda Official', '0xTanda Shop', 'Oxtanda',
-    'Phygital Fashion', 'Phygital Streetwear', 'Web3 Fashion Indonesia', 'Crypto Fashion', 'Fashion Blockchain', 
-    'NFT Clothing', 'Digital Twin NFT', 'Brand Lokal Web3', 'Streetwear Jakarta',
-    'Genesis Boxy Tee', 'Kaos Boxy Oversized', 'Heavyweight Cotton 16s', 'Kaos Premium Pria Wanita', 
-    'Baju Kualitas Tinggi', 'Baju Anti Fast Fashion', 'Slow Fashion Indonesia',
-    'Royal Resistance', 'Stoikisme Fashion', 'Kolektor Seni', 'Aset Digital Monad', 'Concierge Airdrop'
-  ],
-  
-  authors: [{ name: 'Abrur Alaina', url: 'https://www.0xtanda.xyz' }],
-  creator: '0xTanda Research Lab',
-  publisher: '0xTanda',
-  
-  robots: {
-    index: true,
-    follow: true,
-    nocache: false,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
-  },
-
-  metadataBase: new URL('https://www.0xtanda.xyz'),
-  alternates: {
-    canonical: '/',
-  },
-  
-  // Di dalam metadata object di app/layout.tsx
-
-icons: {
-  icon: [
-    { url: '/favicon.ico', sizes: '48x48', type: 'image/x-icon' },
-    { url: '/icon.png', sizes: '512x512', type: 'image/png' },
-  ],
-  shortcut: '/favicon.ico',
-  apple: [
-    { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
-  ],
-},
-
-// === FIX UNTUK MICROSOFT EDGE & BING ===
-  other: {
-    'msapplication-TileColor': '#0E0E0E',
-    'msapplication-TileImage': '/icon.png',
-  },
-  
-  openGraph: {
-    type: 'website',
-    locale: 'id_ID',
-    url: 'https://www.0xtanda.xyz',
-    siteName: '0xTanda', // Sinyal kedua untuk Site Name Google
-    title: '0xTanda | Phygital Fashion & Web3 Streetwear Indonesia',
-    description: 'Pakaian fisik premium yang terhubung dengan Digital Twin NFT. Miliki karya nyata, amankan secara digital.',
-    images: [
-      {
-        url: '/branding/og-banner.jpg', 
-        width: 1200,
-        height: 630,
-        alt: '0xTanda Phygital Brand Vision',
-      },
-    ],
-  },
-
-  twitter: {
-    card: 'summary_large_image',
-    title: '0xTanda | Phygital Fashion Indonesia',
-    description: 'Tangible craftsmanship you can feel, secured by digital ownership you can prove. Join the resistance.',
-    creator: '@0xTanda',
-    site: '@0xTanda',
-    images: ['/branding/og-banner.jpg'],
-  },
-};
-
-export const viewport: Viewport = {
-  width: 'device-width',
-  initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
-  themeColor: '#0E0E0E',
-};
-
-export default function RootLayout({ children }: { children: React.ReactNode }) {
-  
-  // =================================================================
-  // 🧠 JSON-LD SCHEMA MARKUP (GABUNGAN ORGANIZATION & WEBSITE)
-  // Menambahkan WebSite schema agar Google menamai situs ini "0xTanda"
-  // bukan "0xtanda.xyz" atau "www.0xtanda.xyz"
-  // =================================================================
-  const jsonLdData = [
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "0xTanda",
-      "alternateName": ["0xTanda Phygital", "0xTanda Streetwear", "Oxtanda"],
-      "url": "https://www.0xtanda.xyz",
-      "logo": "https://www.0xtanda.xyz/branding/logo-0xtanda-icon.svg",
-      "description": "Pionir Phygital Streetwear di Indonesia yang menggabungkan pakaian fisik heavyweight dengan aset digital NFT di blockchain Monad.",
-      "foundingDate": "2026",
-      "founders": [
-        {
-          "@type": "Person",
-          "name": "Abrur Alaina"
-        }
-      ],
-      "contactPoint": {
-        "@type": "ContactPoint",
-        "contactType": "Customer Support",
-        "availableLanguage": "Indonesian"
-      },
-      "sameAs": [
-        "https://www.instagram.com/0xtanda/",
-        "https://x.com/0xTanda",
-        "https://www.tiktok.com/@0xtanda",
-        "https://t.me/Official0xTanda"
-      ]
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "0xTanda",
-      "alternateName": ["Oxtanda", "0xTanda Official"],
-      "url": "https://www.0xtanda.xyz/"
-    }
-  ];
-
-  return (
-    <html lang="id" className={`${inter.variable} ${spaceGrotesk.variable} ${spaceMono.variable}`}>
-      <head>
-        <meta name="google-site-verification" content="AdsL5zatSrtTJ8kvkoh5wI1flrVIf0YXJ9-93uTbT8o" />
-        
-        {/* INJEKSI JSON-LD ARRAY KE DALAM HEAD */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdData) }}
-        />
-      </head>
-      
-      <body className="bg-[#0a0a0a] text-[#f3f3f3] overflow-x-hidden antialiased">
-        <Marquee />
-        <Navbar />
-        {children}
-      </body>
-    </html>
   );
 }
 </file>
@@ -1913,11 +1337,1446 @@ export default function ShopPage() {
 }
 </file>
 
+<file path="app/verify/page.tsx">
+"use client";
+
+import React from 'react';
+import { ArrowRight, AlertTriangle, ShieldCheck } from 'lucide-react';
+
+// ============================================================================
+// MOCK NEXT.JS (Hanya untuk keperluan Preview di layar Canvas)
+// CATATAN UNTUK COPAS: 
+// Saat menyalin kode ini ke file project asli Anda (VSCode/Vercel), 
+// HAPUS bagian mock ini dan gunakan import bawaan Next.js berikut:
+//
+// import Link from 'next/link';
+// ============================================================================
+const Link = ({ href, children, className }: any) => (
+  <a href={href} className={className}>{children}</a>
+);
+// ============================================================================
+
+export default function VerifyLandingPage() {
+  return (
+    <main className="min-h-screen bg-[#0E0E0E] text-white flex flex-col items-center justify-center pt-32 pb-6 px-6 relative overflow-hidden font-sans selection:bg-[#836EF9] selection:text-black">
+      {/* Background Glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-[#836EF9]/10 blur-[150px] pointer-events-none rounded-full" />
+
+      <div className="relative z-10 max-w-3xl mx-auto text-center space-y-10">
+        
+        {/* Ikon Shield Online */}
+        <div className="inline-flex items-center justify-center w-24 h-24 bg-black border border-[#00FF9D]/30 rounded-full mb-4 shadow-[0_0_40px_rgba(0,255,157,0.1)] relative">
+          <div className="absolute inset-0 border border-[#00FF9D] rounded-full animate-ping opacity-20" />
+          <ShieldCheck size={40} className="text-[#00FF9D]" />
+        </div>
+
+        {/* HEADER */}
+        <div className="space-y-4">
+          <div className="inline-flex items-center gap-2 border border-[#836EF9] bg-[#836EF9]/10 px-4 py-1 rounded-full mb-2">
+            <div className="w-2 h-2 bg-[#836EF9] rounded-full animate-pulse"/>
+            <span className="text-[10px] text-[#836EF9] font-mono font-bold tracking-[0.2em] uppercase">SYSTEM_ONLINE // VERIFICATION_NODE</span>
+          </div>
+          <h1 className="text-4xl md:text-6xl font-bold uppercase tracking-tighter">
+            ACTIVATION <span className="text-[#836EF9]">PORTAL</span>
+          </h1>
+          <p className="text-neutral-500 font-mono text-xs md:text-sm leading-relaxed tracking-widest uppercase max-w-2xl mx-auto italic">
+            "Tangible craftsmanship you can feel, secured by digital ownership you can prove."
+          </p>
+        </div>
+
+        {/* INSTRUKSI PENTING */}
+        <div className="bg-[#121212] border border-white/10 p-6 md:p-8 rounded-sm mb-12 relative overflow-hidden group text-left shadow-2xl">
+          <div className="absolute top-0 left-0 w-1 h-full bg-[#836EF9] group-hover:w-full group-hover:opacity-5 transition-all duration-700" />
+          <h3 className="text-white font-bold text-sm uppercase tracking-[0.2em] mb-6 flex items-center gap-3 relative z-10">
+            <AlertTriangle className="text-[#836EF9]" size={18} /> INSTRUKSI PENTING:
+          </h3>
+          <ul className="space-y-4 text-[10px] md:text-xs text-neutral-400 uppercase tracking-wide leading-relaxed relative z-10">
+            <li className="flex gap-3 items-start">
+              <span className="text-[#836EF9] font-bold shrink-0">01.</span> 
+              <span>GOSOK panel pelindung pada Genesis Card untuk melihat Secret Code.</span>
+            </li>
+            <li className="flex gap-3 items-start">
+              <span className="text-[#836EF9] font-bold shrink-0">02.</span> 
+              <span>PASTIKAN alamat wallet yang dimasukkan adalah Personal Wallet MONAD (Metamask/Phantom/Hot Wallet lainnya).</span>
+            </li>
+            <li className="flex gap-3 items-start text-red-500 font-bold bg-red-900/10 p-3 border border-red-900/30 rounded-sm">
+              <span className="text-red-500 shrink-0">03.</span> 
+              <span>🚫 DILARANG menggunakan alamat Exchange (Indodax/Binance/Tokocrypto/Bybit. dll).</span>
+            </li>
+            <li className="flex gap-3 items-start">
+              <span className="text-[#836EF9] font-bold shrink-0">04.</span> 
+              <span>PROSES verifikasi dilakukan secara manual demi keamanan (Max 1x24 Jam).</span>
+            </li>
+            <li className="flex gap-3 items-start">
+              <span className="text-[#836EF9] font-bold shrink-0">05.</span> 
+              <span>BIAYA jaringan (Gas Fee) ditanggung 0xTanda (GRATIS).</span>
+            </li>
+          </ul>
+        </div>
+
+        {/* Tombol Lanjut ke Form */}
+        <div className="pt-4">
+          <Link 
+            href="/verify/pageform" 
+            className="inline-flex items-center gap-4 bg-[#836EF9] text-black px-12 py-5 font-mono text-sm font-bold uppercase tracking-[0.2em] hover:bg-white transition-all group shadow-[0_0_30px_rgba(131,110,249,0.3)] hover:shadow-[0_0_50px_rgba(131,110,249,0.5)] rounded-sm"
+          >
+            VERIFY <ArrowRight size={18} className="group-hover:translate-x-2 transition-transform" />
+          </Link>
+        </div>
+        
+        <p className="text-[9px] font-mono text-neutral-600 uppercase tracking-[0.4em] pt-8">
+          0xTanda // Secure Transmission
+        </p>
+
+      </div>
+    </main>
+  );
+}
+</file>
+
+<file path="app/verify/pageform/page.tsx">
+"use client";
+
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { 
+  ShieldCheck, 
+  Wallet, 
+  UploadCloud, 
+  CheckCircle2, 
+  AlertTriangle, 
+  Loader2, 
+  X,
+  Key,
+  User,
+  Smartphone,
+  Mail,
+  ShoppingBag,
+  ArrowLeft
+} from 'lucide-react';
+
+// ============================================================================
+// MOCK NEXT.JS (Hanya untuk keperluan Preview di layar Canvas)
+// CATATAN UNTUK COPAS: 
+// Saat menyalin kode ini ke file project asli Anda (VSCode/Vercel), 
+// HAPUS bagian mock ini dan gunakan import bawaan Next.js berikut:
+//
+// import Link from 'next/link';
+// ============================================================================
+const Link = ({ href, children, className }: any) => (
+  <a href={href} className={className}>{children}</a>
+);
+// ============================================================================
+
+export default function VerifyFormPage() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [status, setStatus] = useState<'idle' | 'success' | 'error' | 'used'>('idle');
+  const [fileName, setFileName] = useState('');
+  
+  // State khusus untuk Checkbox Persetujuan
+  const [isAgreed, setIsAgreed] = useState(false);
+
+  // 🔴 PASTIKAN URL INI BENAR DARI DEPLOYMENT GOOGLE APPS SCRIPT
+  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz9_dc-9v8UNopJGhjlzoBPluWiS9i2krk4-wARwH5PhiFiLx-BAHGoZoUgngcGw1ff/exec";
+
+  const [formData, setFormData] = useState({
+    secretCode: '',
+    walletAddress: '',
+    nama: '',
+    gender: 'Pria',
+    email: '',
+    noHp: '',
+    telegramId: '',
+    productName: 'GENESIS BOXY TEE',
+    orderId: '',
+    proofImage: '' 
+  });
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+
+    if (name === 'secretCode') {
+      // 1. Hapus semua karakter selain huruf dan angka, jadikan kapital
+      let rawValue = value.replace(/[^A-Za-z0-9]/g, '').toUpperCase();
+      // 2. Batasi maksimal 12 karakter alfanumerik
+      if (rawValue.length > 12) rawValue = rawValue.substring(0, 12);
+      // 3. Sisipkan strip (-) setiap 4 karakter sehingga menjadi XXXX-XXXX-XXXX
+      const formattedValue = rawValue.match(/.{1,4}/g)?.join('-') || rawValue;
+      setFormData({ ...formData, [name]: formattedValue });
+    } else if (name === 'telegramId') {
+      // Auto tambahkan @ jika user lupa (Hanya kalau input tidak kosong)
+      let tgValue = value.trim();
+      if (tgValue.length > 0 && !tgValue.startsWith('@')) {
+        tgValue = '@' + tgValue;
+      }
+      setFormData({ ...formData, [name]: tgValue });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.size > 2 * 1024 * 1024) {
+        alert("Ukuran file terlalu besar. Maksimal 2MB.");
+        return;
+      }
+      setFileName(file.name);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData({ ...formData, proofImage: reader.result as string });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // VALIDASI WALLET (Wajib Monad/EVM: Diawali 0x dan 40 karakter hex)
+    const evmRegex = /^0x[a-fA-F0-9]{40}$/;
+    if (!evmRegex.test(formData.walletAddress)) {
+        alert("ALAMAT WALLET TIDAK VALID!\nPastikan alamat dimulai dengan '0x' dan merupakan format standar MONAD/EVM.");
+        return;
+    }
+
+    // VALIDASI KODE (Wajib 12 digit alfanumerik + 2 strip = 14 karakter)
+    if (formData.secretCode.length !== 14) {
+        alert("SECRET CODE TIDAK LENGKAP!\nPastikan Anda memasukkan 12 digit kode dengan benar (Format: XXXX-XXXX-XXXX).");
+        return;
+    }
+
+    // VALIDASI TELEGRAM (Wajib pakai @ dan minimal 3 karakter setelah @)
+    if (!formData.telegramId.startsWith('@') || formData.telegramId.length < 4) {
+        alert("ID TELEGRAM TIDAK VALID!\nPastikan mengisi username Telegram yang diawali dengan simbol '@' (contoh: @username).");
+        return;
+    }
+
+    // VALIDASI PERSETUJUAN
+    if (!isAgreed) {
+        alert("Anda harus menyetujui Peringatan dan Kebijakan 0xTanda untuk melanjutkan.");
+        return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      // Menyertakan data persetujuan ke payload untuk direkam di database
+      const payloadData = {
+        ...formData,
+        persetujuanKebijakan: isAgreed ? "SETUJU" : "TIDAK_SETUJU"
+      };
+
+      const response = await fetch(GOOGLE_SCRIPT_URL, {
+        method: "POST",
+        body: JSON.stringify(payloadData),
+      });
+
+      const result = await response.json();
+
+      if (result.status === 'success') {
+        setStatus('success');
+      } else if (result.status === 'duplicate') {
+        setStatus('used');
+      } else {
+        setStatus('error');
+      }
+    } catch (error) {
+      console.error("Submission Error:", error);
+      // Menangkap error CORS yang umum terjadi di Google Apps Script walau data berhasil masuk
+      setStatus('success'); 
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <main className="min-h-screen bg-[#0E0E0E] text-white selection:bg-[#836EF9] selection:text-black font-mono overflow-x-hidden relative">
+      <div className="pt-32 px-6 pb-20 max-w-4xl mx-auto relative z-10">
+        
+        {/* Tombol Kembali ke Portal */}
+        <Link 
+          href="/verify"
+          className="inline-flex items-center gap-2 text-neutral-500 hover:text-white mb-10 font-mono text-[10px] tracking-[0.5em] uppercase transition-colors group"
+        >
+          <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" /> BACK TO PORTAL
+        </Link>
+        
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 border border-[#836EF9] bg-[#836EF9]/10 px-4 py-1 mb-6 rounded-full">
+            <div className="w-2 h-2 bg-[#836EF9] rounded-full animate-pulse"/>
+            <span className="text-[10px] text-[#836EF9] font-bold tracking-[0.2em] uppercase">SYSTEM_ONLINE // DATA_ENTRY</span>
+          </div>
+          <h1 className="text-3xl md:text-5xl font-sans font-bold uppercase tracking-tighter mb-4">
+            ACTIVATION <span className="text-[#836EF9]">FORM</span>
+          </h1>
+        </div>
+
+        {/* FORM */}
+        <form onSubmit={handleSubmit} className="space-y-12">
+          
+          {/* SECTION 1: CRITICAL DATA */}
+          <div className="space-y-6">
+            <div className="bg-gradient-to-b from-[#1a1a1a] to-black border border-[#836EF9]/50 p-8 rounded-sm shadow-[0_0_30px_rgba(131,110,249,0.1)] relative overflow-hidden">
+              <div className="absolute top-0 right-0 p-4 opacity-20">
+                <ShieldCheck size={64} className="text-[#836EF9]" />
+              </div>
+              <h4 className="text-[#836EF9] text-xs font-bold uppercase tracking-[0.3em] mb-8 flex items-center gap-2">
+                <ShieldCheck size={16}/> PRIMARY CREDENTIALS
+              </h4>
+              
+              <div className="grid gap-10">
+                <div className="space-y-3 relative z-10">
+                  <label className="text-xs text-[#836EF9] font-bold uppercase tracking-[0.2em] flex items-center gap-2">
+                    <Key size={14}/> SECRET CODE (GENESIS CARD)
+                  </label>
+                  <input 
+                    type="text" 
+                    name="secretCode"
+                    value={formData.secretCode}
+                    maxLength={14}
+                    required
+                    placeholder="XXXX-XXXX-XXXX" 
+                    className="w-full bg-black border-2 border-[#836EF9] p-6 text-xl md:text-3xl font-sans font-bold text-white placeholder:text-white/10 focus:shadow-[0_0_30px_rgba(131,110,249,0.4)] focus:outline-none transition-all uppercase tracking-widest text-center rounded-sm"
+                    onChange={handleInputChange}
+                  />
+                  <p className="text-[9px] text-neutral-500 uppercase tracking-widest text-center">*Masukkan 12 digit (Format otomatis: XXXX-XXXX-XXXX)</p>
+                </div>
+
+                <div className="space-y-3 relative z-10">
+                  <label className="text-xs text-[#00FF9D] font-bold uppercase tracking-[0.2em] flex items-center gap-2">
+                    <Wallet size={14}/> WALLET MONAD ADDRESS
+                  </label>
+                  <input 
+                    type="text" 
+                    name="walletAddress"
+                    value={formData.walletAddress}
+                    required
+                    placeholder="0x..." 
+                    className="w-full bg-black border-2 border-[#00FF9D]/50 p-6 text-sm md:text-xl font-mono text-[#00FF9D] placeholder:text-[#00FF9D]/20 focus:border-[#00FF9D] focus:shadow-[0_0_30px_rgba(0,255,157,0.2)] focus:outline-none transition-all rounded-sm"
+                    onChange={handleInputChange}
+                  />
+                  <p className="text-[9px] text-neutral-500 uppercase tracking-widest text-right">*Wajib format 0x... (Personal Wallet Monad)</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* SECTION 2: PROFILE */}
+          <div className="space-y-8 pt-8 border-t border-white/5">
+            <h4 className="text-white text-xs font-bold uppercase tracking-[0.3em] flex items-center gap-2">
+              <User size={16} className="text-neutral-500" /> IDENTITAS OWNER
+            </h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <label className="text-[10px] text-neutral-500 uppercase tracking-widest">Nama Lengkap <span className="text-red-500">*</span></label>
+                <input type="text" name="nama" value={formData.nama} required className="w-full bg-[#121212] border border-white/10 p-4 text-sm text-white focus:border-white/50 focus:outline-none transition-colors" onChange={handleInputChange} />
+              </div>
+              <div className="space-y-2">
+                <label className="text-[10px] text-neutral-500 uppercase tracking-widest">Jenis Kelamin</label>
+                <select name="gender" value={formData.gender} className="w-full bg-[#121212] border border-white/10 p-4 text-sm text-white focus:border-white/50 focus:outline-none transition-colors appearance-none" onChange={handleInputChange}>
+                  <option value="Pria">PRIA</option>
+                  <option value="Wanita">WANITA</option>
+                </select>
+              </div>
+              <div className="space-y-2">
+                <label className="text-[10px] text-neutral-500 uppercase tracking-widest">Email Aktif <span className="text-red-500">*</span></label>
+                <div className="relative">
+                  <Mail className="absolute right-4 top-1/2 -translate-y-1/2 text-white/20" size={16} />
+                  <input type="email" name="email" value={formData.email} required className="w-full bg-[#121212] border border-white/10 p-4 text-sm text-white focus:border-white/50 focus:outline-none transition-colors" onChange={handleInputChange} />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <label className="text-[10px] text-neutral-500 uppercase tracking-widest">No. HP / WhatsApp <span className="text-red-500">*</span></label>
+                <div className="relative">
+                  <Smartphone className="absolute right-4 top-1/2 -translate-y-1/2 text-white/20" size={16} />
+                  <input type="tel" name="noHp" value={formData.noHp} required className="w-full bg-[#121212] border border-white/10 p-4 text-sm text-white focus:border-white/50 focus:outline-none transition-colors" onChange={handleInputChange} />
+                </div>
+              </div>
+              <div className="space-y-2 md:col-span-2">
+                <label className="text-[10px] text-neutral-500 uppercase tracking-widest">ID Telegram (Wajib pakai @) <span className="text-red-500">*</span></label>
+                <input type="text" name="telegramId" value={formData.telegramId} required placeholder="@username" className="w-full bg-[#121212] border border-white/10 p-4 text-sm text-white focus:border-white/50 focus:outline-none transition-colors" onChange={handleInputChange} />
+              </div>
+            </div>
+          </div>
+
+          {/* SECTION 3: DETAIL ORDER */}
+          <div className="space-y-8 pt-8 border-t border-white/5">
+            <h4 className="text-white text-xs font-bold uppercase tracking-[0.3em] flex items-center gap-2">
+              <ShoppingBag size={16} className="text-neutral-500" /> DETAIL TRANSAKSI
+            </h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-2 md:col-span-2">
+                <label className="text-[10px] text-neutral-500 uppercase tracking-widest">Pilih Artefak (Produk)</label>
+                <div className="relative">
+                  <select name="productName" value={formData.productName} className="w-full bg-[#121212] border border-white/10 p-4 text-sm text-[#836EF9] font-bold focus:border-white/50 focus:outline-none transition-colors appearance-none uppercase" onChange={handleInputChange}>
+                    <option value="GENESIS BOXY TEE">GENESIS BOXY TEE [BATCH #001]</option>
+                    <option value="-" disabled>ARCHIVE 02 (LOCKED)</option>
+                  </select>
+                  <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
+                    <div className="w-2 h-2 bg-[#836EF9] rounded-full" />
+                  </div>
+                </div>
+              </div>
+              <div className="space-y-2">
+                <label className="text-[10px] text-neutral-500 uppercase tracking-widest">Order ID <span className="text-red-500">*</span></label>
+                <input type="text" name="orderId" value={formData.orderId} required placeholder="Contoh: 230919ABC..." className="w-full bg-[#121212] border border-white/10 p-4 text-sm text-white focus:border-white/50 focus:outline-none transition-colors" onChange={handleInputChange} />
+              </div>
+              <div className="space-y-2">
+                <label className="text-[10px] text-neutral-500 uppercase tracking-widest">Upload Bukti Pembelian (Max 2MB) <span className="text-red-500">*</span></label>
+                <div className="relative group">
+                  <input type="file" id="fileUpload" required className="hidden" onChange={handleFileChange} accept="image/*" />
+                  <label htmlFor="fileUpload" className="w-full bg-[#121212] border border-white/10 border-dashed p-4 text-sm text-neutral-400 flex items-center justify-between cursor-pointer hover:bg-white/5 hover:border-[#836EF9] transition-all">
+                    <span className="truncate font-mono">{fileName || "KLIK UNTUK UPLOAD FILE..."}</span>
+                    <UploadCloud size={20} className="text-neutral-500 group-hover:text-[#836EF9]" />
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* WARNING & DISCLAIMER BOX DENGAN CHECKBOX PERSETUJUAN */}
+          <div className="pt-8">
+            <div className="bg-red-900/10 border border-red-500/30 p-6 md:p-8 rounded-sm space-y-6">
+              <div className="flex items-center gap-2 text-red-500 font-bold text-sm md:text-base uppercase tracking-widest">
+                <AlertTriangle size={20} /> PERINGATAN & KEBIJAKAN
+              </div>
+              <p className="text-[11px] md:text-xs text-neutral-400 uppercase tracking-widest leading-relaxed">
+                Produk 0xTanda <strong className="text-white">bukan instrumen investasi</strong>, dan 0xTanda <strong className="text-white">bukan tempat jual beli</strong>. Setiap produk dan aset digital yang sudah keluar (didistribusikan) dari sistem 0xTanda sepenuhnya menjadi hak dan tanggung jawab mutlak pemilik, dan bukan lagi menjadi tanggung jawab 0xTanda.
+              </p>
+              
+              {/* Checkbox Persetujuan */}
+              <label className="flex items-start gap-4 cursor-pointer mt-4 group">
+                <div className="relative flex items-start justify-center mt-0.5">
+                  <input 
+                    type="checkbox" 
+                    className="w-5 h-5 accent-[#836EF9] bg-[#121212] border border-white/30 rounded-sm cursor-pointer"
+                    checked={isAgreed}
+                    onChange={(e) => setIsAgreed(e.target.checked)}
+                    required
+                  />
+                </div>
+                <span className={`text-[10px] md:text-[11px] font-bold uppercase tracking-widest leading-relaxed transition-colors ${isAgreed ? 'text-[#00FF9D]' : 'text-white group-hover:text-[#836EF9]'}`}>
+                  SAYA TELAH MEMBACA, MEMAHAMI, DAN MENYETUJUI SELURUH KEBIJAKAN SERTA PERINGATAN DI ATAS.
+                </span>
+              </label>
+            </div>
+          </div>
+
+          {/* SUBMIT BUTTON */}
+          <div className="pt-4">
+            <button 
+              type="submit" 
+              disabled={isLoading || !isAgreed}
+              className="w-full bg-[#836EF9] text-black font-mono text-sm font-bold py-6 uppercase tracking-[0.2em] hover:bg-white transition-all flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-neutral-800 disabled:text-neutral-500 shadow-[0_0_40px_rgba(131,110,249,0.3)] hover:shadow-[0_0_60px_rgba(131,110,249,0.6)] rounded-sm"
+            >
+              {isLoading ? <><Loader2 className="animate-spin" size={20} /> VALIDATING DATA...</> : "SUBMIT VERIFICATION DATA"}
+            </button>
+          </div>
+        </form>
+      </div>
+
+      {/* POPUP MODALS */}
+      <AnimatePresence>
+        {status !== 'idle' && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/95 backdrop-blur-md">
+            <motion.div 
+              initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-[#0E0E0E] border border-white/10 p-10 max-w-md w-full text-center relative shadow-[0_0_50px_rgba(131,110,249,0.2)]"
+            >
+              <button onClick={() => setStatus('idle')} className="absolute top-4 right-4 text-neutral-500 hover:text-white"><X size={24} /></button>
+
+              {status === 'success' && (
+                <div className="space-y-6">
+                  <div className="w-24 h-24 bg-[#00FF9D]/10 rounded-full flex items-center justify-center mx-auto border border-[#00FF9D]/30">
+                    <CheckCircle2 size={48} className="text-[#00FF9D]" />
+                  </div>
+                  <div>
+                    <h3 className="text-3xl font-bold text-white uppercase tracking-tighter mb-2">VERIFIED</h3>
+                    <div className="h-1 w-12 bg-[#00FF9D] mx-auto mb-4" />
+                    <p className="text-xs text-neutral-400 font-mono uppercase tracking-widest leading-relaxed">Data Anda telah diterima. Tim 0xTanda akan memvalidasi dalam 1x24 jam.</p>
+                  </div>
+                </div>
+              )}
+
+              {status === 'used' && (
+                <div className="space-y-6">
+                  <div className="w-24 h-24 bg-[#EE4D2D]/10 rounded-full flex items-center justify-center mx-auto border border-[#EE4D2D]/30">
+                    <AlertTriangle size={48} className="text-[#EE4D2D]" />
+                  </div>
+                  <div>
+                    <h3 className="text-3xl font-bold text-[#EE4D2D] uppercase tracking-tighter mb-2">KODE DIGUNAKAN</h3>
+                    <div className="h-1 w-12 bg-[#EE4D2D] mx-auto mb-4" />
+                    <p className="text-xs text-neutral-400 font-mono uppercase tracking-widest leading-relaxed">Kode Rahasia terdeteksi duplikat atau sudah pernah diklaim sebelumnya.</p>
+                  </div>
+                </div>
+              )}
+
+              {status === 'error' && (
+                <div className="space-y-6">
+                  <div className="w-24 h-24 bg-yellow-500/10 rounded-full flex items-center justify-center mx-auto border border-yellow-500/30">
+                    <AlertTriangle size={48} className="text-yellow-500" />
+                  </div>
+                  <div>
+                    <h3 className="text-3xl font-bold text-white uppercase tracking-tighter mb-2">ERROR</h3>
+                    <div className="h-1 w-12 bg-yellow-500 mx-auto mb-4" />
+                    <p className="text-xs text-neutral-400 font-mono uppercase tracking-widest leading-relaxed">Kode Rahasia tidak dikenali. Pastikan Anda mengetik 12 digit kode dengan benar.</p>
+                  </div>
+                </div>
+              )}
+              
+              <button onClick={() => setStatus('idle')} className="mt-10 w-full border border-white/20 py-4 text-xs font-bold uppercase hover:bg-white hover:text-black transition-all">TUTUP</button>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+    </main>
+  );
+}
+</file>
+
+<file path="components/CursorSystem.tsx">
+'use client';
+
+import { useEffect, useRef, useState } from 'react';
+
+function lerp(start: number, end: number, factor: number): number {
+  return start + (end - start) * factor;
+}
+
+export default function CursorSystem() {
+  const [visible, setVisible] = useState(false);
+
+  const dotRef = useRef<HTMLDivElement>(null);
+  const ringRef = useRef<HTMLDivElement>(null);
+  const glowRef = useRef<HTMLDivElement>(null);
+
+  // Mobile check — only activate on pointer/hover-capable devices
+  useEffect(() => {
+    const isTouch = window.matchMedia('(hover: none)').matches;
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!isTouch && !prefersReduced) setVisible(true);
+  }, []);
+
+  // Animation loop — runs only after mobile check passes
+  useEffect(() => {
+    if (!visible) return;
+
+    const dot = dotRef.current;
+    const ring = ringRef.current;
+    const glow = glowRef.current;
+    if (!dot || !ring || !glow) return;
+
+    document.body.style.cursor = 'none';
+
+    const mouse = { x: -1000, y: -1000 };
+    const ringPos = { x: -1000, y: -1000 };
+    const glowPos = { x: -1000, y: -1000 };
+    let isHovered = false;
+    let currentScale = 1;
+    let ringAlpha = 0;
+    let rafId: number;
+
+    const onMouseMove = (e: MouseEvent) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+      // Zero lag — bypass rAF, write directly to DOM
+      dot.style.transform = `translate(${mouse.x - 3}px, ${mouse.y - 3}px)`;
+    };
+
+    const onMouseOver = (e: MouseEvent) => {
+      if ((e.target as Element).closest('a, button, [role="button"]')) {
+        isHovered = true;
+      }
+    };
+
+    const onMouseOut = (e: MouseEvent) => {
+      if ((e.target as Element).closest('a, button, [role="button"]')) {
+        isHovered = false;
+      }
+    };
+
+    const animate = () => {
+      // Ring — lerp 0.12 (slight lag)
+      ringPos.x = lerp(ringPos.x, mouse.x, 0.12);
+      ringPos.y = lerp(ringPos.y, mouse.y, 0.12);
+
+      // Glow — lerp 0.04 (heavy lag, dreamy follow)
+      glowPos.x = lerp(glowPos.x, mouse.x, 0.04);
+      glowPos.y = lerp(glowPos.y, mouse.y, 0.04);
+
+      // Lerp scale + fill for smooth hover transitions
+      currentScale = lerp(currentScale, isHovered ? 2 : 1, 0.1);
+      ringAlpha = lerp(ringAlpha, isHovered ? 0.08 : 0, 0.1);
+
+      ring.style.transform = `translate(${ringPos.x - 14}px, ${ringPos.y - 14}px) scale(${currentScale.toFixed(4)})`;
+      ring.style.background = `rgba(131,110,249,${ringAlpha.toFixed(4)})`;
+      glow.style.transform = `translate(${glowPos.x - 200}px, ${glowPos.y - 200}px)`;
+
+      rafId = requestAnimationFrame(animate);
+    };
+
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseover', onMouseOver);
+    document.addEventListener('mouseout', onMouseOut);
+    rafId = requestAnimationFrame(animate);
+
+    return () => {
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseover', onMouseOver);
+      document.removeEventListener('mouseout', onMouseOut);
+      cancelAnimationFrame(rafId);
+      document.body.style.cursor = '';
+    };
+  }, [visible]);
+
+  if (!visible) return null;
+
+  return (
+    <>
+      {/* Dot — 6px, zero lag, direct DOM write on mousemove */}
+      <div
+        ref={dotRef}
+        aria-hidden="true"
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: 6,
+          height: 6,
+          borderRadius: '50%',
+          background: '#836EF9',
+          pointerEvents: 'none',
+          zIndex: 10001,
+          willChange: 'transform',
+          transform: 'translate(-1000px, -1000px)',
+        }}
+      />
+
+      {/* Ring — 28px, lerp 0.12, scale×2 + fill on interactive hover */}
+      <div
+        ref={ringRef}
+        aria-hidden="true"
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: 28,
+          height: 28,
+          borderRadius: '50%',
+          border: '1px solid rgba(131,110,249,0.5)',
+          background: 'transparent',
+          pointerEvents: 'none',
+          zIndex: 10000,
+          willChange: 'transform',
+          transform: 'translate(-1000px, -1000px)',
+        }}
+      />
+
+      {/* Ambient Glow — 400px, lerp 0.04, purple radial light */}
+      <div
+        ref={glowRef}
+        aria-hidden="true"
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: 400,
+          height: 400,
+          background:
+            'radial-gradient(circle, rgba(131,110,249,0.07) 0%, transparent 70%)',
+          pointerEvents: 'none',
+          zIndex: 9997,
+          willChange: 'transform',
+          transform: 'translate(-1000px, -1000px)',
+        }}
+      />
+    </>
+  );
+}
+</file>
+
+<file path="components/Marquee.tsx">
+export default function Marquee() {
+  const text = "0XTANDA • PHYGITAL STREETWEAR • COMING SOON 0XTANDA ORIGIN • JAKARTA EST. 2026 • ";
+  
+  return (
+    <div className="fixed top-0 left-0 w-full bg-brand-purple text-black py-2 z-[60] overflow-hidden font-mono text-[10px] font-bold">
+      <div className="animate-marquee whitespace-nowrap">
+        {[...Array(10)].map((_, i) => (
+          <span key={i} className="mx-4 italic tracking-widest">{text}</span>
+        ))}
+      </div>
+    </div>
+  );
+}
+</file>
+
+<file path="components/Navbar.tsx">
+"use client";
+
+import React, { useState } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { usePathname } from 'next/navigation';
+import { Menu, X } from 'lucide-react';
+
+/**
+ * Komponen Navbar 0xTanda.
+ * Menambahkan menu "TERMINAL LOG" untuk artikel/SEO.
+ */
+export default function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
+
+  // DI SINI NAMA MENU SUDAH DIGANTI JADI "TERMINAL LOG"
+  const navLinks = [
+    { name: 'HOME', path: '/' },
+    { name: 'SHOP', path: '/shop' },
+    { name: 'VERIFY', path: '/verify' },
+    { name: 'ABOUT', path: '/about' },
+    { name: 'TERMINAL LOG', path: '/terminal-log' }, // <--- UPDATE NAMA DI SINI
+  ];
+
+  return (
+    <nav className="fixed top-10 left-0 w-full z-50 px-6">
+      <div className="max-w-7xl mx-auto bg-black/60 backdrop-blur-xl border border-white/10 rounded-2xl p-4 flex items-center justify-between shadow-2xl">
+        
+        {/* LOGO ICON (POJOK KIRI) */}
+        <Link href="/" className="flex items-center group">
+          <div className="relative w-8 h-8">
+            <Image 
+              src="/branding/logo-0xtanda-icon.png" 
+              alt="0xTanda Icon"
+              width={32}
+              height={32}
+              className="object-contain group-hover:rotate-12 transition-transform duration-500"
+              priority
+            />
+          </div>
+        </Link>
+
+        {/* Desktop Menu */}
+        <div className="hidden lg:flex gap-1 bg-white/5 p-1 rounded-full border border-white/5">
+          {navLinks.map((link) => (
+            <Link 
+              key={link.path} 
+              href={link.path}
+              className={`px-6 py-2 rounded-full text-[10px] font-mono tracking-widest transition-all ${
+                // Logika agar menu menyala walau user lagi baca artikel di sub-folder
+                (pathname.startsWith(link.path) && link.path !== '/') || pathname === link.path
+                ? 'bg-[#836EF9] text-black font-bold' 
+                : 'text-neutral-400 hover:text-white hover:bg-white/5'
+              }`}
+            >
+              {link.name}
+            </Link>
+          ))}
+        </div>
+
+        {/* Mobile Toggle */}
+        <div className="lg:hidden flex items-center">
+          <button 
+            onClick={() => setIsOpen(!isOpen)} 
+            className="text-white p-2 hover:bg-white/5 rounded-lg transition-colors"
+            aria-label="Toggle Navigation"
+          >
+            {isOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Menu Overlay */}
+      {isOpen && (
+        <div className="absolute top-24 left-6 right-6 bg-black/95 backdrop-blur-2xl border border-white/10 rounded-2xl p-8 flex flex-col gap-6 lg:hidden animate-glitch shadow-2xl">
+          {navLinks.map((link) => (
+            <Link 
+              key={link.path} 
+              href={link.path}
+              onClick={() => setIsOpen(false)}
+              className={`text-3xl font-display font-bold tracking-tighter transition-colors uppercase ${
+                (pathname.startsWith(link.path) && link.path !== '/') || pathname === link.path 
+                ? 'text-[#836EF9]' 
+                : 'text-white'
+              }`}
+            >
+              {link.name}
+            </Link>
+          ))}
+        </div>
+      )}
+    </nav>
+  );
+}
+</file>
+
+<file path="components/NoiseOverlay.tsx">
+import type { CSSProperties } from 'react';
+
+const base: CSSProperties = {
+  position: 'fixed',
+  inset: 0,
+  width: '100%',
+  height: '100%',
+  pointerEvents: 'none',
+  zIndex: 9998,
+};
+
+export default function NoiseOverlay() {
+  return (
+    <>
+      {/* Layer 1 — Film Grain */}
+      <svg
+        style={{ ...base, opacity: 0.035, mixBlendMode: 'overlay' }}
+        xmlns="http://www.w3.org/2000/svg"
+        width="100%"
+        height="100%"
+        aria-hidden="true"
+      >
+        <defs>
+          <filter id="noise-filter">
+            <feTurbulence
+              type="fractalNoise"
+              baseFrequency="0.65"
+              numOctaves={3}
+              stitchTiles="stitch"
+            />
+            <feColorMatrix type="saturate" values="0" />
+          </filter>
+        </defs>
+        <rect width="100%" height="100%" filter="url(#noise-filter)" />
+      </svg>
+
+      {/* Layer 2 — Scanlines */}
+      <div
+        aria-hidden="true"
+        style={{
+          ...base,
+          backgroundImage:
+            'repeating-linear-gradient(0deg, rgba(0,0,0,0) 0px, rgba(0,0,0,0) 1px, rgba(0,0,0,0.04) 1px, rgba(0,0,0,0.04) 2px)',
+          backgroundSize: '100% 4px',
+          mixBlendMode: 'multiply',
+        }}
+      />
+
+      {/* Layer 3 — Corner Vignette */}
+      <div
+        aria-hidden="true"
+        style={{
+          ...base,
+          background:
+            'radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.6) 100%)',
+        }}
+      />
+    </>
+  );
+}
+</file>
+
+<file path="components/ScrollProgress.tsx">
+'use client';
+
+import { useScroll, useSpring, motion } from 'framer-motion';
+
+export default function ScrollProgress() {
+  const { scrollYProgress } = useScroll();
+  const scrollSpring = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  });
+
+  return (
+    <motion.div
+      aria-hidden="true"
+      style={{
+        scaleX: scrollSpring,
+        originX: 0,
+        background: 'linear-gradient(to right, #836EF9, #00FF9D)',
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: 2,
+        zIndex: 9999,
+        pointerEvents: 'none',
+      }}
+    />
+  );
+}
+</file>
+
+<file path="eslint.config.mjs">
+import { defineConfig, globalIgnores } from "eslint/config";
+import nextVitals from "eslint-config-next/core-web-vitals";
+import nextTs from "eslint-config-next/typescript";
+
+const eslintConfig = defineConfig([
+  ...nextVitals,
+  ...nextTs,
+  // Override default ignores of eslint-config-next.
+  globalIgnores([
+    // Default ignores of eslint-config-next:
+    ".next/**",
+    "out/**",
+    "build/**",
+    "next-env.d.ts",
+  ]),
+]);
+
+export default eslintConfig;
+</file>
+
+<file path="next-env.d.ts">
+/// <reference types="next" />
+/// <reference types="next/image-types/global" />
+import "./.next/types/routes.d.ts";
+
+// NOTE: This file should not be edited
+// see https://nextjs.org/docs/app/api-reference/config/typescript for more information.
+</file>
+
+<file path="next.config.ts">
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        pathname: '**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'placehold.co',
+        pathname: '**',
+      },
+    ],
+  },
+};
+
+export default nextConfig;
+</file>
+
+<file path="package.json">
+{
+  "name": "oxtanda-website",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "framer-motion": "^12.34.0",
+    "lucide-react": "^0.563.0",
+    "next": "16.1.6",
+    "react": "19.2.3",
+    "react-dom": "19.2.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "autoprefixer": "^10.4.24",
+    "eslint": "^9",
+    "eslint-config-next": "16.1.6",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.18",
+    "typescript": "^5"
+  }
+}
+</file>
+
+<file path="postcss.config.mjs">
+const config = {
+  plugins: {
+    "@tailwindcss/postcss": {},
+  },
+};
+
+export default config;
+</file>
+
+<file path="public/branding/logo-0xtanda-icon.svg">
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32">
+  <image width="2000" height="2000" transform="scale(.02)" xlink:href="../../../../OneDrive/Documents/Abrur File/Project/0xTanda/0xFile/Assets/Logo/0xTanda_White_Logo_Icon.png"/>
+</svg>
+</file>
+
+<file path="public/branding/logo-0xtanda.svg">
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1500 525">
+  <image width="2000" height="700" transform="scale(.75)" xlink:href="logo-0xtanda.png"/>
+</svg>
+</file>
+
+<file path="public/file.svg">
+<svg fill="none" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M14.5 13.5V5.41a1 1 0 0 0-.3-.7L9.8.29A1 1 0 0 0 9.08 0H1.5v13.5A2.5 2.5 0 0 0 4 16h8a2.5 2.5 0 0 0 2.5-2.5m-1.5 0v-7H8v-5H3v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1M9.5 5V2.12L12.38 5zM5.13 5h-.62v1.25h2.12V5zm-.62 3h7.12v1.25H4.5zm.62 3h-.62v1.25h7.12V11z" clip-rule="evenodd" fill="#666" fill-rule="evenodd"/></svg>
+</file>
+
+<file path="public/next.svg">
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 394 80"><path fill="#000" d="M262 0h68.5v12.7h-27.2v66.6h-13.6V12.7H262V0ZM149 0v12.7H94v20.4h44.3v12.6H94v21h55v12.6H80.5V0h68.7zm34.3 0h-17.8l63.8 79.4h17.9l-32-39.7 32-39.6h-17.9l-23 28.6-23-28.6zm18.3 56.7-9-11-27.1 33.7h17.8l18.3-22.7z"/><path fill="#000" d="M81 79.3 17 0H0v79.3h13.6V17l50.2 62.3H81Zm252.6-.4c-1 0-1.8-.4-2.5-1s-1.1-1.6-1.1-2.6.3-1.8 1-2.5 1.6-1 2.6-1 1.8.3 2.5 1a3.4 3.4 0 0 1 .6 4.3 3.7 3.7 0 0 1-3 1.8zm23.2-33.5h6v23.3c0 2.1-.4 4-1.3 5.5a9.1 9.1 0 0 1-3.8 3.5c-1.6.8-3.5 1.3-5.7 1.3-2 0-3.7-.4-5.3-1s-2.8-1.8-3.7-3.2c-.9-1.3-1.4-3-1.4-5h6c.1.8.3 1.6.7 2.2s1 1.2 1.6 1.5c.7.4 1.5.5 2.4.5 1 0 1.8-.2 2.4-.6a4 4 0 0 0 1.6-1.8c.3-.8.5-1.8.5-3V45.5zm30.9 9.1a4.4 4.4 0 0 0-2-3.3 7.5 7.5 0 0 0-4.3-1.1c-1.3 0-2.4.2-3.3.5-.9.4-1.6 1-2 1.6a3.5 3.5 0 0 0-.3 4c.3.5.7.9 1.3 1.2l1.8 1 2 .5 3.2.8c1.3.3 2.5.7 3.7 1.2a13 13 0 0 1 3.2 1.8 8.1 8.1 0 0 1 3 6.5c0 2-.5 3.7-1.5 5.1a10 10 0 0 1-4.4 3.5c-1.8.8-4.1 1.2-6.8 1.2-2.6 0-4.9-.4-6.8-1.2-2-.8-3.4-2-4.5-3.5a10 10 0 0 1-1.7-5.6h6a5 5 0 0 0 3.5 4.6c1 .4 2.2.6 3.4.6 1.3 0 2.5-.2 3.5-.6 1-.4 1.8-1 2.4-1.7a4 4 0 0 0 .8-2.4c0-.9-.2-1.6-.7-2.2a11 11 0 0 0-2.1-1.4l-3.2-1-3.8-1c-2.8-.7-5-1.7-6.6-3.2a7.2 7.2 0 0 1-2.4-5.7 8 8 0 0 1 1.7-5 10 10 0 0 1 4.3-3.5c2-.8 4-1.2 6.4-1.2 2.3 0 4.4.4 6.2 1.2 1.8.8 3.2 2 4.3 3.4 1 1.4 1.5 3 1.5 5h-5.8z"/></svg>
+</file>
+
+<file path="public/window.svg">
+<svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill-rule="evenodd" clip-rule="evenodd" d="M1.5 2.5h13v10a1 1 0 0 1-1 1h-11a1 1 0 0 1-1-1zM0 1h16v11.5a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 0 12.5zm3.75 4.5a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5M7 4.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0m1.75.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5" fill="#666"/></svg>
+</file>
+
+<file path="README.md">
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+
+## Getting Started
+
+First, run the development server:
+
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+
+## Learn More
+
+To learn more about Next.js, take a look at the following resources:
+
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+"# nx-build" 
+"# 0x-build" 
+"# 0x-build" 
+"# 0x-build" 
+"# 0x-build" 
+"# 0x-build" 
+"# 0x-build"
+</file>
+
+<file path="tailwind.config.ts">
+// tailwind.config.ts
+import type { Config } from "tailwindcss";
+
+const config: Config = {
+  content: [
+    "./app/**/*.{js,ts,jsx,tsx}",
+    "./components/**/*.{js,ts,jsx,tsx}",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        brand: {
+          purple: "#836EF9",
+          black: "#0E0E0E",
+          white: "#F0F0F0",
+          green: "#00FF9D",
+          gray: "#A19797",
+          tokopedia: "#03AC0E",
+          shopee: "#EE4D2D",
+          tiktok: "#000000",
+          whatsapp: "#25D366",
+        },
+      },
+      fontFamily: {
+        sans: ["Space Grotesk", "sans-serif"],
+        mono: ["Space Mono", "monospace"],
+        deco: ["Cinzel Decorative", "serif"],
+      },
+    },
+  },
+  plugins: [],
+};
+
+export default config;
+</file>
+
+<file path="tsconfig.json">
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["./*"]
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts",
+    "**/*.mts"
+  ],
+  "exclude": ["node_modules"]
+}
+</file>
+
+<file path="app/globals.css">
+@import "tailwindcss";
+
+@theme {
+  --color-brand-black: #0E0E0E;
+  --color-brand-purple: #836EF9;
+  --color-brand-green: #00FF9D;
+  --color-brand-white: #FFFFFF;
+  --color-brand-gray: #888888;
+
+  --font-sans: var(--font-space-grotesk);
+  --font-mono: var(--font-space-mono);
+  --font-display: var(--font-space-grotesk);
+  --font-deco: var(--font-orbitron);
+}
+
+/* --- ANIMATIONS --- */
+
+/* Glitch Effect */
+@keyframes glitch {
+  0% { transform: translate(0); text-shadow: -2px 0 #836EF9, 2px 0 #00FF9D; }
+  25% { transform: translate(-2px, 2px); }
+  50% { transform: translate(2px, -2px); text-shadow: 2px 0 #836EF9, -2px 0 #00FF9D; }
+  75% { transform: translate(-2px, -2px); }
+  100% { transform: translate(0); }
+}
+
+.animate-glitch {
+  animation: glitch 0.3s cubic-bezier(.25,.46,.45,.94) both infinite;
+}
+
+/* Marquee Effect */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 25s linear infinite;
+}
+
+/* Smooth Fade In Up */
+.fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Custom Selection Color */
+::selection {
+  background-color: #836EF9;
+  color: #0E0E0E;
+}
+
+/* Hero Atmospheric Grid */
+@keyframes gridScroll {
+  from { transform: translateY(0); }
+  to   { transform: translateY(60px); }
+}
+
+.hero-grid-bg {
+  background-image:
+    linear-gradient(rgba(131, 110, 249, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(131, 110, 249, 0.07) 1px, transparent 1px);
+  background-size: 60px 60px;
+  animation: gridScroll 15s linear infinite;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Product Card — Button Sweep Effect */
+.card-btn {
+  position: relative;
+  overflow: hidden;
+  display: block;
+}
+
+.card-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: white;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 0.35s ease;
+  z-index: 0;
+}
+
+.card-btn:hover::before {
+  clip-path: inset(0 0% 0 0);
+}
+
+.card-btn-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: color 0.35s ease;
+}
+
+.card-btn:hover .card-btn-inner {
+  color: black;
+}
+
+/* Animated Border — NFT Card (Phygital Duality Section) */
+@keyframes borderRotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.nft-animated-border {
+  position: relative;
+  padding: 1px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.nft-animated-border::before {
+  content: '';
+  position: absolute;
+  inset: -50%;
+  background: linear-gradient(0deg, #836EF9 0%, #00FF9D 50%, #836EF9 100%);
+  animation: borderRotate 4s linear infinite;
+}
+
+.nft-card-inner {
+  position: relative;
+  z-index: 1;
+  background: #0E0E0E;
+  border-radius: 3px;
+  padding: 8px;
+}
+</file>
+
+<file path="app/layout.tsx">
+import type { Metadata, Viewport } from 'next';
+import { Inter, Space_Grotesk, Space_Mono, Orbitron } from 'next/font/google';
+import './globals.css';
+import Navbar from '../components/Navbar';
+import Marquee from '../components/Marquee';
+import NoiseOverlay from '../components/NoiseOverlay';
+import CursorSystem from '../components/CursorSystem';
+import ScrollProgress from '../components/ScrollProgress';
+
+// Load Fonts
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
+const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], variable: '--font-space-grotesk' });
+const spaceMono = Space_Mono({ weight: ['400', '700'], subsets: ['latin'], variable: '--font-space-mono' });
+const orbitron = Orbitron({ weight: ['400', '700', '900'], subsets: ['latin'], variable: '--font-orbitron' });
+
+// =================================================================
+// 🚀 MASTER SEO METADATA & LSI KEYWORDS ENGINE
+// =================================================================
+export const metadata: Metadata = {
+  applicationName: '0xTanda', // <--- TAMBAHAN BARU: Sinyal super kuat ke Google untuk Site Name
+  title: {
+    default: '0xTanda | Phygital Fashion & Web3 Streetwear Indonesia',
+    template: '%s | 0xTanda Phygital Fashion'
+  },
+  
+  description: '0xTanda adalah brand Phygital Digital Twin Streetwear pertama di Indonesia. Kami menggabungkan pakaian fisik heavyweight cotton berkualitas premium dengan bukti kepemilikan aset digital (Digital Twin NFT) di jaringan blockchain Monad. Tangible craftsmanship secured by digital ownership.',
+  
+  keywords: [
+    '0xTanda', '0x Tanda', '0xTanda Official', '0xTanda Shop', 'Oxtanda',
+    'Phygital Fashion', 'Phygital Streetwear', 'Web3 Fashion Indonesia', 'Crypto Fashion', 'Fashion Blockchain', 
+    'NFT Clothing', 'Digital Twin NFT', 'Brand Lokal Web3', 'Streetwear Jakarta',
+    'Genesis Boxy Tee', 'Kaos Boxy Oversized', 'Heavyweight Cotton 16s', 'Kaos Premium Pria Wanita', 
+    'Baju Kualitas Tinggi', 'Baju Anti Fast Fashion', 'Slow Fashion Indonesia',
+    'Royal Resistance', 'Stoikisme Fashion', 'Kolektor Seni', 'Aset Digital Monad', 'Concierge Airdrop'
+  ],
+  
+  authors: [{ name: 'Abrur Alaina', url: 'https://www.0xtanda.xyz' }],
+  creator: '0xTanda Research Lab',
+  publisher: '0xTanda',
+  
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+
+  metadataBase: new URL('https://www.0xtanda.xyz'),
+  alternates: {
+    canonical: '/',
+  },
+  
+  // Di dalam metadata object di app/layout.tsx
+
+icons: {
+  icon: [
+    { url: '/favicon.ico', sizes: '48x48', type: 'image/x-icon' },
+    { url: '/icon.png', sizes: '512x512', type: 'image/png' },
+  ],
+  shortcut: '/favicon.ico',
+  apple: [
+    { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+  ],
+},
+
+// === FIX UNTUK MICROSOFT EDGE & BING ===
+  other: {
+    'msapplication-TileColor': '#0E0E0E',
+    'msapplication-TileImage': '/icon.png',
+  },
+  
+  openGraph: {
+    type: 'website',
+    locale: 'id_ID',
+    url: 'https://www.0xtanda.xyz',
+    siteName: '0xTanda', // Sinyal kedua untuk Site Name Google
+    title: '0xTanda | Phygital Fashion & Web3 Streetwear Indonesia',
+    description: 'Pakaian fisik premium yang terhubung dengan Digital Twin NFT. Miliki karya nyata, amankan secara digital.',
+    images: [
+      {
+        url: '/branding/og-banner.jpg', 
+        width: 1200,
+        height: 630,
+        alt: '0xTanda Phygital Brand Vision',
+      },
+    ],
+  },
+
+  twitter: {
+    card: 'summary_large_image',
+    title: '0xTanda | Phygital Fashion Indonesia',
+    description: 'Tangible craftsmanship you can feel, secured by digital ownership you can prove. Join the resistance.',
+    creator: '@0xTanda',
+    site: '@0xTanda',
+    images: ['/branding/og-banner.jpg'],
+  },
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  themeColor: '#0E0E0E',
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  
+  // =================================================================
+  // 🧠 JSON-LD SCHEMA MARKUP (GABUNGAN ORGANIZATION & WEBSITE)
+  // Menambahkan WebSite schema agar Google menamai situs ini "0xTanda"
+  // bukan "0xtanda.xyz" atau "www.0xtanda.xyz"
+  // =================================================================
+  const jsonLdData = [
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "0xTanda",
+      "alternateName": ["0xTanda Phygital", "0xTanda Streetwear", "Oxtanda"],
+      "url": "https://www.0xtanda.xyz",
+      "logo": "https://www.0xtanda.xyz/branding/logo-0xtanda-icon.svg",
+      "description": "Pionir Phygital Streetwear di Indonesia yang menggabungkan pakaian fisik heavyweight dengan aset digital NFT di blockchain Monad.",
+      "foundingDate": "2026",
+      "founders": [
+        {
+          "@type": "Person",
+          "name": "Abrur Alaina"
+        }
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "Customer Support",
+        "availableLanguage": "Indonesian"
+      },
+      "sameAs": [
+        "https://www.instagram.com/0xtanda/",
+        "https://x.com/0xTanda",
+        "https://www.tiktok.com/@0xtanda",
+        "https://t.me/Official0xTanda"
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "0xTanda",
+      "alternateName": ["Oxtanda", "0xTanda Official"],
+      "url": "https://www.0xtanda.xyz/"
+    }
+  ];
+
+  return (
+    <html lang="id" className={`${inter.variable} ${spaceGrotesk.variable} ${spaceMono.variable} ${orbitron.variable}`}>
+      <head>
+        <meta name="google-site-verification" content="AdsL5zatSrtTJ8kvkoh5wI1flrVIf0YXJ9-93uTbT8o" />
+        
+        {/* INJEKSI JSON-LD ARRAY KE DALAM HEAD */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdData) }}
+        />
+      </head>
+      
+      <body className="bg-[#0a0a0a] text-[#f3f3f3] overflow-x-hidden antialiased">
+        <ScrollProgress />
+        <NoiseOverlay />
+        <CursorSystem />
+        <Marquee />
+        <Navbar />
+        {children}
+      </body>
+    </html>
+  );
+}
+</file>
+
 <file path="app/terminal-log/cara-klaim-nft/page.tsx">
 "use client";
 
 import React from "react";
-import { motion, useScroll, useSpring, Variants } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { 
   ShieldCheck, Scan, Wallet, User, Calendar, Clock, ArrowLeft, 
   CheckCircle2, MessageSquareWarning, AlertTriangle, Send, ChevronRight, Zap 
@@ -1943,14 +2802,8 @@ const fadeUp: Variants = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1,
 const stagger: Variants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.1 } }};
 
 export default function CaraKlaimNFTPage() {
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
-
   return (
     <main className="min-h-screen bg-[#0A0A0A] text-[#F3F3F3] selection:bg-[#00FF9D] selection:text-black font-sans relative">
-      {/* READING PROGRESS BAR */}
-      <motion.div className="fixed top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#836EF9] to-[#00FF9D] z-[100] origin-left" style={{ scaleX }} />
-
       {/* HEADER ARTIKEL JURNAL */}
       <header className="relative pt-40 pb-12 px-6 border-b border-white/5">
         <div className="max-w-3xl mx-auto">
@@ -2220,7 +3073,7 @@ export default function CaraKlaimNFTPage() {
 "use client";
 
 import React from "react";
-import { motion, useScroll, useSpring, Variants } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import {
   Layers, Package, Fingerprint, HelpCircle, Zap, ShieldCheck, Users, User, Calendar, Clock, Info, ArrowLeft, ChevronRight, Link as LinkIcon
 } from "lucide-react";
@@ -2236,14 +3089,8 @@ const fadeUp: Variants = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1,
 const stagger: Variants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.1 } }};
 
 export default function DigitalTwinArticlePage() {
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
-
   return (
     <main className="min-h-screen bg-[#0A0A0A] text-[#F3F3F3] selection:bg-[#38BDF8] selection:text-black font-sans relative">
-      {/* READING PROGRESS BAR */}
-      <motion.div className="fixed top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#836EF9] via-[#38BDF8] to-[#00FF9D] z-[100] origin-left" style={{ scaleX }} />
-
       {/* HEADER ARTIKEL JURNAL */}
       <header className="relative pt-40 pb-12 px-6 border-b border-white/5">
         <div className="max-w-3xl mx-auto">
@@ -2485,7 +3332,7 @@ export default function DigitalTwinArticlePage() {
 "use client";
 
 import React from "react";
-import { motion, useScroll, useSpring, Variants } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import {
   ScanLine,
   ShieldX,
@@ -2627,21 +3474,8 @@ const COMPARISON_DATA = [
 ];
 
 export default function AntiPalsuArticlePage() {
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001,
-  });
-
   return (
     <main className="min-h-screen bg-[#0A0A0A] text-[#F3F3F3] selection:bg-[#836EF9] selection:text-black font-sans relative">
-      {/* READING PROGRESS BAR */}
-      <motion.div
-        className="fixed top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#836EF9] via-[#00FF9D] to-[#836EF9] z-[100] origin-left"
-        style={{ scaleX }}
-      />
-
       {/* ============================================================ */}
       {/* HEADER ARTIKEL */}
       {/* ============================================================ */}
@@ -3319,7 +4153,7 @@ export default function AntiPalsuArticlePage() {
 "use client";
 
 import React from "react";
-import { motion, useScroll, useSpring, Variants } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import {
   ShieldCheck, Package, Fingerprint, Leaf, Hexagon, User, Calendar, Clock, ArrowLeft, ChevronRight, Link as LinkIcon
 } from "lucide-react";
@@ -3344,14 +4178,8 @@ const fadeUp: Variants = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1,
 const stagger: Variants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.1 } }};
 
 export default function Article1() {
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
-
   return (
     <main className="min-h-screen bg-[#0A0A0A] text-[#F3F3F3] selection:bg-[#836EF9] selection:text-black font-sans relative">
-      {/* READING PROGRESS BAR */}
-      <motion.div className="fixed top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#836EF9] to-[#00FF9D] z-[100] origin-left" style={{ scaleX }} />
-
       {/* HEADER ARTIKEL JURNAL */}
       <header className="relative pt-40 pb-12 px-6 border-b border-white/5">
         <div className="max-w-3xl mx-auto">
@@ -3560,7 +4388,7 @@ export default function Article1() {
 "use client";
 
 import React from "react";
-import { motion, useScroll, useSpring, Variants } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import {
   Brain, Gem, History, ShieldCheck, Globe, Hexagon, User, Calendar, Clock, Info, ArrowLeft, ChevronRight, Link as LinkIcon, ArrowRight
 } from "lucide-react";
@@ -3579,14 +4407,8 @@ const fadeUp: Variants = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1,
 const stagger: Variants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.1 } }};
 
 export default function PsikologiKoleksiArticlePage() {
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
-
   return (
     <main className="min-h-screen bg-[#0A0A0A] text-[#F3F3F3] selection:bg-[#F43F5E] selection:text-black font-sans relative">
-      {/* READING PROGRESS BAR */}
-      <motion.div className="fixed top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#836EF9] via-[#F43F5E] to-[#00FF9D] z-[100] origin-left" style={{ scaleX }} />
-
       {/* HEADER ARTIKEL JURNAL */}
       <header className="relative pt-40 pb-12 px-6 border-b border-white/5">
         <div className="max-w-3xl mx-auto">
@@ -3808,7 +4630,7 @@ export default function PsikologiKoleksiArticlePage() {
 "use client";
 
 import React from "react";
-import { motion, useScroll, useSpring, Variants } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import {
   Compass, Anchor, Zap, ShieldCheck, Scale, Hexagon, User, Calendar, Clock, Info, ArrowLeft, ChevronRight, ArrowRight
 } from "lucide-react";
@@ -3826,13 +4648,8 @@ const fadeUp: Variants = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1,
 const stagger: Variants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.1 } }};
 
 export default function StoikismeFashionArticlePage() {
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
-
   return (
     <main className="min-h-screen bg-[#0A0A0A] text-[#F3F3F3] selection:bg-[#F59E0B] selection:text-black font-sans relative">
-      <motion.div className="fixed top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#836EF9] via-[#F59E0B] to-[#00FF9D] z-[100] origin-left" style={{ scaleX }} />
-
       <header className="relative pt-40 pb-12 px-6 border-b border-white/5">
         <div className="max-w-3xl mx-auto">
           <Link href="/terminal-log" className="inline-flex items-center gap-2 text-neutral-500 hover:text-[#F59E0B] mb-10 font-mono text-[10px] tracking-[0.4em] uppercase transition-colors group">
@@ -3991,933 +4808,1092 @@ export default function StoikismeFashionArticlePage() {
 }
 </file>
 
-<file path="app/verify/page.tsx">
+<file path="app/terminal-log/yono-vs-yolo/page.tsx">
 "use client";
 
-import React from 'react';
-import { ArrowRight, AlertTriangle, ShieldCheck } from 'lucide-react';
+import React from "react";
+import { motion, Variants } from "framer-motion";
+import {
+  BarChart2, RefreshCcw, Brain, Fingerprint, ArrowLeft, ChevronRight, ArrowRight, User, Calendar, Clock
+} from "lucide-react";
 
 // ============================================================================
-// MOCK NEXT.JS (Hanya untuk keperluan Preview di layar Canvas)
-// CATATAN UNTUK COPAS: 
-// Saat menyalin kode ini ke file project asli Anda (VSCode/Vercel), 
-// HAPUS bagian mock ini dan gunakan import bawaan Next.js berikut:
-//
-// import Link from 'next/link';
+// MOCK COMPONENTS
 // ============================================================================
-const Link = ({ href, children, className }: any) => (
-  <a href={href} className={className}>{children}</a>
+const Link = ({ href, children, className }: any) => <a href={href} className={className}>{children}</a>;
+const Image = ({ src, alt, width, height, className, priority }: any) => (
+  <img src={src} alt={alt} width={width} height={height} className={className} loading={priority ? "eager" : "lazy"} />
 );
 // ============================================================================
 
-export default function VerifyLandingPage() {
+// --- VARIAN ANIMASI ---
+const fadeUp: Variants = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8 } }};
+const stagger: Variants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.1 } }};
+
+export default function YonoVsYoloArticlePage() {
   return (
-    <main className="min-h-screen bg-[#0E0E0E] text-white flex flex-col items-center justify-center pt-32 pb-6 px-6 relative overflow-hidden font-sans selection:bg-[#836EF9] selection:text-black">
-      {/* Background Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-[#836EF9]/10 blur-[150px] pointer-events-none rounded-full" />
-
-      <div className="relative z-10 max-w-3xl mx-auto text-center space-y-10">
-        
-        {/* Ikon Shield Online */}
-        <div className="inline-flex items-center justify-center w-24 h-24 bg-black border border-[#00FF9D]/30 rounded-full mb-4 shadow-[0_0_40px_rgba(0,255,157,0.1)] relative">
-          <div className="absolute inset-0 border border-[#00FF9D] rounded-full animate-ping opacity-20" />
-          <ShieldCheck size={40} className="text-[#00FF9D]" />
-        </div>
-
-        {/* HEADER */}
-        <div className="space-y-4">
-          <div className="inline-flex items-center gap-2 border border-[#836EF9] bg-[#836EF9]/10 px-4 py-1 rounded-full mb-2">
-            <div className="w-2 h-2 bg-[#836EF9] rounded-full animate-pulse"/>
-            <span className="text-[10px] text-[#836EF9] font-mono font-bold tracking-[0.2em] uppercase">SYSTEM_ONLINE // VERIFICATION_NODE</span>
-          </div>
-          <h1 className="text-4xl md:text-6xl font-bold uppercase tracking-tighter">
-            ACTIVATION <span className="text-[#836EF9]">PORTAL</span>
-          </h1>
-          <p className="text-neutral-500 font-mono text-xs md:text-sm leading-relaxed tracking-widest uppercase max-w-2xl mx-auto italic">
-            "Tangible craftsmanship you can feel, secured by digital ownership you can prove."
-          </p>
-        </div>
-
-        {/* INSTRUKSI PENTING */}
-        <div className="bg-[#121212] border border-white/10 p-6 md:p-8 rounded-sm mb-12 relative overflow-hidden group text-left shadow-2xl">
-          <div className="absolute top-0 left-0 w-1 h-full bg-[#836EF9] group-hover:w-full group-hover:opacity-5 transition-all duration-700" />
-          <h3 className="text-white font-bold text-sm uppercase tracking-[0.2em] mb-6 flex items-center gap-3 relative z-10">
-            <AlertTriangle className="text-[#836EF9]" size={18} /> INSTRUKSI PENTING:
-          </h3>
-          <ul className="space-y-4 text-[10px] md:text-xs text-neutral-400 uppercase tracking-wide leading-relaxed relative z-10">
-            <li className="flex gap-3 items-start">
-              <span className="text-[#836EF9] font-bold shrink-0">01.</span> 
-              <span>GOSOK panel pelindung pada Genesis Card untuk melihat Secret Code.</span>
-            </li>
-            <li className="flex gap-3 items-start">
-              <span className="text-[#836EF9] font-bold shrink-0">02.</span> 
-              <span>PASTIKAN alamat wallet yang dimasukkan adalah Personal Wallet MONAD (Metamask/Phantom/Hot Wallet lainnya).</span>
-            </li>
-            <li className="flex gap-3 items-start text-red-500 font-bold bg-red-900/10 p-3 border border-red-900/30 rounded-sm">
-              <span className="text-red-500 shrink-0">03.</span> 
-              <span>🚫 DILARANG menggunakan alamat Exchange (Indodax/Binance/Tokocrypto/Bybit. dll).</span>
-            </li>
-            <li className="flex gap-3 items-start">
-              <span className="text-[#836EF9] font-bold shrink-0">04.</span> 
-              <span>PROSES verifikasi dilakukan secara manual demi keamanan (Max 1x24 Jam).</span>
-            </li>
-            <li className="flex gap-3 items-start">
-              <span className="text-[#836EF9] font-bold shrink-0">05.</span> 
-              <span>BIAYA jaringan (Gas Fee) ditanggung 0xTanda (GRATIS).</span>
-            </li>
-          </ul>
-        </div>
-
-        {/* Tombol Lanjut ke Form */}
-        <div className="pt-4">
-          <Link 
-            href="/verify/pageform" 
-            className="inline-flex items-center gap-4 bg-[#836EF9] text-black px-12 py-5 font-mono text-sm font-bold uppercase tracking-[0.2em] hover:bg-white transition-all group shadow-[0_0_30px_rgba(131,110,249,0.3)] hover:shadow-[0_0_50px_rgba(131,110,249,0.5)] rounded-sm"
-          >
-            VERIFY <ArrowRight size={18} className="group-hover:translate-x-2 transition-transform" />
+    <main className="min-h-screen bg-[#0A0A0A] text-[#F3F3F3] selection:bg-[#836EF9] selection:text-black font-sans relative">
+      {/* HEADER ARTIKEL JURNAL */}
+      <header className="relative pt-40 pb-12 px-6 border-b border-white/5">
+        <div className="max-w-3xl mx-auto">
+          <Link href="/terminal-log" className="inline-flex items-center gap-2 text-neutral-500 hover:text-[#836EF9] mb-10 font-mono text-[10px] tracking-[0.4em] uppercase transition-colors group">
+            <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" /> Back to Menu
           </Link>
-        </div>
-        
-        <p className="text-[9px] font-mono text-neutral-600 uppercase tracking-[0.4em] pt-8">
-          0xTanda // Secure Transmission
-        </p>
-
-      </div>
-    </main>
-  );
-}
-</file>
-
-<file path="app/verify/pageform/page.tsx">
-"use client";
-
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  ShieldCheck, 
-  Wallet, 
-  UploadCloud, 
-  CheckCircle2, 
-  AlertTriangle, 
-  Loader2, 
-  X,
-  Key,
-  User,
-  Smartphone,
-  Mail,
-  ShoppingBag,
-  ArrowLeft
-} from 'lucide-react';
-
-// ============================================================================
-// MOCK NEXT.JS (Hanya untuk keperluan Preview di layar Canvas)
-// CATATAN UNTUK COPAS: 
-// Saat menyalin kode ini ke file project asli Anda (VSCode/Vercel), 
-// HAPUS bagian mock ini dan gunakan import bawaan Next.js berikut:
-//
-// import Link from 'next/link';
-// ============================================================================
-const Link = ({ href, children, className }: any) => (
-  <a href={href} className={className}>{children}</a>
-);
-// ============================================================================
-
-export default function VerifyFormPage() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [status, setStatus] = useState<'idle' | 'success' | 'error' | 'used'>('idle');
-  const [fileName, setFileName] = useState('');
-  
-  // State khusus untuk Checkbox Persetujuan
-  const [isAgreed, setIsAgreed] = useState(false);
-
-  // 🔴 PASTIKAN URL INI BENAR DARI DEPLOYMENT GOOGLE APPS SCRIPT
-  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz9_dc-9v8UNopJGhjlzoBPluWiS9i2krk4-wARwH5PhiFiLx-BAHGoZoUgngcGw1ff/exec";
-
-  const [formData, setFormData] = useState({
-    secretCode: '',
-    walletAddress: '',
-    nama: '',
-    gender: 'Pria',
-    email: '',
-    noHp: '',
-    telegramId: '',
-    productName: 'GENESIS BOXY TEE',
-    orderId: '',
-    proofImage: '' 
-  });
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-
-    if (name === 'secretCode') {
-      // 1. Hapus semua karakter selain huruf dan angka, jadikan kapital
-      let rawValue = value.replace(/[^A-Za-z0-9]/g, '').toUpperCase();
-      // 2. Batasi maksimal 12 karakter alfanumerik
-      if (rawValue.length > 12) rawValue = rawValue.substring(0, 12);
-      // 3. Sisipkan strip (-) setiap 4 karakter sehingga menjadi XXXX-XXXX-XXXX
-      const formattedValue = rawValue.match(/.{1,4}/g)?.join('-') || rawValue;
-      setFormData({ ...formData, [name]: formattedValue });
-    } else if (name === 'telegramId') {
-      // Auto tambahkan @ jika user lupa (Hanya kalau input tidak kosong)
-      let tgValue = value.trim();
-      if (tgValue.length > 0 && !tgValue.startsWith('@')) {
-        tgValue = '@' + tgValue;
-      }
-      setFormData({ ...formData, [name]: tgValue });
-    } else {
-      setFormData({ ...formData, [name]: value });
-    }
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      if (file.size > 2 * 1024 * 1024) {
-        alert("Ukuran file terlalu besar. Maksimal 2MB.");
-        return;
-      }
-      setFileName(file.name);
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setFormData({ ...formData, proofImage: reader.result as string });
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    // VALIDASI WALLET (Wajib Monad/EVM: Diawali 0x dan 40 karakter hex)
-    const evmRegex = /^0x[a-fA-F0-9]{40}$/;
-    if (!evmRegex.test(formData.walletAddress)) {
-        alert("ALAMAT WALLET TIDAK VALID!\nPastikan alamat dimulai dengan '0x' dan merupakan format standar MONAD/EVM.");
-        return;
-    }
-
-    // VALIDASI KODE (Wajib 12 digit alfanumerik + 2 strip = 14 karakter)
-    if (formData.secretCode.length !== 14) {
-        alert("SECRET CODE TIDAK LENGKAP!\nPastikan Anda memasukkan 12 digit kode dengan benar (Format: XXXX-XXXX-XXXX).");
-        return;
-    }
-
-    // VALIDASI TELEGRAM (Wajib pakai @ dan minimal 3 karakter setelah @)
-    if (!formData.telegramId.startsWith('@') || formData.telegramId.length < 4) {
-        alert("ID TELEGRAM TIDAK VALID!\nPastikan mengisi username Telegram yang diawali dengan simbol '@' (contoh: @username).");
-        return;
-    }
-
-    // VALIDASI PERSETUJUAN
-    if (!isAgreed) {
-        alert("Anda harus menyetujui Peringatan dan Kebijakan 0xTanda untuk melanjutkan.");
-        return;
-    }
-
-    setIsLoading(true);
-
-    try {
-      // Menyertakan data persetujuan ke payload untuk direkam di database
-      const payloadData = {
-        ...formData,
-        persetujuanKebijakan: isAgreed ? "SETUJU" : "TIDAK_SETUJU"
-      };
-
-      const response = await fetch(GOOGLE_SCRIPT_URL, {
-        method: "POST",
-        body: JSON.stringify(payloadData),
-      });
-
-      const result = await response.json();
-
-      if (result.status === 'success') {
-        setStatus('success');
-      } else if (result.status === 'duplicate') {
-        setStatus('used');
-      } else {
-        setStatus('error');
-      }
-    } catch (error) {
-      console.error("Submission Error:", error);
-      // Menangkap error CORS yang umum terjadi di Google Apps Script walau data berhasil masuk
-      setStatus('success'); 
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  return (
-    <main className="min-h-screen bg-[#0E0E0E] text-white selection:bg-[#836EF9] selection:text-black font-mono overflow-x-hidden relative">
-      <div className="pt-32 px-6 pb-20 max-w-4xl mx-auto relative z-10">
-        
-        {/* Tombol Kembali ke Portal */}
-        <Link 
-          href="/verify"
-          className="inline-flex items-center gap-2 text-neutral-500 hover:text-white mb-10 font-mono text-[10px] tracking-[0.5em] uppercase transition-colors group"
-        >
-          <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" /> BACK TO PORTAL
-        </Link>
-        
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 border border-[#836EF9] bg-[#836EF9]/10 px-4 py-1 mb-6 rounded-full">
-            <div className="w-2 h-2 bg-[#836EF9] rounded-full animate-pulse"/>
-            <span className="text-[10px] text-[#836EF9] font-bold tracking-[0.2em] uppercase">SYSTEM_ONLINE // DATA_ENTRY</span>
-          </div>
-          <h1 className="text-3xl md:text-5xl font-sans font-bold uppercase tracking-tighter mb-4">
-            ACTIVATION <span className="text-[#836EF9]">FORM</span>
-          </h1>
-        </div>
-
-        {/* FORM */}
-        <form onSubmit={handleSubmit} className="space-y-12">
-          
-          {/* SECTION 1: CRITICAL DATA */}
-          <div className="space-y-6">
-            <div className="bg-gradient-to-b from-[#1a1a1a] to-black border border-[#836EF9]/50 p-8 rounded-sm shadow-[0_0_30px_rgba(131,110,249,0.1)] relative overflow-hidden">
-              <div className="absolute top-0 right-0 p-4 opacity-20">
-                <ShieldCheck size={64} className="text-[#836EF9]" />
-              </div>
-              <h4 className="text-[#836EF9] text-xs font-bold uppercase tracking-[0.3em] mb-8 flex items-center gap-2">
-                <ShieldCheck size={16}/> PRIMARY CREDENTIALS
-              </h4>
-              
-              <div className="grid gap-10">
-                <div className="space-y-3 relative z-10">
-                  <label className="text-xs text-[#836EF9] font-bold uppercase tracking-[0.2em] flex items-center gap-2">
-                    <Key size={14}/> SECRET CODE (GENESIS CARD)
-                  </label>
-                  <input 
-                    type="text" 
-                    name="secretCode"
-                    value={formData.secretCode}
-                    maxLength={14}
-                    required
-                    placeholder="XXXX-XXXX-XXXX" 
-                    className="w-full bg-black border-2 border-[#836EF9] p-6 text-xl md:text-3xl font-sans font-bold text-white placeholder:text-white/10 focus:shadow-[0_0_30px_rgba(131,110,249,0.4)] focus:outline-none transition-all uppercase tracking-widest text-center rounded-sm"
-                    onChange={handleInputChange}
-                  />
-                  <p className="text-[9px] text-neutral-500 uppercase tracking-widest text-center">*Masukkan 12 digit (Format otomatis: XXXX-XXXX-XXXX)</p>
-                </div>
-
-                <div className="space-y-3 relative z-10">
-                  <label className="text-xs text-[#00FF9D] font-bold uppercase tracking-[0.2em] flex items-center gap-2">
-                    <Wallet size={14}/> WALLET MONAD ADDRESS
-                  </label>
-                  <input 
-                    type="text" 
-                    name="walletAddress"
-                    value={formData.walletAddress}
-                    required
-                    placeholder="0x..." 
-                    className="w-full bg-black border-2 border-[#00FF9D]/50 p-6 text-sm md:text-xl font-mono text-[#00FF9D] placeholder:text-[#00FF9D]/20 focus:border-[#00FF9D] focus:shadow-[0_0_30px_rgba(0,255,157,0.2)] focus:outline-none transition-all rounded-sm"
-                    onChange={handleInputChange}
-                  />
-                  <p className="text-[9px] text-neutral-500 uppercase tracking-widest text-right">*Wajib format 0x... (Personal Wallet Monad)</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* SECTION 2: PROFILE */}
-          <div className="space-y-8 pt-8 border-t border-white/5">
-            <h4 className="text-white text-xs font-bold uppercase tracking-[0.3em] flex items-center gap-2">
-              <User size={16} className="text-neutral-500" /> IDENTITAS OWNER
-            </h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <label className="text-[10px] text-neutral-500 uppercase tracking-widest">Nama Lengkap <span className="text-red-500">*</span></label>
-                <input type="text" name="nama" value={formData.nama} required className="w-full bg-[#121212] border border-white/10 p-4 text-sm text-white focus:border-white/50 focus:outline-none transition-colors" onChange={handleInputChange} />
-              </div>
-              <div className="space-y-2">
-                <label className="text-[10px] text-neutral-500 uppercase tracking-widest">Jenis Kelamin</label>
-                <select name="gender" value={formData.gender} className="w-full bg-[#121212] border border-white/10 p-4 text-sm text-white focus:border-white/50 focus:outline-none transition-colors appearance-none" onChange={handleInputChange}>
-                  <option value="Pria">PRIA</option>
-                  <option value="Wanita">WANITA</option>
-                </select>
-              </div>
-              <div className="space-y-2">
-                <label className="text-[10px] text-neutral-500 uppercase tracking-widest">Email Aktif <span className="text-red-500">*</span></label>
-                <div className="relative">
-                  <Mail className="absolute right-4 top-1/2 -translate-y-1/2 text-white/20" size={16} />
-                  <input type="email" name="email" value={formData.email} required className="w-full bg-[#121212] border border-white/10 p-4 text-sm text-white focus:border-white/50 focus:outline-none transition-colors" onChange={handleInputChange} />
-                </div>
-              </div>
-              <div className="space-y-2">
-                <label className="text-[10px] text-neutral-500 uppercase tracking-widest">No. HP / WhatsApp <span className="text-red-500">*</span></label>
-                <div className="relative">
-                  <Smartphone className="absolute right-4 top-1/2 -translate-y-1/2 text-white/20" size={16} />
-                  <input type="tel" name="noHp" value={formData.noHp} required className="w-full bg-[#121212] border border-white/10 p-4 text-sm text-white focus:border-white/50 focus:outline-none transition-colors" onChange={handleInputChange} />
-                </div>
-              </div>
-              <div className="space-y-2 md:col-span-2">
-                <label className="text-[10px] text-neutral-500 uppercase tracking-widest">ID Telegram (Wajib pakai @) <span className="text-red-500">*</span></label>
-                <input type="text" name="telegramId" value={formData.telegramId} required placeholder="@username" className="w-full bg-[#121212] border border-white/10 p-4 text-sm text-white focus:border-white/50 focus:outline-none transition-colors" onChange={handleInputChange} />
-              </div>
-            </div>
-          </div>
-
-          {/* SECTION 3: DETAIL ORDER */}
-          <div className="space-y-8 pt-8 border-t border-white/5">
-            <h4 className="text-white text-xs font-bold uppercase tracking-[0.3em] flex items-center gap-2">
-              <ShoppingBag size={16} className="text-neutral-500" /> DETAIL TRANSAKSI
-            </h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-2 md:col-span-2">
-                <label className="text-[10px] text-neutral-500 uppercase tracking-widest">Pilih Artefak (Produk)</label>
-                <div className="relative">
-                  <select name="productName" value={formData.productName} className="w-full bg-[#121212] border border-white/10 p-4 text-sm text-[#836EF9] font-bold focus:border-white/50 focus:outline-none transition-colors appearance-none uppercase" onChange={handleInputChange}>
-                    <option value="GENESIS BOXY TEE">GENESIS BOXY TEE [BATCH #001]</option>
-                    <option value="-" disabled>ARCHIVE 02 (LOCKED)</option>
-                  </select>
-                  <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
-                    <div className="w-2 h-2 bg-[#836EF9] rounded-full" />
-                  </div>
-                </div>
-              </div>
-              <div className="space-y-2">
-                <label className="text-[10px] text-neutral-500 uppercase tracking-widest">Order ID <span className="text-red-500">*</span></label>
-                <input type="text" name="orderId" value={formData.orderId} required placeholder="Contoh: 230919ABC..." className="w-full bg-[#121212] border border-white/10 p-4 text-sm text-white focus:border-white/50 focus:outline-none transition-colors" onChange={handleInputChange} />
-              </div>
-              <div className="space-y-2">
-                <label className="text-[10px] text-neutral-500 uppercase tracking-widest">Upload Bukti Pembelian (Max 2MB) <span className="text-red-500">*</span></label>
-                <div className="relative group">
-                  <input type="file" id="fileUpload" required className="hidden" onChange={handleFileChange} accept="image/*" />
-                  <label htmlFor="fileUpload" className="w-full bg-[#121212] border border-white/10 border-dashed p-4 text-sm text-neutral-400 flex items-center justify-between cursor-pointer hover:bg-white/5 hover:border-[#836EF9] transition-all">
-                    <span className="truncate font-mono">{fileName || "KLIK UNTUK UPLOAD FILE..."}</span>
-                    <UploadCloud size={20} className="text-neutral-500 group-hover:text-[#836EF9]" />
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* WARNING & DISCLAIMER BOX DENGAN CHECKBOX PERSETUJUAN */}
-          <div className="pt-8">
-            <div className="bg-red-900/10 border border-red-500/30 p-6 md:p-8 rounded-sm space-y-6">
-              <div className="flex items-center gap-2 text-red-500 font-bold text-sm md:text-base uppercase tracking-widest">
-                <AlertTriangle size={20} /> PERINGATAN & KEBIJAKAN
-              </div>
-              <p className="text-[11px] md:text-xs text-neutral-400 uppercase tracking-widest leading-relaxed">
-                Produk 0xTanda <strong className="text-white">bukan instrumen investasi</strong>, dan 0xTanda <strong className="text-white">bukan tempat jual beli</strong>. Setiap produk dan aset digital yang sudah keluar (didistribusikan) dari sistem 0xTanda sepenuhnya menjadi hak dan tanggung jawab mutlak pemilik, dan bukan lagi menjadi tanggung jawab 0xTanda.
-              </p>
-              
-              {/* Checkbox Persetujuan */}
-              <label className="flex items-start gap-4 cursor-pointer mt-4 group">
-                <div className="relative flex items-start justify-center mt-0.5">
-                  <input 
-                    type="checkbox" 
-                    className="w-5 h-5 accent-[#836EF9] bg-[#121212] border border-white/30 rounded-sm cursor-pointer"
-                    checked={isAgreed}
-                    onChange={(e) => setIsAgreed(e.target.checked)}
-                    required
-                  />
-                </div>
-                <span className={`text-[10px] md:text-[11px] font-bold uppercase tracking-widest leading-relaxed transition-colors ${isAgreed ? 'text-[#00FF9D]' : 'text-white group-hover:text-[#836EF9]'}`}>
-                  SAYA TELAH MEMBACA, MEMAHAMI, DAN MENYETUJUI SELURUH KEBIJAKAN SERTA PERINGATAN DI ATAS.
-                </span>
-              </label>
-            </div>
-          </div>
-
-          {/* SUBMIT BUTTON */}
-          <div className="pt-4">
-            <button 
-              type="submit" 
-              disabled={isLoading || !isAgreed}
-              className="w-full bg-[#836EF9] text-black font-mono text-sm font-bold py-6 uppercase tracking-[0.2em] hover:bg-white transition-all flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-neutral-800 disabled:text-neutral-500 shadow-[0_0_40px_rgba(131,110,249,0.3)] hover:shadow-[0_0_60px_rgba(131,110,249,0.6)] rounded-sm"
-            >
-              {isLoading ? <><Loader2 className="animate-spin" size={20} /> VALIDATING DATA...</> : "SUBMIT VERIFICATION DATA"}
-            </button>
-          </div>
-        </form>
-      </div>
-
-      {/* POPUP MODALS */}
-      <AnimatePresence>
-        {status !== 'idle' && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/95 backdrop-blur-md">
-            <motion.div 
-              initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-[#0E0E0E] border border-white/10 p-10 max-w-md w-full text-center relative shadow-[0_0_50px_rgba(131,110,249,0.2)]"
-            >
-              <button onClick={() => setStatus('idle')} className="absolute top-4 right-4 text-neutral-500 hover:text-white"><X size={24} /></button>
-
-              {status === 'success' && (
-                <div className="space-y-6">
-                  <div className="w-24 h-24 bg-[#00FF9D]/10 rounded-full flex items-center justify-center mx-auto border border-[#00FF9D]/30">
-                    <CheckCircle2 size={48} className="text-[#00FF9D]" />
-                  </div>
-                  <div>
-                    <h3 className="text-3xl font-bold text-white uppercase tracking-tighter mb-2">VERIFIED</h3>
-                    <div className="h-1 w-12 bg-[#00FF9D] mx-auto mb-4" />
-                    <p className="text-xs text-neutral-400 font-mono uppercase tracking-widest leading-relaxed">Data Anda telah diterima. Tim 0xTanda akan memvalidasi dalam 1x24 jam.</p>
-                  </div>
-                </div>
-              )}
-
-              {status === 'used' && (
-                <div className="space-y-6">
-                  <div className="w-24 h-24 bg-[#EE4D2D]/10 rounded-full flex items-center justify-center mx-auto border border-[#EE4D2D]/30">
-                    <AlertTriangle size={48} className="text-[#EE4D2D]" />
-                  </div>
-                  <div>
-                    <h3 className="text-3xl font-bold text-[#EE4D2D] uppercase tracking-tighter mb-2">KODE DIGUNAKAN</h3>
-                    <div className="h-1 w-12 bg-[#EE4D2D] mx-auto mb-4" />
-                    <p className="text-xs text-neutral-400 font-mono uppercase tracking-widest leading-relaxed">Kode Rahasia terdeteksi duplikat atau sudah pernah diklaim sebelumnya.</p>
-                  </div>
-                </div>
-              )}
-
-              {status === 'error' && (
-                <div className="space-y-6">
-                  <div className="w-24 h-24 bg-yellow-500/10 rounded-full flex items-center justify-center mx-auto border border-yellow-500/30">
-                    <AlertTriangle size={48} className="text-yellow-500" />
-                  </div>
-                  <div>
-                    <h3 className="text-3xl font-bold text-white uppercase tracking-tighter mb-2">ERROR</h3>
-                    <div className="h-1 w-12 bg-yellow-500 mx-auto mb-4" />
-                    <p className="text-xs text-neutral-400 font-mono uppercase tracking-widest leading-relaxed">Kode Rahasia tidak dikenali. Pastikan Anda mengetik 12 digit kode dengan benar.</p>
-                  </div>
-                </div>
-              )}
-              
-              <button onClick={() => setStatus('idle')} className="mt-10 w-full border border-white/20 py-4 text-xs font-bold uppercase hover:bg-white hover:text-black transition-all">TUTUP</button>
+          <motion.div initial="hidden" animate="visible" variants={stagger} className="space-y-6">
+            <motion.div variants={fadeUp} className="flex items-center gap-3 text-[11px] font-mono tracking-widest text-[#836EF9] uppercase font-bold">
+              <span className="bg-[#836EF9]/10 border border-[#836EF9]/30 px-3 py-1 rounded-full">Editorial</span>
+              <span className="text-neutral-500">// Archive_07</span>
             </motion.div>
+            <motion.h1 variants={fadeUp} className="text-3xl md:text-5xl font-bold tracking-tighter leading-tight text-white">
+              YONO vs YOLO: Ketika Generasi yang Lahir dari Impulse Buying Mulai Mempertanyakan Lemari Bajunya Sendiri
+            </motion.h1>
+            <motion.p variants={fadeUp} className="text-lg md:text-xl text-[#836EF9] font-light leading-relaxed">
+              Sistem dirancang agar kamu terus membeli. Tapi ada error di dalam loop itu. Dan Gen Z mulai melihatnya.
+            </motion.p>
+            <motion.div variants={fadeUp} className="flex flex-wrap items-center gap-x-6 gap-y-4 text-[12px] text-neutral-500 pt-6 border-t border-white/5">
+              <div className="flex items-center gap-2">
+                <div className="w-6 h-6 rounded-full bg-[#836EF9]/20 flex items-center justify-center border border-[#836EF9]/50">
+                  <User size={12} className="text-[#836EF9]" />
+                </div>
+                <span className="font-bold text-white">0xTanda Lab</span>
+              </div>
+              <div className="flex items-center gap-2"><Calendar size={14} /> 19 Mei 2026</div>
+              <div className="flex items-center gap-2"><Clock size={14} /> ~8 menit</div>
+            </motion.div>
+          </motion.div>
+        </div>
+      </header>
+
+      {/* BODY ARTIKEL */}
+      <article className="relative py-16 px-6">
+        <div className="max-w-3xl mx-auto space-y-10 text-[17px] md:text-[19px] text-neutral-300 leading-[1.8] font-light">
+
+          {/* PENDAHULUAN */}
+          <motion.div variants={fadeUp}>
+            <p>
+              <span className="float-left text-6xl md:text-7xl font-bold text-[#836EF9] mr-4 mt-2 leading-none font-serif">K</span>
+              amu punya berapa baju?
+            </p>
+            <p className="mt-6">
+              Buka lemarimu. Hitung. Bukan yang sering dipakai — hitung semuanya. Yang terlipat rapi di belakang. Yang masih ada tag-nya. Yang dibeli karena diskon flash sale pukul 00.00. Yang terasa "sayang dibuang" padahal sudah setahun tidak pernah disentuh.
+            </p>
+            <p className="mt-6">
+              Angkanya lebih besar dari yang kamu kira.
+            </p>
+            <p className="mt-6">
+              Dan di suatu titik, angka itu berhenti terasa seperti kekayaan. Ia mulai terasa seperti catatan kesalahan.
+            </p>
+            <p className="mt-6">
+              Generasi yang dibesarkan dengan notifikasi checkout, OOTD culture, dan filosofi YOLO — You Only Live Once, hidup sekali jadi belilah saja — kini menghadapi paradoks yang tidak pernah diajarkan di sekolah: punya banyak, tapi tidak benar-benar memiliki apapun.
+            </p>
+            <p className="mt-6">
+              Di sinilah YONO masuk. Bukan sebagai tren estetika. Tapi sebagai sinyal bahwa sesuatu di dalam sistem sudah mulai rusak.
+            </p>
+          </motion.div>
+
+          {/* COVER IMAGE */}
+          <motion.div variants={fadeUp} className="py-6">
+            <figure className="relative aspect-[16/9] w-full rounded-sm overflow-hidden border border-white/10 bg-white/5 group flex items-center justify-center">
+              <Image 
+                src="/article/cover-yono-vs-yolo.png" 
+                alt="YONO vs YOLO Concept" 
+                width={1600}
+                height={900}
+                priority
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000 grayscale group-hover:grayscale-0" 
+              />
+              <div className="absolute inset-0 bg-[#836EF9]/10 mix-blend-overlay group-hover:bg-transparent transition-colors"></div>
+              <figcaption className="absolute bottom-4 left-4 bg-black/80 backdrop-blur-md px-3 py-1.5 text-[10px] font-mono text-[#836EF9] border border-[#836EF9]/30 uppercase tracking-widest z-10">
+                Consumption_Loop // Error_Detected
+              </figcaption>
+            </figure>
+          </motion.div>
+
+          {/* SEKSI A */}
+          <motion.div variants={fadeUp} className="space-y-5">
+            <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight flex items-center gap-3">
+              <BarChart2 className="text-[#836EF9]" size={28} /> A. Angka-Angka yang Tidak Ada di Caption Instagram
+            </h2>
+            <p>
+              Mari kita mulai dari fakta.
+            </p>
+            <p>
+              Sebuah riset terhadap perilaku konsumsi Gen Z di Indonesia menemukan angka yang mengejutkan: 56,2% membeli pakaian baru setiap bulan. Dan 75,6% melakukan impulse buying — membeli tanpa rencana, dipicu diskon atau tampilan menarik di layar ponsel.
+            </p>
+
+            {/* CALLOUT BOX */}
+            <div className="bg-[#836EF9]/10 border-l-2 border-[#836EF9] p-6 my-6 text-white italic">
+              "Tiga dari empat orang. Setiap bulan. Tanpa benar-benar berniat membeli."
+            </div>
+
+            <p>
+              Di sisi lain, data Kementerian Perdagangan mencatat bahwa pakaian adalah produk paling banyak dibeli di e-commerce Indonesia sepanjang 2024, dengan persentase 70,1% dari seluruh kategori — mengalahkan produk kecantikan, makanan, bahkan elektronik.
+            </p>
+            <p>
+              Indonesia bukan hanya konsumen fashion. Indonesia adalah salah satu mesin konsumsi fashion terbesar di dunia.
+            </p>
+            <p>
+              Dan biayanya?
+            </p>
+            <p>
+              Limbah tekstil Indonesia diproyeksikan mencapai 3,5 juta ton pada 2030 — naik 68 persen dibanding 2019. Industri tekstil global menyumbang setidaknya 7 persen dari total sampah dunia. Di hulu produksinya, Sungai Citarum — sungai yang ada di negara yang sama dengan lemarimu — telah kehilangan 60 persen spesies ikannya akibat limbah pewarnaan tekstil.
+            </p>
+            <p>
+              Tidak ada dari angka-angka ini yang muncul di konten "haul baju" yang kamu tonton tadi malam.
+            </p>
+          </motion.div>
+
+          {/* SEKSI B */}
+          <motion.div variants={fadeUp} className="space-y-5 pt-8 border-t border-white/5">
+            <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight flex items-center gap-3">
+              <RefreshCcw className="text-[#836EF9]" size={28} /> B. YOLO ke YONO: Ini Bukan Soal Kesadaran Lingkungan
+            </h2>
+            <p>
+              YONO — You Only Need One — bukan lahir dari kampanye sustainability yang dibiayai brand fashion mewah.
+            </p>
+            <p>
+              Ia lahir dari tekanan.
+            </p>
+            <p>
+              Pertama kali viral dari Korea, YONO adalah respons Gen Z terhadap dua krisis sekaligus: krisis ekonomi yang membuat "flex culture" terasa semakin absurd, dan krisis eksistensial ketika lemari yang penuh ternyata tidak membuat hidup terasa lebih penuh.
+            </p>
+            <p>
+              Ini adalah perbedaan yang penting untuk dipahami.
+            </p>
+            <p>
+              YONO bukan tentang menjadi minimalis yang estetis. Ia tentang satu pertanyaan radikal yang mulai berani ditanyakan oleh generasi yang selama ini diajarkan untuk tidak menunda kepuasan:
+            </p>
+            <p className="text-white font-bold">
+              "Apakah aku benar-benar membutuhkan ini?"
+            </p>
+            <p>
+              Dan di balik pertanyaan itu, ada kesadaran yang lebih gelap: bahwa selama bertahun-tahun, jawaban atas pertanyaan itu sudah dijawabkan lebih dulu — oleh algoritma, oleh flash sale, oleh notifikasi yang tahu persis kapan kamu paling rentan membuka aplikasi.
+            </p>
+
+            {/* BLOCKQUOTE */}
+            <div className="bg-[#836EF9]/10 border-l-2 border-[#836EF9] p-6 my-6">
+              <p className="text-white italic text-lg md:text-xl leading-relaxed">
+                "YOLO memberi izin. YONO adalah pencabutan izin itu."
+              </p>
+            </div>
+
+            <p>
+              Tapi ada masalah.
+            </p>
+          </motion.div>
+
+          {/* SEKSI C */}
+          <motion.div variants={fadeUp} className="space-y-5 pt-8 border-t border-white/5">
+            <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight flex items-center gap-3">
+              <Brain className="text-[#836EF9]" size={28} /> C. Intention-Behavior Gap: Tahu Tapi Tidak Bisa Berhenti
+            </h2>
+            <p>
+              Di sinilah narasi YONO mulai retak.
+            </p>
+            <p>
+              Riset akademis menyebutnya intention-behavior gap — jurang antara niat dan tindakan nyata. Orang tahu fast fashion merusak. Mereka tahu impulse buying menguras dompet. Mereka setuju dengan prinsip YONO secara teoritis.
+            </p>
+            <p>
+              Tapi angka impulse buying tidak turun.
+            </p>
+            <p>
+              Kenapa?
+            </p>
+            <p>
+              Karena sistem tidak dirancang untuk mendukung keputusan yang lambat.
+            </p>
+            <p>
+              Algoritma TikTok dan Instagram bukan hanya cermin selera kamu — ia adalah instruksi pembelian yang sangat personal, dibangun dari data perilakumu selama bertahun-tahun. Setiap konten yang berhenti kamu scroll lebih dari dua detik adalah data. Setiap produk yang kamu zoom adalah data. Setiap jam berapa kamu membuka aplikasi adalah data.
+            </p>
+            <p>
+              Lebih jauh lagi: brand fashion besar sudah menggunakan AI yang menganalisis jutaan gambar media sosial setiap hari untuk memprediksi apa yang akan kamu inginkan — hingga 24 bulan ke depan. Tren yang kamu "temukan" sendiri di FYP bulan ini, mungkin sudah diproduksi massal dua tahun yang lalu berdasarkan model prediktif yang melacak pola konsumsi jutaan orang seperti kamu.
+            </p>
+            <p>
+              Kamu bukan yang menemukan tren itu. Kamu adalah konfirmasi dari prediksi yang sudah dibuat sebelum kamu sadar ingin membelinya.
+            </p>
+            <p>
+              YONO adalah perlawanan terhadap sistem ini. Tapi perlawanan yang jujur harus dimulai dengan mengakui betapa dalamnya sistem itu sudah masuk.
+            </p>
+            <p>
+              Capsule wardrobe yang diromantisasi di konten lifestyle? Itu bukan solusi untuk semua orang. "Beli sedikit, beli bagus" adalah privilege ketika harga barang berkualitas masih jauh di atas jangkauan UMR Jakarta.
+            </p>
+            <p>
+              Masalahnya bukan pilihan antara fast fashion atau slow fashion.
+            </p>
+            <p className="text-white font-bold">
+              Masalahnya adalah: kepemilikan yang sebenarnya tidak pernah diajarkan sebagai sebuah nilai.
+            </p>
+
+            {/* GRID 2-COL FAKTA KUNCI */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+              <div className="bg-white/5 border border-white/10 p-6 rounded-sm space-y-3">
+                <p className="text-3xl font-bold text-[#836EF9] font-mono">76,7%</p>
+                <p className="text-sm text-neutral-400 leading-relaxed">
+                  Gen Z dipengaruhi konten sosmed dalam belanja baju
+                </p>
+              </div>
+              <div className="bg-white/5 border border-white/10 p-6 rounded-sm space-y-3">
+                <p className="text-3xl font-bold text-[#836EF9] font-mono">24</p>
+                <p className="text-sm text-neutral-400 leading-relaxed">
+                  Bulan — brand fashion pakai AI prediksi tren hingga 24 bulan sebelum launching
+                </p>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* SEKSI D */}
+          <motion.div variants={fadeUp} className="space-y-5 pt-8 border-t border-white/5">
+            <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight flex items-center gap-3">
+              <Fingerprint className="text-[#836EF9]" size={28} /> D. Bukan Tentang Membeli Lebih Sedikit — Tapi Memiliki dengan Cara yang Berbeda
+            </h2>
+            <p>
+              Ada pertanyaan yang lebih fundamental dari "seberapa banyak yang cukup?":
+            </p>
+            <p className="text-white font-bold text-xl">
+              Apa artinya benar-benar memiliki sesuatu?
+            </p>
+            <p>
+              Dalam sistem yang sekarang ada, jawaban itu sangat kabur. Kamu membeli baju, tapi dalam tiga bulan modelnya sudah "ketinggalan." Kamu punya receipt-nya, tapi tidak ada cara membuktikan keasliannya. Nilai barangnya turun begitu keluar dari toko, bukan karena kualitasnya menurun, tapi karena sistem tidak pernah membangun infrastruktur untuk nilai yang bertahan.
+            </p>
+            <p>
+              Fast fashion menjual ilusi kepemilikan. Kamu membeli sebuah baju, tapi yang sebenarnya kamu beli adalah akses sementara ke sebuah tren — yang akan digantikan oleh tren berikutnya dalam hitungan minggu.
+            </p>
+            <p>
+              YONO bukan hanya tentang membeli lebih sedikit. Ia tentang menuntut bahwa setiap keputusan membeli harus berarti sesuatu. Bahwa setiap piece yang masuk ke lemarimu membawa nilai yang bisa diverifikasi, dipertahankan, dan dipindahtangankan secara sah.
+            </p>
+
+            {/* CALLOUT BOX */}
+            <div className="bg-[#836EF9]/10 border border-[#836EF9]/30 p-6 md:p-8 rounded-sm mt-8">
+              <p className="text-white font-bold text-lg md:text-xl leading-relaxed">
+                Kepemilikan yang nyata bukan soal jumlah. Ia soal bukti.
+              </p>
+            </div>
+
+            <p>
+              Baju yang kamu beli hari ini — siapa yang bisa membuktikan kamu yang punya? Dalam berapa tahun, dan dengan cara apa, nilai itu bisa bertahan?
+            </p>
+            <p>
+              Itulah pertanyaan yang seharusnya ditanyakan sebelum checkout berikutnya.
+            </p>
+          </motion.div>
+
+          {/* PENUTUP */}
+          <motion.div variants={fadeUp} className="space-y-5 pt-8 border-t border-white/5">
+            <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight">
+              Sistem Tidak Akan Berubah Sendiri
+            </h2>
+            <p>
+              YONO adalah sinyal yang benar dengan solusi yang masih setengah jalan.
+            </p>
+            <p>
+              Benar bahwa generasi ini mulai lelah dengan loop konsumsi tanpa akhir. Benar bahwa "lebih sedikit" lebih baik dari "lebih banyak."
+            </p>
+            <p>
+              Tapi selama infrastruktur kepemilikan tidak berubah — selama baju yang kamu beli tidak punya catatan eksistensi, tidak punya verifikasi, tidak punya nilai yang bertahan melampaui satu musim tren — YONO hanya akan menjadi tren lain yang difoto untuk konten dan dilupakan di bulan berikutnya.
+            </p>
+            <p>
+              Pergeseran yang nyata bukan di jumlah baju di lemarimu.
+            </p>
+            <p>
+              Ia ada di pertanyaan yang kamu tanyakan sebelum membeli:
+            </p>
+            <p className="text-white font-bold text-xl md:text-2xl italic leading-relaxed">
+              "Apakah ini sesuatu yang layak untuk benar-benar kumiliki?"
+            </p>
+            <p>
+              Dan jika jawabannya ya — maka kepemilikan itu seharusnya bisa dibuktikan.
+            </p>
+
+            {/* CTA BUTTON */}
+            <div className="pt-6">
+              <Link 
+                href="/shop" 
+                className="inline-flex items-center justify-center gap-3 px-8 py-5 bg-[#836EF9] text-black font-mono text-xs font-bold uppercase tracking-widest hover:bg-white transition-all rounded-sm shadow-[0_0_30px_rgba(131,110,249,0.3)] w-full sm:w-auto"
+              >
+                LIHAT KOLEKSI GENESIS <ArrowRight size={16} />
+              </Link>
+            </div>
+          </motion.div>
+
+        </div>
+      </article>
+
+      {/* INTERNAL LINKS */}
+      <section className="py-16 px-6 bg-white/[0.02] border-y border-white/5">
+        <div className="max-w-4xl mx-auto space-y-6">
+          <h4 className="font-mono text-[#836EF9] text-[10px] tracking-[0.4em] uppercase mb-4 text-center md:text-left">Archive Transmissions:</h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Link 
+              href="/terminal-log/phygital-fashion-indonesia" 
+              className="group bg-[#121212] border border-white/10 p-5 flex flex-col gap-4 hover:border-[#836EF9]/50 transition-all rounded-sm"
+            >
+              <div className="space-y-2">
+                <p className="text-[9px] font-mono text-neutral-500 uppercase tracking-widest">System Log 01</p>
+                <h4 className="text-white font-bold text-sm tracking-tight leading-snug group-hover:text-[#836EF9] transition-colors flex items-start gap-2 justify-between">
+                  Apa Itu Phygital Fashion? <ChevronRight size={16} className="shrink-0 mt-1" />
+                </h4>
+              </div>
+            </Link>
+            <Link 
+              href="/terminal-log/psikologi-koleksi" 
+              className="group bg-[#121212] border border-white/10 p-5 flex flex-col gap-4 hover:border-[#F43F5E]/50 transition-all rounded-sm"
+            >
+              <div className="space-y-2">
+                <p className="text-[9px] font-mono text-neutral-500 uppercase tracking-widest">System Log 04</p>
+                <h4 className="text-white font-bold text-sm tracking-tight leading-snug group-hover:text-[#F43F5E] transition-colors flex items-start gap-2 justify-between">
+                  Psikologi di Balik Mengoleksi <ChevronRight size={16} className="shrink-0 mt-1" />
+                </h4>
+              </div>
+            </Link>
           </div>
-        )}
-      </AnimatePresence>
+        </div>
+      </section>
+
+      <footer className="py-16 px-6 text-center">
+        <div className="max-w-3xl mx-auto space-y-8">
+          <p className="font-mono text-[7px] text-neutral-800 uppercase tracking-[0.5em]">0XTANDA_DIGITAL_ARCHIVE_ISSUE_007_LOCKED</p>
+        </div>
+      </footer>
     </main>
   );
 }
 </file>
 
-<file path="components/Marquee.tsx">
-export default function Marquee() {
-  const text = "0XTANDA • PHYGITAL STREETWEAR • COMING SOON 0XTANDA ORIGIN • JAKARTA EST. 2026 • ";
-  
-  return (
-    <div className="fixed top-0 left-0 w-full bg-brand-purple text-black py-2 z-[60] overflow-hidden font-mono text-[10px] font-bold">
-      <div className="animate-marquee whitespace-nowrap">
-        {[...Array(10)].map((_, i) => (
-          <span key={i} className="mx-4 italic tracking-widest">{text}</span>
-        ))}
-      </div>
-    </div>
-  );
-}
-</file>
-
-<file path="components/Navbar.tsx">
-"use client";
-
-import React, { useState } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { usePathname } from 'next/navigation';
-import { Menu, X } from 'lucide-react';
-
+<file path="lib/data.ts">
 /**
- * Komponen Navbar 0xTanda.
- * Menambahkan menu "TERMINAL LOG" untuk artikel/SEO.
+ * 0xTanda - Single Source of Truth
+ * Data produk diperbarui dengan ekstensi .png dan penamaan file spesifik (_front/_back).
+ * File ini mengelola konten untuk katalog Shop dan halaman Detail Produk.
  */
-export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
-  const pathname = usePathname();
 
-  // DI SINI NAMA MENU SUDAH DIGANTI JADI "TERMINAL LOG"
-  const navLinks = [
-    { name: 'HOME', path: '/' },
-    { name: 'SHOP', path: '/shop' },
-    { name: 'VERIFY', path: '/verify' },
-    { name: 'ABOUT', path: '/about' },
-    { name: 'TERMINAL LOG', path: '/terminal-log' }, // <--- UPDATE NAMA DI SINI
-  ];
-
-  return (
-    <nav className="fixed top-10 left-0 w-full z-50 px-6">
-      <div className="max-w-7xl mx-auto bg-black/60 backdrop-blur-xl border border-white/10 rounded-2xl p-4 flex items-center justify-between shadow-2xl">
-        
-        {/* LOGO ICON (POJOK KIRI) */}
-        <Link href="/" className="flex items-center group">
-          <div className="relative w-8 h-8">
-            <Image 
-              src="/branding/logo-0xtanda-icon.png" 
-              alt="0xTanda Icon"
-              width={32}
-              height={32}
-              className="object-contain group-hover:rotate-12 transition-transform duration-500"
-              priority
-            />
-          </div>
-        </Link>
-
-        {/* Desktop Menu */}
-        <div className="hidden lg:flex gap-1 bg-white/5 p-1 rounded-full border border-white/5">
-          {navLinks.map((link) => (
-            <Link 
-              key={link.path} 
-              href={link.path}
-              className={`px-6 py-2 rounded-full text-[10px] font-mono tracking-widest transition-all ${
-                // Logika agar menu menyala walau user lagi baca artikel di sub-folder
-                (pathname.startsWith(link.path) && link.path !== '/') || pathname === link.path
-                ? 'bg-[#836EF9] text-black font-bold' 
-                : 'text-neutral-400 hover:text-white hover:bg-white/5'
-              }`}
-            >
-              {link.name}
-            </Link>
-          ))}
-        </div>
-
-        {/* Mobile Toggle */}
-        <div className="lg:hidden flex items-center">
-          <button 
-            onClick={() => setIsOpen(!isOpen)} 
-            className="text-white p-2 hover:bg-white/5 rounded-lg transition-colors"
-            aria-label="Toggle Navigation"
-          >
-            {isOpen ? <X size={20} /> : <Menu size={20} />}
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile Menu Overlay */}
-      {isOpen && (
-        <div className="absolute top-24 left-6 right-6 bg-black/95 backdrop-blur-2xl border border-white/10 rounded-2xl p-8 flex flex-col gap-6 lg:hidden animate-glitch shadow-2xl">
-          {navLinks.map((link) => (
-            <Link 
-              key={link.path} 
-              href={link.path}
-              onClick={() => setIsOpen(false)}
-              className={`text-3xl font-display font-bold tracking-tighter transition-colors uppercase ${
-                (pathname.startsWith(link.path) && link.path !== '/') || pathname === link.path 
-                ? 'text-[#836EF9]' 
-                : 'text-white'
-              }`}
-            >
-              {link.name}
-            </Link>
-          ))}
-        </div>
-      )}
-    </nav>
-  );
+export interface ProductVariant {
+  color: string;
+  sizes: {
+    size: string;
+    stock: number;
+  }[];
 }
-</file>
 
-<file path="eslint.config.mjs">
-import { defineConfig, globalIgnores } from "eslint/config";
-import nextVitals from "eslint-config-next/core-web-vitals";
-import nextTs from "eslint-config-next/typescript";
+export interface Product {
+  id: string | number;
+  name: string;
+  type: string;
+  price: number;
+  originalPrice?: number; 
+  description: string;
+  specs: string[];
+  features: string[];
+  includes: string[];
+  stock: number; 
+  variants?: ProductVariant[]; 
+  slug: string;
+  imgPhysical: string; 
+  imgDigital: string;   
+  gallery: string[];    
+  sizeChart?: string;   
+  isPlaceholder?: boolean;
+  // === NEW: DATA SMART CONTRACT BLOCKCHAIN ===
+  smartContract?: string; 
+  explorerLink?: string;
+  // =========================================
+  links: {
+    telegram: string;
+    whatsapp?: string; 
+    tokopedia?: string;
+    tiktokshop?: string;
+  };
+}
 
-const eslintConfig = defineConfig([
-  ...nextVitals,
-  ...nextTs,
-  // Override default ignores of eslint-config-next.
-  globalIgnores([
-    // Default ignores of eslint-config-next:
-    ".next/**",
-    "out/**",
-    "build/**",
-    "next-env.d.ts",
-  ]),
-]);
-
-export default eslintConfig;
-</file>
-
-<file path="next-env.d.ts">
-/// <reference types="next" />
-/// <reference types="next/image-types/global" />
-import "./.next/dev/types/routes.d.ts";
-
-// NOTE: This file should not be edited
-// see https://nextjs.org/docs/app/api-reference/config/typescript for more information.
-</file>
-
-<file path="next.config.ts">
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-  images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'images.unsplash.com',
-        pathname: '**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'placehold.co',
-        pathname: '**',
-      },
+export const PRODUCTS_DATA: Product[] = [
+  {
+    id: "G-001",
+    slug: "genesis-boxy-tee",
+    name: "GENESIS BOXY TEE",
+    type: "0xTanda Batch #001",
+    price: 200000,
+    originalPrice: 249000,
+    description: "Genesis Boxy Tee adalah rilisan perdana dari 0xTanda dengan pendekatan phygital: produk fisik berkualitas yang dilengkapi akses digital sebagai nilai tambah. Kaos ini menggunakan bahan cotton combed heavyweight dengan struktur tebal dan potongan boxy modern. Bagian depan menampilkan logo 0xTanda dalam ukuran minimal. Bagian belakang menampilkan ilustrasi karakter cyborg dengan sentuhan warna kontras sebagai representasi konsep “One Entity // Dual Existence”. Setiap pembelian akan mendapatkan Genesis Collection Card sebagai bonus kepemilikan fisik.",
+    specs: [
+      "Nama: Genesis Boxy Tee",
+      "Batch: #001 (Limited Release)",
+      "Material: 100% Cotton Combed 16s Heavyweight",
+      "Gramasi: ±235–245 gsm",
+      "Fit: Boxy Oversized / Modern Cut",
+      "Sablon: DTF High-Density Print",
+      "Warna: Hitam & Putih",
+      "Ukuran: L & XL"
     ],
-  },
-};
-
-export default nextConfig;
-</file>
-
-<file path="package.json">
-{
-  "name": "oxtanda-website",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint"
-  },
-  "dependencies": {
-    "framer-motion": "^12.34.0",
-    "lucide-react": "^0.563.0",
-    "next": "16.1.6",
-    "react": "19.2.3",
-    "react-dom": "19.2.3"
-  },
-  "devDependencies": {
-    "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "autoprefixer": "^10.4.24",
-    "eslint": "^9",
-    "eslint-config-next": "16.1.6",
-    "postcss": "^8.5.6",
-    "tailwindcss": "^4.1.18",
-    "typescript": "^5"
-  }
-}
-</file>
-
-<file path="postcss.config.mjs">
-const config = {
-  plugins: {
-    "@tailwindcss/postcss": {},
-  },
-};
-
-export default config;
-</file>
-
-<file path="public/branding/logo-0xtanda-icon.svg">
-<?xml version="1.0" encoding="UTF-8"?>
-<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32">
-  <image width="2000" height="2000" transform="scale(.02)" xlink:href="../../../../OneDrive/Documents/Abrur File/Project/0xTanda/0xFile/Assets/Logo/0xTanda_White_Logo_Icon.png"/>
-</svg>
-</file>
-
-<file path="public/branding/logo-0xtanda.svg">
-<?xml version="1.0" encoding="UTF-8"?>
-<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1500 525">
-  <image width="2000" height="700" transform="scale(.75)" xlink:href="logo-0xtanda.png"/>
-</svg>
-</file>
-
-<file path="public/file.svg">
-<svg fill="none" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M14.5 13.5V5.41a1 1 0 0 0-.3-.7L9.8.29A1 1 0 0 0 9.08 0H1.5v13.5A2.5 2.5 0 0 0 4 16h8a2.5 2.5 0 0 0 2.5-2.5m-1.5 0v-7H8v-5H3v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1M9.5 5V2.12L12.38 5zM5.13 5h-.62v1.25h2.12V5zm-.62 3h7.12v1.25H4.5zm.62 3h-.62v1.25h7.12V11z" clip-rule="evenodd" fill="#666" fill-rule="evenodd"/></svg>
-</file>
-
-<file path="public/next.svg">
-<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 394 80"><path fill="#000" d="M262 0h68.5v12.7h-27.2v66.6h-13.6V12.7H262V0ZM149 0v12.7H94v20.4h44.3v12.6H94v21h55v12.6H80.5V0h68.7zm34.3 0h-17.8l63.8 79.4h17.9l-32-39.7 32-39.6h-17.9l-23 28.6-23-28.6zm18.3 56.7-9-11-27.1 33.7h17.8l18.3-22.7z"/><path fill="#000" d="M81 79.3 17 0H0v79.3h13.6V17l50.2 62.3H81Zm252.6-.4c-1 0-1.8-.4-2.5-1s-1.1-1.6-1.1-2.6.3-1.8 1-2.5 1.6-1 2.6-1 1.8.3 2.5 1a3.4 3.4 0 0 1 .6 4.3 3.7 3.7 0 0 1-3 1.8zm23.2-33.5h6v23.3c0 2.1-.4 4-1.3 5.5a9.1 9.1 0 0 1-3.8 3.5c-1.6.8-3.5 1.3-5.7 1.3-2 0-3.7-.4-5.3-1s-2.8-1.8-3.7-3.2c-.9-1.3-1.4-3-1.4-5h6c.1.8.3 1.6.7 2.2s1 1.2 1.6 1.5c.7.4 1.5.5 2.4.5 1 0 1.8-.2 2.4-.6a4 4 0 0 0 1.6-1.8c.3-.8.5-1.8.5-3V45.5zm30.9 9.1a4.4 4.4 0 0 0-2-3.3 7.5 7.5 0 0 0-4.3-1.1c-1.3 0-2.4.2-3.3.5-.9.4-1.6 1-2 1.6a3.5 3.5 0 0 0-.3 4c.3.5.7.9 1.3 1.2l1.8 1 2 .5 3.2.8c1.3.3 2.5.7 3.7 1.2a13 13 0 0 1 3.2 1.8 8.1 8.1 0 0 1 3 6.5c0 2-.5 3.7-1.5 5.1a10 10 0 0 1-4.4 3.5c-1.8.8-4.1 1.2-6.8 1.2-2.6 0-4.9-.4-6.8-1.2-2-.8-3.4-2-4.5-3.5a10 10 0 0 1-1.7-5.6h6a5 5 0 0 0 3.5 4.6c1 .4 2.2.6 3.4.6 1.3 0 2.5-.2 3.5-.6 1-.4 1.8-1 2.4-1.7a4 4 0 0 0 .8-2.4c0-.9-.2-1.6-.7-2.2a11 11 0 0 0-2.1-1.4l-3.2-1-3.8-1c-2.8-.7-5-1.7-6.6-3.2a7.2 7.2 0 0 1-2.4-5.7 8 8 0 0 1 1.7-5 10 10 0 0 1 4.3-3.5c2-.8 4-1.2 6.4-1.2 2.3 0 4.4.4 6.2 1.2 1.8.8 3.2 2 4.3 3.4 1 1.4 1.5 3 1.5 5h-5.8z"/></svg>
-</file>
-
-<file path="public/window.svg">
-<svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill-rule="evenodd" clip-rule="evenodd" d="M1.5 2.5h13v10a1 1 0 0 1-1 1h-11a1 1 0 0 1-1-1zM0 1h16v11.5a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 0 12.5zm3.75 4.5a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5M7 4.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0m1.75.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5" fill="#666"/></svg>
-</file>
-
-<file path="README.md">
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
-
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-"# nx-build" 
-"# 0x-build" 
-"# 0x-build" 
-"# 0x-build" 
-"# 0x-build" 
-"# 0x-build" 
-"# 0x-build"
-</file>
-
-<file path="tailwind.config.ts">
-// tailwind.config.ts
-import type { Config } from "tailwindcss";
-
-const config: Config = {
-  content: [
-    "./app/**/*.{js,ts,jsx,tsx}",
-    "./components/**/*.{js,ts,jsx,tsx}",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
-  theme: {
-    extend: {
-      colors: {
-        brand: {
-          purple: "#836EF9",
-          black: "#0E0E0E",
-          white: "#F0F0F0",
-          green: "#00FF9D",
-          gray: "#A19797",
-          tokopedia: "#03AC0E",
-          shopee: "#EE4D2D",
-          tiktok: "#000000",
-          whatsapp: "#25D366",
-        },
-      },
-      fontFamily: {
-        sans: ["Space Grotesk", "sans-serif"],
-        mono: ["Space Mono", "monospace"],
-        deco: ["Cinzel Decorative", "serif"],
-      },
-    },
-  },
-  plugins: [],
-};
-
-export default config;
-</file>
-
-<file path="tsconfig.json">
-{
-  "compilerOptions": {
-    "target": "ES2017",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "react-jsx",
-    "incremental": true,
-    "plugins": [
+    features: [
+      "Kain tebal dan berstruktur",
+      "Tidak tipis dan tidak mudah melar",
+      "Cocok untuk daily wear",
+      "Detail cetak tajam dan solid"
+    ],
+    includes: [
+      "1 Kaos Genesis Boxy Tee",
+      "1 Genesis Collection Card (dengan kode akses)",
+      "1 Akses digital resmi 0xTanda (diberikan setelah verifikasi)"
+    ],
+    stock: 4, 
+    variants: [
       {
-        "name": "next"
+        color: "PUTIH",
+        sizes: [
+          { size: "L", stock: 1 },
+          { size: "XL", stock: 1 }
+        ]
+      },
+      {
+        color: "HITAM",
+        sizes: [
+          { size: "L", stock: 0 },
+          { size: "XL", stock: 2 }
+        ]
       }
     ],
-    "paths": {
-      "@/*": ["./*"]
+    imgPhysical: "/product/gen1/mockup/Batch_1_Gen_1_Black_Genesis_Boxy_Tee.png",
+    imgDigital: "/product/gen1/nft/Genesis-Collcetion-Card-0xTanda.png",
+    sizeChart: "/product/gen1/Size_Chart_Batch_1_Gen_1.jpg",
+    gallery: [
+      "/product/gen1/mockup/Batch_1_Gen_1_Black_Genesis_Boxy_Tee.png",
+      "/product/gen1/mockup/Batch_1_Gen_1_White_Genesis_Boxy_Tee.png",
+      "/product/gen1/model/Model-1-front-gen-1.png",
+      "/product/gen1/model/Model-1-back-gen-1.png",
+      "/product/gen1/model/Model-2-front-gen-1.png",
+      "/product/gen1/model/Model-2-back-gen-1.png",
+    ],
+    // === ALAMAT DEPLOYMENT SMART CONTRACT MONAD ===
+    smartContract: "0x75c294c9f8576FDF882cAAEf9d4316589b638610",
+    explorerLink: "https://monadvision.com/address/0x75c294c9f8576FDF882cAAEf9d4316589b638610?portfolio=Info&tab=Contract&mode=overview",
+    // ================================================
+    links: {
+      telegram: "https://t.me/rempeyek_0",
+      whatsapp: "https://wa.me/6281398621530",
+      tokopedia: "https://www.tokopedia.com/0xtanda/0xtanda-genesis-boxy-tee-pria-wanita-unisex-dengan-nft-kaos-cotton-combed-16s-100-fit-boxy-oversized-modern-cut-bonus-genesis-collection-card-1734427428785194157",
+      tiktokshop: "https://vt.tokopedia.com/t/ZS9eT3ML7F2cK-6q8hd/"
     }
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts",
-    ".next/dev/types/**/*.ts",
-    "**/*.mts"
-  ],
-  "exclude": ["node_modules"]
-}
+  {
+    id: "PL-002",
+    slug: "archive-02-placeholder",
+    name: "ARCHIVE_02 // ???",
+    type: "Upcoming Phygital Release",
+    price: 0,
+    description: "Dokumen terenkripsi. Detail produk akan tersedia pada fase pengembangan berikutnya.",
+    specs: [],
+    features: [],
+    includes: [],
+    stock: 0,
+    imgPhysical: "", 
+    imgDigital: "",
+    gallery: [],
+    isPlaceholder: true,
+    links: { telegram: "" }
+  },
+  {
+    id: "PL-003",
+    slug: "archive-03-placeholder",
+    name: "ARCHIVE_03 // ???",
+    type: "Upcoming Phygital Release",
+    price: 0,
+    description: "Dokumen terenkripsi. Detail produk akan tersedia pada fase pengembangan berikutnya.",
+    specs: [],
+    features: [],
+    includes: [],
+    stock: 0,
+    imgPhysical: "", 
+    imgDigital: "",
+    gallery: [],
+    isPlaceholder: true,
+    links: { telegram: "" }
+  }
+];
+
+export const ROADMAP_DATA = [
+  { phase: "PHASE 01", year: "2026", title: "THE GENESIS", desc: "Peluncuran batch pertama 14 unit eksklusif untuk pendiri awal." },
+  { phase: "PHASE 02", year: "2026", title: "DIGITAL FUSION", desc: "Integrasi penuh aset digital ke dalam infrastruktur Monad." },
+  { phase: "PHASE 03", year: "2026", title: "THE WAR ROOM", desc: "Pembukaan akses komunitas VIP bagi pemegang Royal Genesis." },
+  { phase: "PHASE 04", year: "2026", title: "ARCHIVE 02", desc: "Ekspansi koleksi utilitas dengan material industrial baru." },
+  { phase: "PHASE 05", year: "2027", title: "PHYGITAL HUB", desc: "Portal verifikasi terdesentralisasi untuk ekosistem fashion." },
+  { phase: "PHASE 06", year: "2027", title: "GLOBAL SYNDICATE", desc: "Kolaborasi lintas batas antara kreator digital dan pengrajin fisik." },
+];
+
+export const SECRET_CODES_DB = [
+  "K7XM-9Q2L-4RZT", "V8P3-LQ7N-X5DW", "Z4TK-8MPR-2Q9L", "N6RX-W3P9-K2ZM", 
+  "Q9VL-7X2R-M4PT", "X3QK-8LZM-5R7N", "M7ZT-2W9L-X4QP", "R5XL-9P2K-V8QW", 
+  "T8QM-4ZRL-7X2P", "L2WX-9Q7R-K5ZM", "P9ZR-3XLM-8Q2T", "W4QK-7Z2P-M9RL", 
+  "X8LM-2R9Q-T5ZP", "Z7QP-4XLM-9R2W", "M3ZL-8QWP-2RX9", "Q2RX-7LZM-9P4K", 
+  "V9ZM-3QXL-8R2P", "T5RL-9ZQ2-X7KM", "K8QX-4RZM-2P9L", "X7PM-9LQ2-Z4RW", 
+  "R2ZL-8QXM-7P4K", "W9QT-3RZL-X8PM", "P4XM-7Q2R-9ZLK", "Z8RL-2QWP-4X9M", 
+  "M9QX-7R2L-Z4KP", "L7ZM-9P4Q-X2RW", "Q4RL-8ZMX-7P2K", "X2QP-9LZR-4MW8",
+  "BRND-3QZL-7P2W", "DEV1-4QXM-8R2P", "ARTS-7RZM-9P4L" 
+];
 </file>
 
 <file path="app/page.tsx">
-import React from 'react';
+'use client';
+
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-// Jalur relatif untuk keamanan preview
+import { motion, AnimatePresence } from 'framer-motion';
 import Navbar from '../components/Navbar';
 import Marquee from '../components/Marquee';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Lock, Zap } from 'lucide-react';
+import { PRODUCTS_DATA } from '../lib/data';
 
-/**
- * Halaman Home 0xTanda.
- * Logo Ultra Mega (Lebar Maksimal) dengan jarak yang sangat rapat (meppet)
- * agar semua konten muat dalam satu layar tanpa scroll.
- */
+const sectionVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.15 } },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 32, filter: 'blur(4px)' },
+  visible: {
+    opacity: 1,
+    y: 0,
+    filter: 'blur(0px)',
+    transition: { duration: 0.85, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] },
+  },
+};
+
+const headingVariants = {
+  hidden: { opacity: 0, y: 20, skewY: 2 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    skewY: 0,
+    transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
+  },
+};
+
+const TICKER_TOKENS = [
+  'Phygital', 'Digital × Physical', 'Blockchain', '0xTanda',
+  'Archive', 'Genesis', 'Monad', 'Jakarta', 'NFT', 'One Entity',
+];
+
 export default function HomePage() {
+  const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    const t = setTimeout(() => setIsReady(true), 100);
+    return () => clearTimeout(t);
+  }, []);
+
   return (
     <main className="min-h-screen bg-brand-black overflow-hidden">
       <Marquee />
       <Navbar />
 
+      {/* ===== HERO SECTION ===== */}
       <section className="relative h-screen flex flex-col items-center justify-center px-4">
-        {/* Latar Belakang Cahaya */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-7xl aspect-square bg-brand-purple/5 blur-[150px] pointer-events-none rounded-full" />
-        
-        <div className="relative z-10 text-center fade-in flex flex-col items-center w-full">
-          {/* Teks Atas - Margin sangat kecil */}
-          <p className="font-mono text-brand-purple text-[9px] tracking-[0.7em] mb-4 uppercase opacity-70">
-            Est. 2026 Jakarta // Digital Archive
-          </p>
-          
-          {/* ULTRA MEGA LOGO - Sangat Lebar, Tinggi Ramping, Margin Meppet */}
-          <div className="relative w-[110vw] max-w-[1200px] h-[180px] md:max-w-[2800px] md:h-[420px] mb-2 animate-glitch">
-            <Image 
-              src="/branding/logo-0xtanda.png"
-              alt="0xTanda Official Logo"
-              fill
-              className="object-contain"
-              priority
-            />
-          </div>
-          
-          {/* Deskripsi - Margin Meppet */}
-          <div className="max-w-3xl mx-auto mb-6">
-            <p className="font-mono text-[#00FF9D] text-[10px] md:text-[13px] tracking-[0.4em] leading-relaxed uppercase">
-              Tangible craftsmanship you can feel, secured by digital ownership you can prove.
-            </p>
-          </div>
+        <div className="hero-grid-bg absolute inset-0 z-[0]" />
+        <div
+          className="absolute inset-0 z-[1] pointer-events-none"
+          style={{ background: 'radial-gradient(ellipse at center, transparent 30%, #0E0E0E 75%)' }}
+        />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-7xl aspect-square bg-brand-purple/5 blur-[150px] pointer-events-none rounded-full z-[2]" />
 
-          {/* Tombol Aksi */}
-          <div className="flex flex-col sm:flex-row gap-3 justify-center w-full sm:w-auto">
-            <Link 
-              href="/shop" 
-              className="group bg-brand-purple text-black px-12 py-4 font-mono text-[10px] font-bold rounded-sm flex items-center justify-center gap-3 hover:bg-white transition-all shadow-[0_0_40px_rgba(131,110,249,0.3)]"
-            >
-              ENTER COLLECTIONS <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-            </Link>
-            <Link 
-              href="/about" 
-              className="px-12 py-4 border border-white/10 font-mono text-[10px] font-bold rounded-sm hover:bg-white/5 hover:border-white/30 transition-all text-center uppercase tracking-[0.4em]"
-            >
-              MANIFESTO
-            </Link>
-          </div>
+        <div className="relative z-10 text-center flex flex-col items-center w-full">
+          <AnimatePresence>
+            {isReady && (
+              <motion.div
+                className="flex flex-col items-center w-full"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.4 }}
+              >
+                <motion.p
+                  className="font-mono text-brand-purple text-[9px] mb-4 uppercase"
+                  initial={{ opacity: 0, letterSpacing: '0.2em' }}
+                  animate={{ opacity: 0.7, letterSpacing: '0.7em' }}
+                  transition={{ duration: 1.2, ease: 'easeOut', delay: 0.1 }}
+                >
+                  Est. 2026 Jakarta // Digital Archive
+                </motion.p>
+
+                <motion.div
+                  className="relative w-[110vw] max-w-[1200px] h-[180px] md:max-w-[2800px] md:h-[420px] mb-2 animate-glitch"
+                  initial={{ opacity: 0, scale: 1.06, filter: 'blur(12px)' }}
+                  animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+                  transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+                >
+                  <Image
+                    src="/branding/logo-0xtanda.png"
+                    alt="0xTanda Official Logo"
+                    fill
+                    className="object-contain"
+                    priority
+                  />
+                </motion.div>
+
+                <motion.div
+                  className="max-w-3xl mx-auto mb-6"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.7 }}
+                >
+                  <p className="font-mono text-[#00FF9D] text-[10px] md:text-[13px] tracking-[0.4em] leading-relaxed uppercase">
+                    Tangible craftsmanship you can feel, secured by digital ownership you can prove.
+                  </p>
+                </motion.div>
+
+                <motion.div
+                  className="flex flex-col sm:flex-row gap-3 justify-center w-full sm:w-auto"
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: 1.0 }}
+                >
+                  <Link
+                    href="/shop"
+                    className="group bg-brand-purple text-black px-12 py-4 font-mono text-[10px] font-bold rounded-sm flex items-center justify-center gap-3 hover:bg-white transition-all shadow-[0_0_40px_rgba(131,110,249,0.3)]"
+                  >
+                    ENTER COLLECTIONS <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                  <Link
+                    href="/about"
+                    className="px-12 py-4 border border-white/10 font-mono text-[10px] font-bold rounded-sm hover:bg-white/5 hover:border-white/30 transition-all text-center uppercase tracking-[0.4em]"
+                  >
+                    MANIFESTO
+                  </Link>
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
-        
-        {/* Specs di pojok bawah */}
+
         <div className="absolute bottom-6 left-0 w-full px-10 flex justify-between items-end opacity-20 select-none pointer-events-none font-mono text-[7px] tracking-[0.5em] uppercase">
           <div>System_Live // 2026</div>
           <div className="text-right italic">JKT_ARCHIVE_01</div>
         </div>
       </section>
+
+      {/* ===== PHYGITAL DUALITY SECTION ===== */}
+      <section className="relative w-full min-h-screen overflow-hidden bg-brand-black">
+
+        {/* Desktop — vertical center line */}
+        <div
+          className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px z-20 pointer-events-none"
+          style={{ background: 'rgba(131, 110, 249, 0.2)' }}
+        />
+
+        {/* Desktop — center tag */}
+        <motion.div
+          className="hidden md:flex absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-none"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 1.0, ease: 'easeOut', delay: 0.65 }}
+        >
+          <p className="font-mono text-[11px] tracking-[0.6em] uppercase text-brand-purple whitespace-nowrap px-5 py-2 bg-brand-black/80 backdrop-blur-sm">
+            ONE ENTITY // DUAL EXISTENCE
+          </p>
+        </motion.div>
+
+        <div className="flex flex-col md:flex-row min-h-screen">
+
+          {/* LEFT — PHYSICAL */}
+          <motion.div
+            className="relative flex-1 h-[40vh] md:h-auto md:min-h-screen overflow-hidden bg-[#0a0a0a]"
+            initial={{ opacity: 0, x: -60 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
+          >
+            {/* Ghost watermark */}
+            <span
+              className="absolute bottom-0 left-0 right-0 flex justify-center font-display font-bold uppercase select-none pointer-events-none leading-none z-0 overflow-hidden"
+              style={{ fontSize: 'clamp(56px, 16vw, 160px)', color: 'rgba(255,255,255,0.06)' }}
+            >
+              TANGIBLE
+            </span>
+
+            {/* Model photo */}
+            <Image
+              src="/product/gen1/model/Model-1-front-gen-1.png"
+              alt="Physical Artifact — Genesis Boxy Tee"
+              fill
+              className="object-cover object-top z-[1]"
+              sizes="(max-width: 768px) 100vw, 50vw"
+            />
+
+            {/* Bottom fade overlay */}
+            <div
+              className="absolute inset-0 z-[2] pointer-events-none"
+              style={{ background: 'linear-gradient(to bottom, transparent 40%, #0a0a0a 100%)' }}
+            />
+
+            {/* Label */}
+            <div className="absolute bottom-8 left-8 z-[3]">
+              <p className="font-mono text-[9px] tracking-[0.5em] uppercase" style={{ color: '#A19797' }}>
+                Physical Artifact
+              </p>
+            </div>
+          </motion.div>
+
+          {/* MOBILE center text — between panels */}
+          <motion.div
+            className="md:hidden flex items-center justify-center py-6 bg-brand-black"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, margin: '-40px' }}
+            transition={{ duration: 0.8, ease: 'easeOut', delay: 0.2 }}
+          >
+            <p className="font-mono text-[9px] tracking-[0.4em] uppercase text-brand-purple text-center">
+              ONE ENTITY // DUAL EXISTENCE
+            </p>
+          </motion.div>
+
+          {/* RIGHT — DIGITAL */}
+          <motion.div
+            className="relative flex-1 h-[40vh] md:h-auto md:min-h-screen overflow-hidden bg-[#0E0E0E] flex items-center justify-center"
+            initial={{ opacity: 0, x: 60 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
+          >
+            {/* Ghost watermark */}
+            <span
+              className="absolute bottom-0 left-0 right-0 flex justify-center font-display font-bold uppercase select-none pointer-events-none leading-none z-0 overflow-hidden"
+              style={{ fontSize: 'clamp(56px, 16vw, 160px)', color: 'rgba(255,255,255,0.08)' }}
+            >
+              DIGITAL
+            </span>
+
+            {/* Purple ambient glow */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] aspect-square bg-brand-purple/10 blur-[80px] rounded-full pointer-events-none z-0" />
+
+            {/* NFT Card with animated gradient border */}
+            <div className="relative z-10 nft-animated-border">
+              <div className="nft-card-inner">
+                <div
+                  className="relative w-[190px] h-[268px] md:w-[270px] md:h-[380px]"
+                  style={{
+                    transform: 'rotate(2deg)',
+                    filter: 'drop-shadow(0 0 28px rgba(131, 110, 249, 0.55))',
+                  }}
+                >
+                  <Image
+                    src="/product/gen1/nft/Genesis-Collcetion-Card-0xTanda.png"
+                    alt="Genesis Collection Card — Digital Twin"
+                    fill
+                    className="object-contain"
+                    sizes="(max-width: 768px) 190px, 270px"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Label */}
+            <div className="absolute bottom-8 right-8 z-[3]">
+              <p className="font-mono text-[9px] tracking-[0.5em] uppercase text-brand-purple">
+                Digital Twin
+              </p>
+            </div>
+          </motion.div>
+
+        </div>
+      </section>
+
+      {/* ===== TICKER DIVIDER ===== */}
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: '-80px' }}
+        variants={sectionVariants}
+        className="border-y border-white/5 py-4 overflow-hidden"
+      >
+        <motion.div variants={itemVariants} className="flex gap-12 animate-marquee select-none pointer-events-none">
+          {Array.from({ length: 4 }).flatMap(() => TICKER_TOKENS).map((token, i) => (
+            <span
+              key={i}
+              className="font-mono text-[8px] tracking-[0.6em] text-white/15 uppercase whitespace-nowrap"
+            >
+              {token} <span className="text-brand-purple/30">//</span>
+            </span>
+          ))}
+        </motion.div>
+      </motion.section>
+
+      {/* ===== FEATURED PRODUCTS SECTION ===== */}
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: '-80px' }}
+        variants={sectionVariants}
+        className="py-24 px-6"
+      >
+        <div className="max-w-7xl mx-auto">
+          <motion.p variants={itemVariants} className="font-mono text-brand-purple text-[9px] tracking-[0.5em] uppercase mb-4">
+            Genesis Collection // Batch_001
+          </motion.p>
+          <motion.h2
+            variants={headingVariants}
+            className="text-5xl md:text-7xl font-display font-bold tracking-tighter uppercase text-white mb-16 leading-none"
+          >
+            Featured<br />
+            <span className="text-white/15 italic">Archive</span>
+          </motion.h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {PRODUCTS_DATA.map((product) => (
+              <motion.div key={product.id} variants={itemVariants}>
+                <div
+                  className={`group relative transition-[border-color,box-shadow] duration-[400ms] ease-out overflow-hidden flex flex-col rounded-sm ${
+                    product.isPlaceholder
+                      ? 'bg-black/40 grayscale opacity-40 cursor-default border border-white/5'
+                      : 'bg-[#121212] border border-[rgba(131,110,249,0.15)] hover:border-[rgba(131,110,249,0.4)] hover:shadow-[0_0_30px_rgba(131,110,249,0.08)]'
+                  }`}
+                >
+                  {/* Image container */}
+                  <div className="relative aspect-[4/5] overflow-hidden bg-black">
+                    {product.isPlaceholder ? (
+                      <div className="flex flex-col items-center justify-center gap-4 text-neutral-800 h-full">
+                        <Lock size={48} strokeWidth={1} />
+                        <p className="font-mono text-[9px] tracking-[1em] uppercase">Encrypted</p>
+                      </div>
+                    ) : (
+                      <>
+                        <Image
+                          src={product.imgPhysical}
+                          alt={product.name}
+                          fill
+                          className="object-contain transition-[transform] duration-[600ms] ease-in-out group-hover:scale-105"
+                          sizes="(max-width: 768px) 100vw, 33vw"
+                        />
+                        {/* Gradient overlay */}
+                        <div
+                          className="absolute inset-0 pointer-events-none z-[1]"
+                          style={{ background: 'linear-gradient(to bottom, transparent 50%, black 100%)' }}
+                        />
+                      </>
+                    )}
+                    {!product.isPlaceholder && (
+                      <div className="absolute top-4 left-4 z-[2] bg-black/80 backdrop-blur-md px-3 py-1 border border-white/10 rounded-full flex items-center gap-2">
+                        <div className="w-1.5 h-1.5 bg-brand-green rounded-full animate-pulse" />
+                        <span className="font-mono text-[8px] tracking-widest text-white uppercase">
+                          Stock: {product.stock}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Info area */}
+                  <div className="p-6 border-t border-white/5 flex flex-col flex-1">
+                    <div className="flex justify-between items-start mb-1">
+                      <h3
+                        className={`font-deco text-sm font-bold tracking-[0.08em] uppercase leading-tight transition-colors ${
+                          product.isPlaceholder
+                            ? 'text-neutral-700'
+                            : 'text-white group-hover:text-brand-purple'
+                        }`}
+                      >
+                        {product.name}
+                      </h3>
+                      {!product.isPlaceholder && <Zap size={14} className="text-brand-purple opacity-50 shrink-0 mt-0.5" />}
+                    </div>
+                    <p className="font-mono text-[9px] text-neutral-600 mb-4 tracking-widest uppercase">{product.type}</p>
+                    <p className={`font-mono text-lg font-bold mb-5 ${product.isPlaceholder ? 'text-neutral-800' : 'text-brand-purple'}`}>
+                      {product.isPlaceholder ? 'TBA' : `IDR ${product.price.toLocaleString('id-ID')}`}
+                    </p>
+                    {!product.isPlaceholder && (
+                      <Link
+                        href={`/product/${product.slug}`}
+                        className="card-btn group/cbtn mt-auto w-full py-3 border border-white/10 font-mono text-[10px] font-bold uppercase text-white"
+                      >
+                        <span className="card-btn-inner">
+                          View Details
+                          <ArrowRight size={12} className="transition-transform duration-[350ms] group-hover/cbtn:translate-x-1" />
+                        </span>
+                      </Link>
+                    )}
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </motion.section>
+
+      {/* ===== SHOP LINK SECTION ===== */}
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: '-80px' }}
+        variants={sectionVariants}
+        className="py-20 px-6 border-t border-white/5"
+      >
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-10">
+          <div>
+            <motion.p variants={itemVariants} className="font-mono text-[9px] text-white/30 tracking-[0.5em] uppercase mb-4">
+              Archive // Genesis_001
+            </motion.p>
+            <motion.h2
+              variants={headingVariants}
+              className="text-4xl md:text-6xl font-display font-bold tracking-tighter uppercase text-white leading-none"
+            >
+              Own The{' '}
+              <span className="text-brand-purple">Physical.</span>
+              <br />
+              <span className="text-white/20 italic">Prove The Digital.</span>
+            </motion.h2>
+          </div>
+
+          <motion.div variants={itemVariants} className="flex flex-col gap-3 md:items-end shrink-0">
+            <Link
+              href="/shop"
+              className="group bg-brand-purple text-black px-10 py-4 font-mono text-[10px] font-bold rounded-sm flex items-center gap-3 hover:bg-white transition-all shadow-[0_0_40px_rgba(131,110,249,0.3)]"
+            >
+              ENTER COLLECTIONS <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+            </Link>
+            <Link
+              href="/verify"
+              className="px-10 py-4 border border-white/10 font-mono text-[10px] font-bold rounded-sm hover:bg-white/5 hover:border-white/30 transition-all text-center uppercase tracking-[0.3em]"
+            >
+              VERIFY OWNERSHIP
+            </Link>
+          </motion.div>
+        </div>
+      </motion.section>
+
+      {/* ===== CTA BAWAH ===== */}
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: '-80px' }}
+        variants={sectionVariants}
+        className="relative py-32 px-6 bg-[#090909] overflow-hidden"
+        style={{ borderTop: '1px solid rgba(255,255,255,0.04)' }}
+      >
+        {/* Radial glow */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{ background: 'radial-gradient(ellipse at center, rgba(131,110,249,0.04) 0%, transparent 70%)' }}
+        />
+
+        <div className="relative max-w-3xl mx-auto text-center">
+          <motion.p
+            variants={itemVariants}
+            className="font-mono text-[9px] tracking-[0.6em] uppercase mb-8"
+            style={{ color: 'rgba(131,110,249,0.6)' }}
+          >
+            Terminal_Log // Digital_Archive
+          </motion.p>
+
+          {/* Gradient heading */}
+          <motion.h2
+            variants={headingVariants}
+            className="font-deco text-5xl md:text-7xl font-bold uppercase leading-none mb-8"
+            style={{
+              background: 'linear-gradient(90deg, #836EF9 0%, #00FF9D 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+            }}
+          >
+            Enter The Archive.
+          </motion.h2>
+
+          {/* Subtext */}
+          <motion.p
+            variants={itemVariants}
+            className="font-mono text-[11px] tracking-[0.4em] uppercase leading-loose mb-12 text-white"
+            style={{ opacity: 0.6 }}
+          >
+            Essays on phygital fashion, digital ownership,
+            <br className="hidden md:block" />
+            and the future of tangible culture.
+          </motion.p>
+
+          {/* CTA + blockchain label */}
+          <motion.div variants={itemVariants} className="flex flex-col items-center gap-5">
+            <Link
+              href="/terminal-log"
+              className="group inline-flex items-center gap-3 border border-[#836EF9] bg-transparent text-white px-12 py-4 font-mono text-[10px] font-bold uppercase tracking-[0.4em] hover:bg-[#836EF9] hover:text-[#0E0E0E] hover:tracking-[0.55em] transition-[background-color,color,letter-spacing,border-color] duration-300 ease-out"
+            >
+              OPEN TERMINAL
+              <ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-1" />
+            </Link>
+
+            <p
+              className="font-mono text-[9px] tracking-[0.4em] uppercase text-white"
+              style={{ opacity: 0.3 }}
+            >
+              Secured on Monad Blockchain // ERC-721
+            </p>
+          </motion.div>
+        </div>
+      </motion.section>
+
+      {/* ===== FOOTER ===== */}
+      <motion.footer
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: '-80px' }}
+        variants={sectionVariants}
+        className="border-t border-white/5 py-14 px-6"
+      >
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-10 mb-12">
+            <motion.div variants={itemVariants}>
+              <p className="font-mono text-[8px] tracking-[0.5em] uppercase text-white/25 mb-5">Navigate</p>
+              <ul className="space-y-3">
+                {([['Shop', '/shop'], ['About', '/about'], ['Verify', '/verify'], ['Terminal Log', '/terminal-log']] as const).map(([label, href]) => (
+                  <li key={href}>
+                    <Link href={href} className="font-mono text-[10px] text-white/40 hover:text-white transition-colors uppercase tracking-widest">
+                      {label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+
+            <motion.div variants={itemVariants}>
+              <p className="font-mono text-[8px] tracking-[0.5em] uppercase text-white/25 mb-5">Connect</p>
+              <ul className="space-y-3">
+                {[
+                  ['Telegram', 'https://t.me/rempeyek_0'],
+                  ['WhatsApp', 'https://wa.me/6281398621530'],
+                  ['Tokopedia', PRODUCTS_DATA[0].links.tokopedia ?? ''],
+                ].map(([label, href]) => (
+                  <li key={label}>
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-mono text-[10px] text-white/40 hover:text-white transition-colors uppercase tracking-widest"
+                    >
+                      {label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+
+            <motion.div variants={itemVariants} className="col-span-2">
+              <p className="font-mono text-[8px] tracking-[0.5em] uppercase text-white/25 mb-5">System</p>
+              <p className="font-mono text-[9px] text-white/20 leading-loose tracking-widest uppercase">
+                0xTanda // Phygital Fashion Archive<br />
+                Est. 2026 // Jakarta, Indonesia<br />
+                Blockchain: Monad Network<br />
+                Contract: 0x75c2...8610
+              </p>
+            </motion.div>
+          </div>
+
+          <motion.div
+            variants={itemVariants}
+            className="border-t border-white/5 pt-6 flex flex-col md:flex-row justify-between items-center gap-4"
+          >
+            <p className="font-mono text-[8px] text-white/20 tracking-[0.5em] uppercase">
+              © 2026 0xTanda. All Rights Reserved.
+            </p>
+            <p className="font-mono text-[8px] text-white/10 tracking-[0.4em] uppercase">
+              Physical × Digital // One Entity Dual Existence
+            </p>
+          </motion.div>
+        </div>
+      </motion.footer>
     </main>
   );
 }
@@ -5216,177 +6192,6 @@ export default function TerminalLogMenu() {
     </main>
   );
 }
-</file>
-
-<file path="lib/data.ts">
-/**
- * 0xTanda - Single Source of Truth
- * Data produk diperbarui dengan ekstensi .png dan penamaan file spesifik (_front/_back).
- * File ini mengelola konten untuk katalog Shop dan halaman Detail Produk.
- */
-
-export interface ProductVariant {
-  color: string;
-  sizes: {
-    size: string;
-    stock: number;
-  }[];
-}
-
-export interface Product {
-  id: string | number;
-  name: string;
-  type: string;
-  price: number;
-  originalPrice?: number; 
-  description: string;
-  specs: string[];
-  features: string[];
-  includes: string[];
-  stock: number; 
-  variants?: ProductVariant[]; 
-  slug: string;
-  imgPhysical: string; 
-  imgDigital: string;   
-  gallery: string[];    
-  sizeChart?: string;   
-  isPlaceholder?: boolean;
-  // === NEW: DATA SMART CONTRACT BLOCKCHAIN ===
-  smartContract?: string; 
-  explorerLink?: string;
-  // =========================================
-  links: {
-    telegram: string;
-    whatsapp?: string; 
-    tokopedia?: string;
-    tiktokshop?: string;
-  };
-}
-
-export const PRODUCTS_DATA: Product[] = [
-  {
-    id: "G-001",
-    slug: "genesis-boxy-tee",
-    name: "GENESIS BOXY TEE",
-    type: "0xTanda Batch #001",
-    price: 200000,
-    originalPrice: 249000,
-    description: "Genesis Boxy Tee adalah rilisan perdana dari 0xTanda dengan pendekatan phygital: produk fisik berkualitas yang dilengkapi akses digital sebagai nilai tambah. Kaos ini menggunakan bahan cotton combed heavyweight dengan struktur tebal dan potongan boxy modern. Bagian depan menampilkan logo 0xTanda dalam ukuran minimal. Bagian belakang menampilkan ilustrasi karakter cyborg dengan sentuhan warna kontras sebagai representasi konsep “One Entity // Dual Existence”. Setiap pembelian akan mendapatkan Genesis Collection Card sebagai bonus kepemilikan fisik.",
-    specs: [
-      "Nama: Genesis Boxy Tee",
-      "Batch: #001 (Limited Release)",
-      "Material: 100% Cotton Combed 16s Heavyweight",
-      "Gramasi: ±235–245 gsm",
-      "Fit: Boxy Oversized / Modern Cut",
-      "Sablon: DTF High-Density Print",
-      "Warna: Hitam & Putih",
-      "Ukuran: L & XL"
-    ],
-    features: [
-      "Kain tebal dan berstruktur",
-      "Tidak tipis dan tidak mudah melar",
-      "Cocok untuk daily wear",
-      "Detail cetak tajam dan solid"
-    ],
-    includes: [
-      "1 Kaos Genesis Boxy Tee",
-      "1 Genesis Collection Card (dengan kode akses)",
-      "1 Akses digital resmi 0xTanda (diberikan setelah verifikasi)"
-    ],
-    stock: 4, 
-    variants: [
-      {
-        color: "PUTIH",
-        sizes: [
-          { size: "L", stock: 1 },
-          { size: "XL", stock: 1 }
-        ]
-      },
-      {
-        color: "HITAM",
-        sizes: [
-          { size: "L", stock: 0 },
-          { size: "XL", stock: 2 }
-        ]
-      }
-    ],
-    imgPhysical: "/product/gen1/mockup/Batch_1_Gen_1_Black_Genesis_Boxy_Tee.png",
-    imgDigital: "/product/gen1/nft/Genesis-Collcetion-Card-0xTanda.png",
-    sizeChart: "/product/gen1/Size_Chart_Batch_1_Gen_1.jpg",
-    gallery: [
-      "/product/gen1/mockup/Batch_1_Gen_1_Black_Genesis_Boxy_Tee.png",
-      "/product/gen1/mockup/Batch_1_Gen_1_White_Genesis_Boxy_Tee.png",
-      "/product/gen1/model/Model-1-front-gen-1.png",
-      "/product/gen1/model/Model-1-back-gen-1.png",
-      "/product/gen1/model/Model-2-front-gen-1.png",
-      "/product/gen1/model/Model-2-back-gen-1.png",
-    ],
-    // === ALAMAT DEPLOYMENT SMART CONTRACT MONAD ===
-    smartContract: "0x75c294c9f8576FDF882cAAEf9d4316589b638610",
-    explorerLink: "https://monadvision.com/address/0x75c294c9f8576FDF882cAAEf9d4316589b638610?portfolio=Info&tab=Contract&mode=overview",
-    // ================================================
-    links: {
-      telegram: "https://t.me/rempeyek_0",
-      whatsapp: "https://wa.me/6281398621530",
-      tokopedia: "https://www.tokopedia.com/0xtanda/0xtanda-genesis-boxy-tee-pria-wanita-unisex-dengan-nft-kaos-cotton-combed-16s-100-fit-boxy-oversized-modern-cut-bonus-genesis-collection-card-1734427428785194157",
-      tiktokshop: "https://vt.tokopedia.com/t/ZS9eT3ML7F2cK-6q8hd/"
-    }
-  },
-  {
-    id: "PL-002",
-    slug: "archive-02-placeholder",
-    name: "ARCHIVE_02 // ???",
-    type: "Upcoming Phygital Release",
-    price: 0,
-    description: "Dokumen terenkripsi. Detail produk akan tersedia pada fase pengembangan berikutnya.",
-    specs: [],
-    features: [],
-    includes: [],
-    stock: 0,
-    imgPhysical: "", 
-    imgDigital: "",
-    gallery: [],
-    isPlaceholder: true,
-    links: { telegram: "" }
-  },
-  {
-    id: "PL-003",
-    slug: "archive-03-placeholder",
-    name: "ARCHIVE_03 // ???",
-    type: "Upcoming Phygital Release",
-    price: 0,
-    description: "Dokumen terenkripsi. Detail produk akan tersedia pada fase pengembangan berikutnya.",
-    specs: [],
-    features: [],
-    includes: [],
-    stock: 0,
-    imgPhysical: "", 
-    imgDigital: "",
-    gallery: [],
-    isPlaceholder: true,
-    links: { telegram: "" }
-  }
-];
-
-export const ROADMAP_DATA = [
-  { phase: "PHASE 01", year: "2026", title: "THE GENESIS", desc: "Peluncuran batch pertama 14 unit eksklusif untuk pendiri awal." },
-  { phase: "PHASE 02", year: "2026", title: "DIGITAL FUSION", desc: "Integrasi penuh aset digital ke dalam infrastruktur Monad." },
-  { phase: "PHASE 03", year: "2026", title: "THE WAR ROOM", desc: "Pembukaan akses komunitas VIP bagi pemegang Royal Genesis." },
-  { phase: "PHASE 04", year: "2026", title: "ARCHIVE 02", desc: "Ekspansi koleksi utilitas dengan material industrial baru." },
-  { phase: "PHASE 05", year: "2027", title: "PHYGITAL HUB", desc: "Portal verifikasi terdesentralisasi untuk ekosistem fashion." },
-  { phase: "PHASE 06", year: "2027", title: "GLOBAL SYNDICATE", desc: "Kolaborasi lintas batas antara kreator digital dan pengrajin fisik." },
-];
-
-export const SECRET_CODES_DB = [
-  "K7XM-9Q2L-4RZT", "V8P3-LQ7N-X5DW", "Z4TK-8MPR-2Q9L", "N6RX-W3P9-K2ZM", 
-  "Q9VL-7X2R-M4PT", "X3QK-8LZM-5R7N", "M7ZT-2W9L-X4QP", "R5XL-9P2K-V8QW", 
-  "T8QM-4ZRL-7X2P", "L2WX-9Q7R-K5ZM", "P9ZR-3XLM-8Q2T", "W4QK-7Z2P-M9RL", 
-  "X8LM-2R9Q-T5ZP", "Z7QP-4XLM-9R2W", "M3ZL-8QWP-2RX9", "Q2RX-7LZM-9P4K", 
-  "V9ZM-3QXL-8R2P", "T5RL-9ZQ2-X7KM", "K8QX-4RZM-2P9L", "X7PM-9LQ2-Z4RW", 
-  "R2ZL-8QXM-7P4K", "W9QT-3RZL-X8PM", "P4XM-7Q2R-9ZLK", "Z8RL-2QWP-4X9M", 
-  "M9QX-7R2L-Z4KP", "L7ZM-9P4Q-X2RW", "Q4RL-8ZMX-7P2K", "X2QP-9LZR-4MW8",
-  "BRND-3QZL-7P2W", "DEV1-4QXM-8R2P", "ARTS-7RZM-9P4L" 
-];
 </file>
 
 </files>

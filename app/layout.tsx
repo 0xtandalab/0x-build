@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter, Space_Grotesk, Space_Mono } from 'next/font/google';
+import { Inter, Space_Grotesk, Space_Mono, Orbitron } from 'next/font/google';
 import './globals.css';
 import Navbar from '../components/Navbar';
 import Marquee from '../components/Marquee';
@@ -11,6 +11,7 @@ import ScrollProgress from '../components/ScrollProgress';
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], variable: '--font-space-grotesk' });
 const spaceMono = Space_Mono({ weight: ['400', '700'], subsets: ['latin'], variable: '--font-space-mono' });
+const orbitron = Orbitron({ weight: ['400', '700', '900'], subsets: ['latin'], variable: '--font-orbitron' });
 
 // =================================================================
 // 🚀 MASTER SEO METADATA & LSI KEYWORDS ENGINE
@@ -154,7 +155,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   ];
 
   return (
-    <html lang="id" className={`${inter.variable} ${spaceGrotesk.variable} ${spaceMono.variable}`}>
+    <html lang="id" className={`${inter.variable} ${spaceGrotesk.variable} ${spaceMono.variable} ${orbitron.variable}`}>
       <head>
         <meta name="google-site-verification" content="AdsL5zatSrtTJ8kvkoh5wI1flrVIf0YXJ9-93uTbT8o" />
         
