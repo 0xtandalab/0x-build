@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { motion, useScroll, useSpring, Variants } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import {
   Compass, Anchor, Zap, ShieldCheck, Scale, Hexagon, User, Calendar, Clock, Info, ArrowLeft, ChevronRight, ArrowRight
 } from "lucide-react";
@@ -19,13 +19,8 @@ const fadeUp: Variants = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1,
 const stagger: Variants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.1 } }};
 
 export default function StoikismeFashionArticlePage() {
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
-
   return (
     <main className="min-h-screen bg-[#0A0A0A] text-[#F3F3F3] selection:bg-[#F59E0B] selection:text-black font-sans relative">
-      <motion.div className="fixed top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#836EF9] via-[#F59E0B] to-[#00FF9D] z-[100] origin-left" style={{ scaleX }} />
-
       <header className="relative pt-40 pb-12 px-6 border-b border-white/5">
         <div className="max-w-3xl mx-auto">
           <Link href="/terminal-log" className="inline-flex items-center gap-2 text-neutral-500 hover:text-[#F59E0B] mb-10 font-mono text-[10px] tracking-[0.4em] uppercase transition-colors group">

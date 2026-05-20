@@ -3,6 +3,9 @@ import { Inter, Space_Grotesk, Space_Mono } from 'next/font/google';
 import './globals.css';
 import Navbar from '../components/Navbar';
 import Marquee from '../components/Marquee';
+import NoiseOverlay from '../components/NoiseOverlay';
+import CursorSystem from '../components/CursorSystem';
+import ScrollProgress from '../components/ScrollProgress';
 
 // Load Fonts
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
@@ -163,6 +166,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       
       <body className="bg-[#0a0a0a] text-[#f3f3f3] overflow-x-hidden antialiased">
+        <ScrollProgress />
+        <NoiseOverlay />
+        <CursorSystem />
         <Marquee />
         <Navbar />
         {children}
